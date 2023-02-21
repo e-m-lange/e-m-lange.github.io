@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="DragDropOrderModel.js"></script>
+    <script type="text/javascript" src="DragDropFunction.js"></script>
+    <script type="text/javascript" src="DragDropControl.js"></script>
+
+    <style>
+        .column {
+            width: 49%;
+            height: 550px;
+            float: left;
+            background: aliceblue;
+            border-style: solid;
+        }
+
+        .customer {
+            margin-top: 50px;
+            height: 50px;
+            border-style: solid;
+        }
+
+        .customerContainer {
+
+        }
+
+        .menuItem {
+
+        }
+
+        .orderItem {
+
+        }
+
+    </style>
+</head>
+
+<body style="margin: 0">
+<div>
+    <div id="menuZone" class="column menu"></div>
+    <div class="column">
+        <div id="orderZone" class="orderTab" style="height: 74%; border-style: solid; text-align: center; overflow-y: scroll"></div>
+        <div id="optionZone" style="height: 24%; border-style: solid">
+            <div id="addCustomerZone" class="addNewCustomer" style="height: 40%; border-style: dashed; text-align: center;">+ customer</div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
