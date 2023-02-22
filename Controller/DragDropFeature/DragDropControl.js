@@ -11,7 +11,6 @@
 
 //Should only have 10 orders in total
 const maxNumOrders = 10;
-var isVIP = false;
 
 //Purpose: When an item that has subscribed is dragged, will save the parentElement ID for the drop function
 function Drag(ev){
@@ -131,9 +130,12 @@ function CreateItem(text, id, className)
     //Temporary. This can easily be changed by setting a class / a function.
     divItem.style.borderStyle = "solid";
     divItem.style.borderWidth = "1px";
-    divItem.style.height = "40px";
-    divItem.style.width = "150px";
-    divItem.style.margin = "10px";
+    divItem.style.height = "80px";
+    divItem.style.margin = "15px";
+    divItem.style.padding = "15px";
+    divItem.style.maxWidth = "100px";
+    divItem.style.minWidth = "100px";
+    divItem.style.backgroundColor = "#E4E4E4";
     divItem.draggable = true;
     divItem.ondragstart = Drag;
     divItem.textContent = text;
@@ -150,18 +152,17 @@ function CreateItem(text, id, className)
 //Purpose: Create placeholder customer container
 function CreateCustomer(customerName, id = "cust_0")
 {
+    var divCustomerContainer = document.createElement("div");
     var divCustomer = document.createElement("div");
 
-    divCustomer.style.borderStyle = "dashed";
-    divCustomer.style.borderWidth = "1px";
-    divCustomer.style.height = "fit-content";
-    divCustomer.style.minHeight = "60px";
-    divCustomer.style.width = "250px";
-    divCustomer.textContent = customerName + " ID: " + id;
-    divCustomer.id = id;
+    divCustomerContainer.textContent = customerName + " ID: " + id;
+    divCustomerContainer.style.marginTop = "5%";
     divCustomer.className = "customerItem"; //so we can add items to it
+    divCustomer.id = id;
 
-    return divCustomer;
+    divCustomerContainer.appendChild(divCustomer);
+
+    return divCustomerContainer;
 }
 
 
@@ -200,30 +201,3 @@ function LoadViewMultipleCustomer(){
         }
     }//https://stackoverflow.com/questions/9681601/how-can-i-count-the-number-of-elements-with-same-class
 }
-
-
-$(document).ready(function () {
-    var menuZone = document.getElementById("menuZone");
-    var orderZone = document.getElementById("orderZone");
-    var customerZone = document.getElementsByClassName("addNewCustomer")[0]; //since there is only 1 anyway
-
-    //Subscribing functions to the drag drop events:
-    menuZone.addEventListener("dragover", (event) => {event.preventDefault();} );
-    menuZone.addEventListener("drop", Drop );
-    orderZone.addEventListener("dragover", (event) => {event.preventDefault();} );
-    orderZone.addEventListener("drop", Drop );
-    customerZone.addEventListener("dragover", (event) => {event.preventDefault();} );
-    customerZone.addEventListener("drop", Drop );
-
-    //If is VIP, just hide the add customer part
-    if (isVIP)
-        $(".addNewCustomer").hide();
-
-    //Fill up with some items.
-    for (i = 0; i < 10; i++){
-        const element = document.getElementById("menuZone");
-        element.appendChild(CreateItem("Temp Item" + i, "cust_-1", "menuItem")); //-1 since it is basically unassigned atm
-    }
-
-    LoadView();
-})
