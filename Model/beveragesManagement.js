@@ -1,5 +1,5 @@
 //Create a card for the beverage
-function elementBeverage(contact){
+function elementBeverage(){
     var name = create_element('div',{'class':'name'},[contact.firstname+" "+contact.lastname]);
     var email = create_element('div',{'class':'email'},['email : '+contact.email]);
     var phone = create_element('div',{'class':'phone'},['telephone : '+contact.phone]);
@@ -19,26 +19,15 @@ function elementBeverage(contact){
     return div_list;
   }
 
-//Display the list of beverages
-function sallBeverages(){
-    var liste = document.getElementById('contact-list'); //menu display zone
+// Display all the beverage cards
+function allBeverages(){
+    //Select the menu display zone
+    var menu = document.getElementById('');
+
+    //Add each beverage to the menu
     for (i = 0 ; i < 100 ; i++){
-      liste.appendChild(contact_as_element(contacts[i])); // ajoute chaque contact de contacts à la div contact-list
+      menu.appendChild(elementBeverage(drinks[i]));
     }
-}
-
-// Returns a list of all the names of the beverages in the database.
-function allBeverages() {
-
-    // Using a local variable to collect the items
-    var collector = [];
-
-    // The beverages are stored in the variable drinks
-    for (i = 0; i < drinks.lenght; i++) {
-        collector.push(drinks[i].name); //instead show the drink card
-    };
-    
-    return collector;
 }
 
 // Returns the names of beverages within a category.
@@ -100,10 +89,3 @@ function addToSet(set, item) {
 function percentToNumber(percentStr) {
     return Number(percentStr.slice(0,-1));
 }
-
-function getString(id){
-    var lang = parameters.lang;
-    return languages.lang.id;
-}
-
-console.log(getString("language"));
