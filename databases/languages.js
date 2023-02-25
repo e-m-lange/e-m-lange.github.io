@@ -58,6 +58,31 @@ var languages = {
     },
 
     indonesian : {
-
+        "language": "Bahasa",
+        "lang": "idn",
+        "string welcome page": "Selamat datang di kapal kami",
+        "button login": "Masuk",
+        "button logout": "Keluar",
+        "string swipe up": "Geser ke atas jika Anda tidak memiliki akun",
+        "string sign in": "Masuk",
+        "label email id": "Email id",
+        "placeholder email": "me@email.com",
+        "label password": "Kata Sandi",
+        "button back": "Kembali",
+        "pop up login out": "Anda telah berhasil keluar",
+        "string table": "nomor meja", //e.g. nomor meja 1
+        "string balance": "saldo", //e.g. saldo Olivia
+        "string special VIP section": "Spesial untuk Anda",
+        "placeholder search bar": "cari",
+        "placeholder categories filter": "Semua Kategori",
+        "placeholder allergies": "Alergi",
+        "string order menu": "Pesan",
+        "string new customer": "pelanggan",
+        "string total order": "Total",
+        "string account balance order": "Saldo Rekening",
+        "string balance after order": "Saldo baru",
+        "button fridge code": "Kode",
+        "button fridge code explanation": "tekan untuk melihat",
+        "pop up order sent": "Pesanan telah terkirim ke bartender kami"
     }
 }
