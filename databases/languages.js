@@ -25,7 +25,8 @@ var languages = {
         "string balance after order": "New balance",
         "button fridge code": "Code",
         "button fridge code explanation": "hold to view",
-        "pop up order sent": "The order has been sent to our bartender"
+        "pop up order sent": "The order has been sent to our bartender",
+        "string drag order": "Drag item here to order"
     },
 
     fra : {
@@ -54,10 +55,11 @@ var languages = {
         "string balance after order": "Nouveau solde",
         "button fridge code": "Code",
         "button fridge code explanation": "maintenir to voir",
-        "pop up order sent": "La commande a été envoyée a notre barman"
+        "pop up order sent": "La commande a été envoyée a notre barman",
+        "string drag order": "(fra):Drag item here to order"
     },
 
-    indonesian : {
+    indo : {
         "language": "Bahasa",
         "lang": "idn",
         "string welcome page": "Selamat datang di kapal kami",
@@ -70,8 +72,8 @@ var languages = {
         "label password": "Kata Sandi",
         "button back": "Kembali",
         "pop up login out": "Anda telah berhasil keluar",
-        "string table": "nomor meja", //e.g. nomor meja 1
-        "string balance": "saldo", //e.g. saldo Olivia
+        "string table": "nomor meja", //need to reverse e.g. nomor meja 1
+        "string balance": "saldo", //need to reverse e.g. saldo Olivia
         "string special VIP section": "Spesial untuk Anda",
         "placeholder search bar": "cari",
         "placeholder categories filter": "Semua Kategori",
@@ -83,6 +85,7 @@ var languages = {
         "string balance after order": "Saldo baru",
         "button fridge code": "Kode",
         "button fridge code explanation": "tekan untuk melihat",
-        "pop up order sent": "Pesanan telah terkirim ke bartender kami"
+        "pop up order sent": "Pesanan telah terkirim ke bartender kami",
+        "string drag order": "Tarik item kesini untuk memesan"
     }
 }
