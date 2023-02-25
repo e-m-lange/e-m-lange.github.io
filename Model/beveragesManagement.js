@@ -9,9 +9,26 @@ function allBeverages(){
     return collector;
 }
 
-//Return all the beverages alphabetically sorted by category and alcohol strength
-function sortBeverage(){
-    
+//Return all the beverages sorted by category and alcohol strength by ChatGPT
+function sortBeverage(beverages) {  
+    return beverages.sort(compareBeverage);
+}
+
+// Custom sorting function by ChatGPT
+function compareBeverage(a, b) {
+    // Sort by category first
+    if (a.category < b.category) return -1;
+    if (a.category > b.category) return 1;
+
+    // If in the same category, sort by alcohol strength
+    if (getAlcoholBeverage(a) < getAlcoholBeverage(b)) return -1;
+    if (getAlcoholBeverage(a) > getAlcoholBeverage(b)) return 1;
+
+    // If in the same category and same alcohol strength, sort by price
+    if (a.price < b.price) return -1;
+    if (a.price > b.price) return 1;
+
+    return 0;
 }
 
 // Returns the beverage information within a category from a list of beverages

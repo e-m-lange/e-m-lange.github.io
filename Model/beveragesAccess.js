@@ -1,6 +1,7 @@
 // Return the name of the beverage
 function getNameBeverage(beverage){
-    return beverage.name + " " + (beverage.name2 || "");
+    if (beverage.name2) return beverage.name + ", " + beverage.name2;
+    return beverage.name;
 }
 
 // Return the price of the beverage
@@ -30,13 +31,10 @@ function percentToNumber(percentStr) {
 
 // Return the alcohol strength of the beverage
 function getAlcoholBeverage(beverage){
-    if (beverage.alcoholstrength) {
-        return percentToNumber(beverage.alcoholstrength);
-    }
+    if (beverage.alcoholstrength) return percentToNumber(beverage.alcoholstrength);
 
     return beverage.strength;
 }
-
 
 // Return the production year of the beverage
 function getYearBeverage(beverage){
