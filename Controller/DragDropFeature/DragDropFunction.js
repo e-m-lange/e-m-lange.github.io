@@ -92,16 +92,15 @@ function SetCstmrOrderListModel(inputList){
     cstmrOrderListModel = Object.assign(cstmrOrderListModel, inputList);
 }
 
-//Purpose: To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
+//Purpose: Function drag and drop passes to undo redo manager.
 function UndoRedoDragDrop(inputList, undoOrRedo)
 {
-    console.log(RetrieveAllCustomers());
-    if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "undo")
+    if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "undo") //To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
         Undo();
-    else if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "redo")
+    else if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "redo") //To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
         Redo();
     else
-        SetCstmrOrderListModel(inputList);
+        SetCstmrOrderListModel(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
 }
 
 //Purpose: Generates the ID for the customer.
