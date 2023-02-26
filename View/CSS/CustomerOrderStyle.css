@@ -6,7 +6,11 @@ html, body {
 
 .mainContent {
     height: 100%;
+    width: 100%;
     background: linear-gradient(#546C5B, #01260A);
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 .column {
@@ -46,7 +50,7 @@ html, body {
 }
 
 .customerContainer {
-
+    marginTop: "5%"
 }
 
 .menuItem {
@@ -78,6 +82,12 @@ html, body {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 90%;
+}
+
+.vertiLine {
+    border-left: 2px solid rgb(80, 80, 78);
+    margin: auto;
+    height: 20px;
 }
 
 #menuBar {
@@ -130,11 +140,6 @@ html, body {
     background: transparent;
 }
 
-#filters {
-    height: 160px;
-    width: 100%;
-}
-
 #orderZone {
     height: 75%;
     text-align: center;
@@ -169,4 +174,47 @@ html, body {
     font-family: Tahoma;
     font-size: 18px;
     min-width: 130px;
+}
+
+#filters {
+    margin-top: 70px;
+    padding-left: 3%;
+    height: 100px;
+    width: 100%;
+    background: transparent;
+}
+
+#undoRedoBtn {
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #E4E4E4;
+    display: flex;
+    width: fit-content;
+    border-radius: 15px;
+}
+
+#undoBtn {
+    padding: 15px;
+    padding-left: 20px;
+    background: transparent;
+    border-style: none;
+}
+
+#undoBtn:hover {
+    background: #EFB93C;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#redoBtn {
+    padding: 15px;
+    padding-right: 20px;
+    background: transparent;
+    border-style: none;
+}
+
+#redoBtn:hover {
+    background: #EFB93C;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
 }

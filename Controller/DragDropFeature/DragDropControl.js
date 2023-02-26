@@ -1,9 +1,9 @@
-//Important View IDs:
+//View IDs:
 //orderZone = supposed to represent the area that the holds all order-related things
 //menuZone = supposed to represent the area that the holds all menu-related things
 //addCustomerZone = supposed to represent the area that allows for adding of customers, although is redundant given class addNewCustomer
 
-//CLASSES that need to be added to View elements:
+//View CLASSES:
 //orderItem = used to identify items that have been ordered
 //menuItem = used to identify items that have been classified as menu items
 //addNewCustomer = used to
@@ -17,7 +17,6 @@ function Drag(ev){
     ev.dataTransfer.setData("string", ev.target.parentElement.id); //storing this ID will allow for us to know where the item came from
     ev.dataTransfer.setData("text", ev.target.textContent); //store the name of the item
     ev.dataTransfer.setData("idText", ev.target.id); //store the id for removal later
-    console.log(ev.target.id);
 }
 
 
@@ -45,8 +44,6 @@ function Drop(ev){
 //Purpose: Will check whether the items being added are meeting the conditions before calling the functions in DragDropFunctions.
 function CheckDrop(parent, target, addItemName, itemId)
 {
-    console.log("target: " + target + "  parent: " + parent + "  classList: " + Array.from(document.getElementById(target).classList));
-
     //If they are the same (i.e. not moving anywhere), do nothing.
     if (parent == target)
         return;
@@ -66,8 +63,11 @@ function CheckDrop(parent, target, addItemName, itemId)
     AddCustomerItem(target, addItemName);
 }
 
+//Purpose: To add an item to the order.
 function AddOrderItem(target, addItemName)
 {
+    const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers())); //Used to save the model state before changes made for the UndoRedoManager. Clone the model, https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/.
+
     //ADD ORDER ITEM: If the div has the class orderTab, items dragged here are added.
     if (document.getElementById(target).classList.contains('orderTab')){ //If the item is being dragged into the div with class orderTab
         if (TotalCstmrCount().length > 1)
@@ -80,14 +80,17 @@ function AddOrderItem(target, addItemName)
     else if (document.getElementById(target).classList.contains('orderItem')) //If user drags over existing item, allow to drop..
         AddItem(addItemName, document.getElementById(target).parentElement.id); //But need to parent of the target to add to (i.e. cust_1...)
 
-    console.log("parent element: " + document.getElementById(target).parentElement.classList);
+    CstmrActionUndoRedo(oldState);
 }
 
+//Purpose: Removing and item from the order.
 function RemoveOrderItem(parent, target, itemId){
-    console.log(RetrieveAllCustomers());
     var targetElement = document.getElementById(target).classList;
 
     if (!targetElement.contains('orderTab') && !targetElement.contains('orderItem') && !targetElement.contains('addNewCustomer')) {
+        const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
+
+        //Don't need to specify the customer it is being removed from.
         if (TotalCstmrCount() <= 1)
             RemoveItem(itemId); //ID that was stored in drag datatransfer, is used to find the item in the model.
         else
@@ -95,22 +98,33 @@ function RemoveOrderItem(parent, target, itemId){
     }
 }
 
+//Purpose: For adding a new customer.
 function AddCustomerItem(target, addItemName){
     var targetElement = document.getElementById(target).classList;
 
     if (targetElement.contains('addNewCustomer')){
+        const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
+
         if (RetrieveCstmrItems().length > 0){ //only allow adding of customers once customer 1 has items
             var newlyAddedCstmrID = AddCustomer();
             AddItem(addItemName, newlyAddedCstmrID);
-            console.log(RetrieveAllCustomers());
+
+            console.log(TotalCstmrCount());
+            CstmrActionUndoRedo(oldState);
         }
     }
 }
 
+//Basic function sent to UndoRedoManager where the states of the models are saved. This was the easiest way to ensure all changes were accounted for, and since the model is so small.
+function CstmrActionUndoRedo(oldState) {
+    //const newState = Object.assign({}, RetrieveAllCustomers());
+    const newState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
+    CreateUndoRedoItem(function(){ UndoRedoDragDrop(newState); LoadView(); ManageListeners(); }, function(){ UndoRedoDragDrop(oldState); LoadView(); ManageListeners(); }); //To allow for Undo & Redo. https://stackoverflow.com/questions/1300242/passing-a-function-with-parameters-as-a-parameter
+}
+
 //Purpose: This will be called when the there are more than one customer as the areas that allow for
 //dropping items into will change from the whole orderZone to the specific customer containers
-function ManageListeners()
-{
+function ManageListeners() {
     var orderZone = document.getElementById("orderZone");
 
     if (TotalCstmrCount() <= 1) //If the total number of customer is only one...

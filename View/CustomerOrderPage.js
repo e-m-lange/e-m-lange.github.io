@@ -6,7 +6,12 @@ $(document).ready(function(){
 function CreatePage(){
     //Separated to make it easier to understand...
     //--------------------------------------------------------------------------------------//
-    var filterDivEl = createElement("div", {"id": "filters"});
+    var undoBtnEl = createElement("button", {"id": "undoBtn", "onclick": "Undo()"});
+    var vertiLineEl = createElement("div", {"class": "vertiLine"});
+    var redoBtnEl = createElement("button", {"id": "redoBtn", "onclick": "Redo()"});
+    var undoRedoBtnEl = createElement("div", {"id": "undoRedoBtn"}, [undoBtnEl, vertiLineEl, redoBtnEl]);
+
+    var filterDivEl = createElement("div", {"id": "filters"}, [undoRedoBtnEl]);
     var menuZoneEl = createElement("div", {"id": "menuZone", "class": "menu"});
     //--------------------------------------------------------------------------------------//
     var addCustomerEl = createElement("div", {"id": "addCustomerZone", "class": "addNewCustomer", "content": "textContent"});
@@ -30,16 +35,20 @@ function CreatePage(){
 
     CustomerControlInit();
 }
-
 function CustomerSetTextLabels(){
     document.getElementById("loginButton").textContent = getString("button login");
     document.getElementById("addCustomerZone").textContent = "+ " + getString("string new customer");
     document.getElementById("orderBtn").textContent = getString("string order menu");
     document.getElementById("orderLabel").textContent = getString("string order menu");
+    //For now undo redo is text, will be replaced later.
+    document.getElementById("undoBtn").textContent = "undo";
+    document.getElementById("redoBtn").textContent = "redo";
 }
 
 //VIEW RELATED FUNCTIONS
 var isVIP = false;
+
+//Can use this function to set the VIP status, which is important for display the correct information & html elements
 function SetVIPStatus (boolValue){
     isVIP = boolValue;
 }
@@ -71,8 +80,6 @@ function HoverOrderTab(ev){
             x.style.display = "block";
         rightColumn.addEventListener("mouseleave", UnhoverOrderTab);
     }, 550);
-
-    console.log("hovering");
 }
 
 function UnhoverOrderTab()
@@ -90,8 +97,6 @@ function UnhoverOrderTab()
         rightColumn.addEventListener("dragover", HoverOrderTab);
         document.getElementById("orderLabel").style.display = "block";
     }, 100);
-
-    console.log("unhovering");
 }
 
 function CustomerControlInit(){
@@ -136,7 +141,6 @@ function LoadView(){
     //For each item in a customer, display them.
     else {
         for (i = 0; i < RetrieveCstmrItems().length; i++) {
-            console.log(RetrieveCstmrItems());
             document.getElementById("orderZone").appendChild(CreateItem(RetrieveCstmrItems()[i].name, RetrieveCstmrItems()[i].ID, "orderItem"));
         }
     }
@@ -153,20 +157,17 @@ function LoadView(){
 function LoadViewMultipleCustomer(){
     //If there are more than one customer, this needs to be presented visually.
     for (i = 0; i < RetrieveAllCustomers().length; i++) {
-        document.getElementById("orderZone").appendChild(CreateCustomer(RetrieveAllCustomers()[i].cstmrName, RetrieveAllCustomers()[i].ID));
-        var customerId = RetrieveAllCustomers()[i].ID; //console.log(customerId + " customer list length: " + RetrieveAllCustomers().length);
-        console.log("customer ID: " + customerId);
+        CreateCustomer(RetrieveAllCustomers()[i].cstmrName, RetrieveAllCustomers()[i].ID, document.getElementById("orderZone")); //Create Customer
+        var customerId = RetrieveAllCustomers()[i].ID;
 
-        for (j = 0; j < RetrieveCstmrItems(customerId).length; j++){
-            console.log(RetrieveCstmrItems(customerId));
+        for (j = 0; j < RetrieveCstmrItems(customerId).length; j++) {
             var addElementTo = $(".customerItem#" + customerId) //first find the ones with customer class, then identify with ID
             addElementTo.append(CreateItem(RetrieveCstmrItems(customerId)[j].name, RetrieveCstmrItems(customerId)[j].ID, "orderItem"));
         }
     }//https://stackoverflow.com/questions/9681601/how-can-i-count-the-number-of-elements-with-same-class
 }
 
-
-//Purpose: Creates a placeholder item
+//Purpose: Creates a placeholder item. SHOULD BE DELETED ONCE THE DRINK CARDS HAVE BEEN MADE.
 function CreateItem(text, id, className)
 {
     var divItem = document.createElement("div");
@@ -184,26 +185,20 @@ function CreateItem(text, id, className)
     divItem.textContent = text;
     divItem.id = id; //allows for removal later
 
-    console.log("classname: " + className);
-
     if (className != null)
         divItem.className = className;//to allow for dropping into the order tab ("menuItem") OR to prevent deletion upon being dropped on top of each other in the order tab ("order tab")
 
     return divItem;
 }
 
-//Purpose: Create placeholder customer container
-function CreateCustomer(customerName, id = "cust_0")
+//Purpose: Create placeholder customer container.
+function CreateCustomer(customerName, id = "cust_0", appendTo)
 {
-    var divCustomerContainer = document.createElement("div");
-    var divCustomer = document.createElement("div");
+    var customerEl = createElement("div", {"class": "customerItem", "id": id});
+    var editCustNameEl = createElement("button", {"class": "editCustomerName", "id": id});
+    var customerContainerEl = createElement("div", {"class": "customerContainer", "content": "textContent"});
+    customerContainerEl.textContent = customerName + " ID: " + id;
+    appendTo.appendChild(customerContainerEl).appendChild(customerEl);
 
-    divCustomerContainer.textContent = customerName + " ID: " + id;
-    divCustomerContainer.style.marginTop = "5%";
-    divCustomer.className = "customerItem"; //so we can add items to it
-    divCustomer.id = id;
-
-    divCustomerContainer.appendChild(divCustomer);
-
-    return divCustomerContainer;
+    return customerContainerEl;
 }
