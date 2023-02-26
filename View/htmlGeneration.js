@@ -2,14 +2,14 @@
 function createElement(tagname, attributes, children){
     //Create a "tagname" HTML element
     var element = document.createElement(tagname);
-  
+
     //Add its attributes 
     for (key in attributes){
-      element.setAttribute(key, attributes.key);
+        element.setAttribute(key, attributes[key]);
     }
-  
+
     //Add the children to the element
-    if (children){
+    if (children != null && children.length > 0){
       for (child of children){
         if (child instanceof HTMLElement){
           element.appendChild(child);
@@ -19,5 +19,6 @@ function createElement(tagname, attributes, children){
         }
       }
     }
+
     return element;
   }
