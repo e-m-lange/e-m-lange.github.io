@@ -9,6 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Engagement&display=swap" rel="stylesheet">
   <!-- jQuery Modal -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="databases/accounts.js"></script>
+  <script src="databases/drinks.js"></script>
+  <script src="databases/languages.js"></script>
+  <script src="databases/orders.js"></script>
+  <script src="databases/parameters.js"></script>
+  <script src="databases/VIP.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   <title>Ship With No Name</title>
 </head>
@@ -17,26 +23,44 @@
 <div class="container">
   <div class="welcome">
     <div class="welcome-container">
-      <h1 class="welcome-text">Welcome to Our Ship</h1>
+      <h1 class="welcome-text" id="header"></h1>
       <button class="welcome-btn">
-        <p><a href="#ex1" rel="modal:open">Login</a></p>
+        <a href="#ex1" rel="modal:open" id="sign"></a>
       </button>
     </div>
     <div id="ex1" class="modal">
       <div class="login-container">
         <form class="form">
           <div class="form-welcome">
-            <p>Welcome On Board</p>
-            <p class="sign-text">Sign In</p>
+            <p id="welcome"></p>
+            <p class="sign-text" id="sign-welcome"></p>
           </div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required>
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required>
+          <script>
+            document.getElementById("sign").innerHTML = "Login"
+            document.getElementById("header").innerHTML = "Welcome to our ship";
+            document.getElementById("welcome").innerHTML = "Welcome On Board";
+            document.getElementById("sign-welcome").innerHTML = "Sign In";
+          </script>
+          <!-- Login pop-up-->
+          <form>
+            <div class="userPass">
+              <label for="username" id="username"></label><br>
+              <input type="text" name="username" value="Enter your username" required><br>
+              <label for="password" id="password"></label><br>
+              <input type="password" name="password" value="Enter your password" required>
+            </div>
+            <script>
+              document.getElementById("username").innerHTML = "Username :";
+              document.getElementById("password").innerHTML = "Password :";
+            </script>
+          </form>
           <div class="modal-btns">
-            <button type="submit" class="btn-login">Login</button>
-            <!--                        <button rel="modal:close" class="btn-back">Back</button>-->
+            <button type="submit" class="btn-login" id="lBtn"></button>
+            <!--<button rel="modal:close" class="btn-back">Reset</button>-->
           </div>
+          <script>
+            document.getElementById("lBtn").innerHTML = "Login";
+          </script>
 
 
         </form>
@@ -55,47 +79,4 @@
 
 </div>
 </body>
-<script>
-  $("#fade").modal({
-    fadeDuration: 1000,
-    fadeDelay: 0.50
-  });
-</script>
 </html>
-<script>
-  (function() {
-    var ws = new WebSocket('ws://' + window.location.host +
-            '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
-            'referrer=' + encodeURIComponent(window.location.pathname));
-    ws.onmessage = function (msg) {
-      if (msg.data === 'reload') {
-        window.location.reload();
-      }
-      if (msg.data.startsWith('update-css ')) {
-        var messageId = msg.data.substring(11);
-        var links = document.getElementsByTagName('link');
-        for (var i = 0; i < links.length; i++) {
-          var link = links[i];
-          if (link.rel !== 'stylesheet') continue;
-          var clonedLink = link.cloneNode(true);
-          var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
-          if (newHref !== link.href) {
-            clonedLink.href = newHref;
-          }
-          else {
-            var indexOfQuest = newHref.indexOf('?');
-            if (indexOfQuest >= 0) {
-              // to support ?foo#hash
-              clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
-                      newHref.substring(indexOfQuest + 1);
-            }
-            else {
-              clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
-            }
-          }
-          link.replaceWith(clonedLink);
-        }
-      }
-    };
-  })();
-</script>
