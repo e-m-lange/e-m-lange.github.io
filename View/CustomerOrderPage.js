@@ -1,6 +1,7 @@
 $(document).ready(function(){
     CreatePage();
     CustomerSetTextLabels();
+    ResetUndoRedo(); //Since user is opening another page
 })
 
 function CreatePage(){
