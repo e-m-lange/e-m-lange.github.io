@@ -6,16 +6,16 @@ function allBeverages(){
         collector.push(getInfoBeverage(drinks[i]));
     }
 
-    return collector;
+    return sortBeverages(collector);
 }
 
 //Return all the beverages sorted by category and alcohol strength by ChatGPT
-function sortBeverage(beverages) {  
+function sortBeverages(beverages) {  
     return beverages.sort(compareBeverage);
 }
 
 // Custom sorting function by ChatGPT
-function compareBeverage(a, b) {
+function compareBeverages(a, b) {
     // Sort by category first
     if (a.category < b.category) return -1;
     if (a.category > b.category) return 1;

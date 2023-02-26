@@ -9,7 +9,7 @@ function elementBeverage(beverage){
 }
 
 // Display all the beverage cards
-function allBeverages(){
+function displayBeverages(){
     //Select the menu display zone
     var menu = document.getElementById('');
 
