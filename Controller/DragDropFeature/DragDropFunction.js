@@ -93,11 +93,13 @@ function SetCstmrOrderListModel(inputList){
 }
 
 //Purpose: To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
-function UndoRedoDragDrop(inputList)
+function UndoRedoDragDrop(inputList, undoOrRedo)
 {
     console.log(RetrieveAllCustomers());
-    if (deepEqual(RetrieveAllCustomers(), inputList))
+    if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "undo")
         Undo();
+    else if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "redo")
+        Redo();
     else
         SetCstmrOrderListModel(inputList);
 }

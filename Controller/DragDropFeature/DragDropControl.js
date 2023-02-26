@@ -119,7 +119,7 @@ function AddCustomerItem(target, addItemName){
 function CstmrActionUndoRedo(oldState) {
     //const newState = Object.assign({}, RetrieveAllCustomers());
     const newState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
-    CreateUndoRedoItem(function(){ UndoRedoDragDrop(newState); LoadView(); ManageListeners(); }, function(){ UndoRedoDragDrop(oldState); LoadView(); ManageListeners(); }); //To allow for Undo & Redo. https://stackoverflow.com/questions/1300242/passing-a-function-with-parameters-as-a-parameter
+    CreateUndoRedoItem(function(){ UndoRedoDragDrop(newState, "redo"); LoadView(); ManageListeners(); }, function(){ UndoRedoDragDrop(oldState, "undo"); LoadView(); ManageListeners(); }); //To allow for Undo & Redo. https://stackoverflow.com/questions/1300242/passing-a-function-with-parameters-as-a-parameter
 }
 
 //Purpose: This will be called when the there are more than one customer as the areas that allow for
