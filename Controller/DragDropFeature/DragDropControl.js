@@ -95,6 +95,8 @@ function RemoveOrderItem(parent, target, itemId){
             RemoveItem(itemId); //ID that was stored in drag datatransfer, is used to find the item in the model.
         else
             RemoveItem(itemId, parent);
+
+        CstmrActionUndoRedo(oldState);
     }
 }
 
@@ -103,9 +105,8 @@ function AddCustomerItem(target, addItemName){
     var targetElement = document.getElementById(target).classList;
 
     if (targetElement.contains('addNewCustomer')){
-        const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
-
         if (RetrieveCstmrItems().length > 0){ //only allow adding of customers once customer 1 has items
+            const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
             var newlyAddedCstmrID = AddCustomer();
             AddItem(addItemName, newlyAddedCstmrID);
 

@@ -12,7 +12,7 @@ function CreateUndoRedoItem(inputExecute, inputUnexecute) { //Can assign the red
 }//cloning: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
 //Purpose: Will execute the stored 'reexecute' function.
-function Redo(state = null) {
+function Redo() {
     if (redoStack.length > 0){
         var func = redoStack.pop();
         func.reexecute();
@@ -21,7 +21,7 @@ function Redo(state = null) {
 }
 
 //Purpose: Will execute the stored 'unexecute' function.
-function Undo(state = null) { //optional parameter to check state against
+function Undo() {
     if (undoStack.length > 0){
         var func = undoStack.pop();
         func.unexecute();

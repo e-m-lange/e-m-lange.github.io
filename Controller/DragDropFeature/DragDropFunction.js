@@ -89,16 +89,26 @@ function TotalCstmrOrderCount(customerID = "cust_0"){
 //Purpose: Replaces the current cstmrOrderListModel with a new cstmrOrderListModel;
 function SetCstmrOrderListModel(inputList){
     cstmrOrderListModel = [];
-    cstmrOrderListModel = Object.assign(cstmrOrderListModel, inputList);
+    cstmrOrderListModel = JSON.parse(JSON.stringify(inputList));
 }
 
 //Purpose: Function drag and drop passes to undo redo manager.
 function UndoRedoDragDrop(inputList, undoOrRedo)
 {
-    if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "undo") //To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
-        Undo();
-    else if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "redo") //To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
-        Redo();
+    if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "undo"){ //To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
+        console.log("Extra Action");
+        setTimeout(function(){
+            Undo();
+            console.log("end timeout"); //Wait for the task to complete first before starting the next one otherwise it will not store objects in the stack corrently.
+        }, 50)
+    }
+    else if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "redo"){
+        console.log("Extra Action");
+        setTimeout(function(){
+            Redo();
+            console.log("end timeout"); //Wait for the task to complete first before starting the next one otherwise it will not store objects in the stack corrently.
+        }, 50)
+    }
     else
         SetCstmrOrderListModel(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
 }
