@@ -1,3 +1,19 @@
+// Return the object referenced by the id from the drinks database
+function getBeveragefromDrinks(beverage_id){
+    var i=0;
+    // Search for the corresponding id in the database
+    while(beverage_id=!drinks[i].articleid) i++;
+    return drinks[i];
+}
+
+// Return the object referenced by the id from the drinks_information database
+function getBeveragefromDrinksInformation(beverage_id){
+    var i=0;
+    // Search for the corresponding id in the database
+    while(beverage_id=!drinks_information[i].articleid) i++;
+    return drinks_information[i];
+}
+
 // Return the name of the beverage
 function getNameBeverage(beverage){
     if (beverage.name2) return beverage.name + ", " + beverage.name2;
@@ -41,16 +57,69 @@ function getYearBeverage(beverage){
     return Number(beverage.productionyear) || beverage.year;
 }
 
+// Return the stock size of the beverage
+function getStockBeverage(beverage){
+    return Number(beverage.stock);
+}
+
+// Return true if the beverage is hidden and false if not
+function getHiddenBeverage(beverage){
+    return beverage.hiddeninmenu;
+}
+
+// Return true if the beverage is for VIP and false if not
+function getVIPBeverage(beverage){
+    return beverage.specialvip;
+}
+
+// Return the serving size of the beverage
+function getServingBeverage(beverage){
+    return beverage.servingsize;
+}
+
+// Return the tannin of the beverage
+function getTanninBeverage(beverage){
+    return beverage.tannin;
+}
+
+// Return true if the beverage contains gluten and fasle if not
+function getGlutenBeverage(beverage){
+    return beverage.gluten;
+}
+
+// Return true if the beverage contains lactose and fasle if not
+function getLactoseBeverage(beverage){
+    return beverage.lactose;
+}
+
+// Return true if the beverage contains nuts and fasle if not
+function getNutsBeverage(beverage){
+    return beverage.nuts;
+}
+
 // Return all informations relative to the beverage
-function getInfoBeverage(beverage){
+function getInfoBeverage(beverage_id){
+    var beverage = getBeveragefromDrinks(beverage_id);
+    var info = getBeveragefromDrinksInformation(beverage_id);
+
     return { "name" : getNameBeverage(beverage),
         "category" : getCategoryBeverage(beverage),
         "strength" : getAlcoholBeverage(beverage),
         "producer" : getProducerBeverage(beverage),
         "country" : getCountryBeverage(beverage),
         "year" : getYearBeverage(beverage),
-        "price" : getPriceBeverage(beverage)} || beverage;
+        "price" : getPriceBeverage(beverage),
+        "stock": getStockBeverage(info),
+        "hiddeninmenu": getHiddenBeverage(info),
+        "specialvip": getVIPBeverage(info),
+        "servingsize": getServingBeverage(info),
+        "tannin": getTanninBeverage(info),
+        "gluten": getGlutenBeverage(info),
+        "lactose": getLactoseBeverage(info),
+        "nuts": getNutsBeverage(info)} ;
 }
+
+console.log(getInfoBeverage(drinks_information[0].articleid));
 
 // Return the list of all beverage types in the database
 function getTypesBeverage() {
