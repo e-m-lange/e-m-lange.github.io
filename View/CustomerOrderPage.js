@@ -27,10 +27,8 @@ function CreatePage(){
 
     var columnAllEl = createElement("div",{"class": "column"}, [columnRightEl, labelEl]);
     //--------------------------------------------------------------------------------------//
-    var loginBtnEl = createElement("button", {"id": "loginButton", "content": "textContent"});
-    var menuBarEl = createElement("div", {"id": "menuBar"}, [loginBtnEl]);
-    //--------------------------------------------------------------------------------------//
-    var mainContentEl = createElement("div", {"class": "mainContent"}, [filterDivEl, menuZoneEl, columnAllEl, menuBarEl]);
+    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); console.log(this.getAttribute("langType")); CustomerSetTextLabels(); LoadView();} ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
+    var mainContentEl = createElement("div", {"class": "mainContent"}, [filterDivEl, menuZoneEl, columnAllEl, CreateMenuBar()]);
 
     document.body.appendChild(mainContentEl);
 
@@ -195,10 +193,11 @@ function CreateItem(text, id, className)
 //Purpose: Create placeholder customer container.
 function CreateCustomer(customerName, id = "cust_0", appendTo)
 {
-    var customerEl = createElement("div", {"class": "customerItem", "id": id});
     var editCustNameEl = createElement("button", {"class": "editCustomerName", "id": id});
+    var customerEl = createElement("div", {"class": "customerItem", "id": id});
     var customerContainerEl = createElement("div", {"class": "customerContainer", "content": "textContent"});
     customerContainerEl.textContent = customerName + " ID: " + id;
+    appendTo.appendChild(customerContainerEl).appendChild(editCustNameEl);
     appendTo.appendChild(customerContainerEl).appendChild(customerEl);
 
     return customerContainerEl;
