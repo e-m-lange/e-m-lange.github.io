@@ -10,7 +10,7 @@ var drinks_information = [
     "lactose": false,
     "nuts": false,
 }, {
-    "articletype": "10",
+    "articleid": "190719",
     "stock": 3,
     "hiddeninmenu": false,
     "specialvip": false,

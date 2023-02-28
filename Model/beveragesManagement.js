@@ -3,15 +3,10 @@ function allBeverages(){
     var collector = [];
 
     for (i = 0 ; i < parameters.menu_size ; i++){
-        collector.push(getInfoBeverage(drinks[i]));
+        collector.push(getInfoBeverage(drinks[i].articleid));
     }
 
     return sortBeverages(collector);
-}
-
-//Return all the beverages sorted by category and alcohol strength by ChatGPT
-function sortBeverages(beverages) {  
-    return beverages.sort(compareBeverage);
 }
 
 // Custom sorting function by ChatGPT
@@ -29,6 +24,11 @@ function compareBeverages(a, b) {
     if (a.price > b.price) return 1;
 
     return 0;
+}
+
+//Return all the beverages sorted by category and alcohol strength by ChatGPT
+function sortBeverages(beverages) {  
+    return beverages.sort(compareBeverages);
 }
 
 // Returns the beverage information within a category from a list of beverages
@@ -58,6 +58,9 @@ function filterBeverageStrength(beverages, strength_min, strength_max) {
 
     return collector;
 }
+
+console.log(allBeverages());
+console.log(filterBeverageCategory(allBeverages(), getTypesBeverage()[1]));
 
 //TO DO allergies
 

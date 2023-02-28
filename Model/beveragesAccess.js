@@ -2,7 +2,8 @@
 function getBeveragefromDrinks(beverage_id){
     var i=0;
     // Search for the corresponding id in the database
-    while(beverage_id=!drinks[i].articleid) i++;
+    while(beverage_id != drinks[i].articleid && i < parameters.menu_size) i++;
+    
     return drinks[i];
 }
 
@@ -10,7 +11,8 @@ function getBeveragefromDrinks(beverage_id){
 function getBeveragefromDrinksInformation(beverage_id){
     var i=0;
     // Search for the corresponding id in the database
-    while(beverage_id=!drinks_information[i].articleid) i++;
+    while(beverage_id != drinks_information[i].articleid && i < parameters.menu_size) i++;
+    
     return drinks_information[i];
 }
 
@@ -118,8 +120,6 @@ function getInfoBeverage(beverage_id){
         "lactose": getLactoseBeverage(info),
         "nuts": getNutsBeverage(info)} ;
 }
-
-console.log(getInfoBeverage(drinks_information[0].articleid));
 
 // Return the list of all beverage types in the database
 function getTypesBeverage() {
