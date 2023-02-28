@@ -1,7 +1,7 @@
-var VIP = [
+var VIP = [ // credentials 0 means waiter, crendential 1 means manager, credentials 3 means VIP
     {
         "user_id": "2",
-        "credentials": "0",
+        "credentials": "1",
         "password": "b690bc2447d40ea8a6f78345eb979a28",
         "username": "jorass",
         "first_name": "Jory",
