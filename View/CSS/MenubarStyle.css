@@ -80,7 +80,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     transition: transform 300ms;
-    background-image: url(../ImageAssets/DropDownArrowIcon.png);
+    background-image: url(../jpg/DropDownArrowIcon.png);
 }
 
 #langDropDown {
