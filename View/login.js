@@ -15,6 +15,10 @@ $(document).ready(function() {
     document.getElementById("password").innerHTML = "Password :";
     document.getElementById("lBtn").innerHTML = "Login";
 
+    //Swipe up texts
+    document.getElementById("swipe").innerHTML = "Swipe Up";
+    document.getElementById("noAccount").innerHTML = "if you do not have an account";
+
     $('#lBtn').on('click', function() {
         var loginUsernameEntry = $("#username1").val();
         var loginPasswordEntry = $("#password1").val();
