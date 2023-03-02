@@ -19,7 +19,7 @@ function CreatePage(){
     var horizLineEl = createElement("div", {"class": "horizLine"});
     var orderBtnEl = createElement("button", {"id": "orderBtn", "content": "textContent"});
 
-    var orderZoneEl = createElement("div", {"id": "orderZone", "class": "orderTab"});
+    var orderZoneEl = createElement("div", {"id": "orderZone", "class": "orderTab orderZoneOpened"});
     var optionZoneEl = createElement("div", {"id": "optionZone"}, [addCustomerEl, horizLineEl, orderBtnEl]);
     //--------------------------------------------------------------------------------------//
     var columnRightEl = createElement("div", {"class": "columnRight"}, [orderZoneEl, optionZoneEl]);
@@ -75,8 +75,12 @@ function HoverOrderTab(ev){
     },300);
 
     setTimeout(function(){
-        for (let x of rightColumn.children)
-            x.style.display = "block";
+        for (let x of rightColumn.children) {
+            if (x.id == "orderZone" && x.classList.contains("orderZoneOpened"))
+                x.style.display = "flex";
+            else
+                x.style.display = "block";
+        }
         rightColumn.addEventListener("mouseleave", UnhoverOrderTab);
     }, 550);
 }
@@ -87,7 +91,7 @@ function UnhoverOrderTab()
     rightColumn.removeEventListener("mouseleave", UnhoverOrderTab);
 
     setTimeout(function(){
-        rightColumn.style.width = "5%";
+        rightColumn.style.width = "8%"; //The width of the hidden order.
 
         for (let x of rightColumn.children)
             x.style.display = "none";
@@ -139,6 +143,7 @@ function LoadView(){
 
     //For each item in a customer, display them.
     else {
+        document.getElementById("orderZone").style.padding = "20px";
         for (i = 0; i < RetrieveCstmrItems().length; i++) {
             document.getElementById("orderZone").appendChild(CreateItem(RetrieveCstmrItems()[i].name, RetrieveCstmrItems()[i].ID, "orderItem"));
         }
@@ -147,14 +152,22 @@ function LoadView(){
     //If there are no items in the order zone, display this text.
     if (document.getElementById("orderZone").children.length == 0) {
         $("#orderZone").text(getString("string drag order"));
-        document.getElementById("orderZone").style.lineHeight = "100px";
+        document.getElementById("orderZone").style.paddingTop = "36%";
+        document.getElementById("orderZone").style.paddingLeft = "30%";
+        document.getElementById("orderZone").style.height = "38%";
     }
-    else
-        document.getElementById("orderZone").style.lineHeight = "normal";
+    else {
+        document.getElementById("orderZone").style.paddingTop = "0%";
+        document.getElementById("orderZone").style.paddingRight = "0px";
+        document.getElementById("orderZone").style.height = "70%";
+    }
 }
 
-function LoadViewMultipleCustomer(){
-    //If there are more than one customer, this needs to be presented visually.
+function LoadViewMultipleCustomer(){ //If there are more than one customer, this needs to be presented visually.
+    document.getElementById("orderZone").style.paddingTop = "0%";
+    document.getElementById("orderZone").style.paddingRight = "0px";
+    document.getElementById("orderZone").style.height = "70%";
+
     for (i = 0; i < RetrieveAllCustomers().length; i++) {
         CreateCustomer(RetrieveAllCustomers()[i].cstmrName, RetrieveAllCustomers()[i].ID, document.getElementById("orderZone")); //Create Customer
         var customerId = RetrieveAllCustomers()[i].ID;
@@ -194,10 +207,14 @@ function CreateItem(text, id, className)
 function CreateCustomer(customerName, id = "cust_0", appendTo)
 {
     var editCustNameEl = createElement("button", {"class": "editCustomerName", "id": id});
+    editCustNameEl.onclick = function() { EditCustomerNameCtrl(id); };
+    var nameCustEl = createElement("p", {"class": "custNameTxt"});
+    var headerContainerEl = createElement("div", {"class": "custContainHeader"}, [nameCustEl, editCustNameEl]);
     var customerEl = createElement("div", {"class": "customerItem", "id": id});
-    var customerContainerEl = createElement("div", {"class": "customerContainer", "content": "textContent"});
-    customerContainerEl.textContent = customerName + " ID: " + id;
-    appendTo.appendChild(customerContainerEl).appendChild(editCustNameEl);
+    var customerContainerEl = createElement("div", {"class": "customerContainer", "id": id});
+    nameCustEl.textContent = "Order " + id.charAt(id.length - 1) + ": " + customerName;
+
+    appendTo.appendChild(customerContainerEl).appendChild(headerContainerEl);
     appendTo.appendChild(customerContainerEl).appendChild(customerEl);
 
     return customerContainerEl;

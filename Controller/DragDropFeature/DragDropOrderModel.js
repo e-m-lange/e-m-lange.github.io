@@ -1,6 +1,6 @@
 //Default values.
 const defaultCustomerID = "cust_0";
-const defaultCustomerName = "Customer";
+const defaultCustomerName = "Crewmate";
 
 //This will hold a list of the orders.
 var orderModel = [];

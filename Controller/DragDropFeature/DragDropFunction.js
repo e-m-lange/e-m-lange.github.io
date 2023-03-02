@@ -1,6 +1,6 @@
 //The functions here are called by DragDropControl, and relate directly the DragDropOrderModel
 
-function AddCustomer(customerName = "customer"){
+function AddCustomer(customerName = "Crewmate"){
     var orderModel = []; //A new customer will have an empty order list.
     var customerToAdd = {ID: CstmrIdGenerator(), cstmrName: customerName, orders: orderModel}; //Create the customer object to add to the model.
     cstmrOrderListModel.push(customerToAdd); //Add said object to the model.
@@ -30,6 +30,15 @@ function RemoveCustomer(customerID = "cust_0")
         var replacementCustomer = {ID: "cust_0", cstmrName: oldCustomer.cstmrName, orders: replacementOrders}
         cstmrOrderListModel.pop();
         cstmrOrderListModel.push(replacementCustomer);
+    }
+}
+
+function EditCustomerName(customerID, newName = "Crewmate"){
+    for (i = 0; i < cstmrOrderListModel.length; i++){
+        if (cstmrOrderListModel[i].ID == customerID) {
+            cstmrOrderListModel[i].cstmrName = newName;
+            break;
+        }
     }
 }
 

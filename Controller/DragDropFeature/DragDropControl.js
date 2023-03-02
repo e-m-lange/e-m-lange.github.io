@@ -8,6 +8,7 @@
 //menuItem = used to identify items that have been classified as menu items
 //addNewCustomer = used to
 //customerItem =
+//customerContainer =
 
 //Should only have 10 orders in total
 const maxNumOrders = 10;
@@ -44,6 +45,11 @@ function Drop(ev){
 //Purpose: Will check whether the items being added are meeting the conditions before calling the functions in DragDropFunctions.
 function CheckDrop(parent, target, addItemName, itemId)
 {
+    console.log("parent");
+    console.log(parent);
+    console.log("target");
+    console.log(target);
+
     //If they are the same (i.e. not moving anywhere), do nothing.
     if (parent == target)
         return;
@@ -52,7 +58,7 @@ function CheckDrop(parent, target, addItemName, itemId)
     var customerCount = 0;
     RetrieveAllCustomers().forEach(x => customerCount = customerCount + TotalCstmrOrderCount(x.ID));
     if (customerCount < maxNumOrders) //Ensure that it does not exceed 10 items
-        AddOrderItem(target, addItemName); //Should inform user with a message!
+        AddOrderItem(target, addItemName, parent); //Should inform user with a message!
 
     //REMOVE ORDER ITEM: If it outside of the order tab, remove them.
     //But if it has been marked as an orderItem (which user may accidently drag into), do nothing.
@@ -64,7 +70,7 @@ function CheckDrop(parent, target, addItemName, itemId)
 }
 
 //Purpose: To add an item to the order.
-function AddOrderItem(target, addItemName)
+function AddOrderItem(target, addItemName, parent)
 {
     const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers())); //Used to save the model state before changes made for the UndoRedoManager. Clone the model, https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/.
 
@@ -75,19 +81,18 @@ function AddOrderItem(target, addItemName)
         else //otherwise just go with default customer ID of 0
             AddItem(addItemName);
     }
-    else if (document.getElementById(target).classList.contains('customerItem')) //Otherwise if it is a customer div...
+    else if (document.getElementById(target).classList.contains('customerContainer')) //Otherwise if it is a customer div...
         AddItem(addItemName, target);
-    else if (document.getElementById(target).classList.contains('orderItem')) //If user drags over existing item, allow to drop..
-        AddItem(addItemName, document.getElementById(target).parentElement.id); //But need to parent of the target to add to (i.e. cust_1...)
 
-    CstmrActionUndoRedo(oldState);
+    setTimeout(() => CstmrActionUndoRedo(oldState), 10); //If there are remove functions running, wait for those to finish.
 }
 
 //Purpose: Removing and item from the order.
 function RemoveOrderItem(parent, target, itemId){
     var targetElement = document.getElementById(target).classList;
 
-    if (!targetElement.contains('orderTab') && !targetElement.contains('orderItem') && !targetElement.contains('addNewCustomer')) {
+    if (!targetElement.contains('orderTab') && !targetElement.contains('orderItem') && !targetElement.contains('addNewCustomer')
+        && parent != "menuZone") {
         const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
 
         //Don't need to specify the customer it is being removed from.
@@ -96,24 +101,45 @@ function RemoveOrderItem(parent, target, itemId){
         else
             RemoveItem(itemId, parent);
 
-        CstmrActionUndoRedo(oldState);
+        if (!document.getElementById(target).classList.contains('customerContainer')) //When moving between customers, two actions occur, thus, we only want to save the state once.
+            CstmrActionUndoRedo(oldState);
     }
 }
 
 //Purpose: For adding a new customer.
-function AddCustomerItem(target, addItemName){
+async function AddCustomerItem(target, addItemName){
     var targetElement = document.getElementById(target).classList;
 
     if (targetElement.contains('addNewCustomer')){
         if (RetrieveCstmrItems().length > 0){ //only allow adding of customers once customer 1 has items
-            const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
-            var newlyAddedCstmrID = AddCustomer();
-            AddItem(addItemName, newlyAddedCstmrID);
 
-            console.log(TotalCstmrCount());
-            CstmrActionUndoRedo(oldState);
+            document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox(getString("message customer name"), true));
+            document.getElementById("defMessBox").addEventListener("MessageClosedEv", function(evt) {
+                AddCustomerWithName(evt.input, addItemName);
+            }, false);
         }
     }
+}
+
+function AddCustomerWithName(customerName, addItemName) {
+    console.log("made customer");
+    const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
+    var newlyAddedCstmrID = AddCustomer(customerName);
+    console.log(customerName);
+    console.log(newlyAddedCstmrID);
+    AddItem(addItemName, newlyAddedCstmrID);
+
+    console.log(TotalCstmrCount());
+    CstmrActionUndoRedo(oldState);
+    LoadView();
+}
+
+function EditCustomerNameCtrl(customerID){
+    document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Input new name:", true));
+    document.getElementById("defMessBox").addEventListener("MessageClosedEv", function(evt) {
+        EditCustomerName(customerID, evt.input);
+        LoadView();
+    }, false);
 }
 
 //Basic function sent to UndoRedoManager where the states of the models are saved. This was the easiest way to ensure all changes were accounted for, and since the model is so small.
@@ -132,7 +158,7 @@ function ManageListeners() {
         orderZone.addEventListener("drop", Drop ); //allow user to drop into the orderZone
 
     else { //Otherwise, allow for dropping into any of the customer containers
-        document.querySelectorAll(".customerItem").forEach(x => { x.addEventListener("drop", Drop ); }) //https://flaviocopes.com/how-to-add-event-listener-multiple-elements-javascript/
+        document.querySelectorAll(".customerContainer").forEach(x => { x.addEventListener("drop", Drop ); }) //https://flaviocopes.com/how-to-add-event-listener-multiple-elements-javascript/
         orderZone.removeEventListener("drop", Drop ); //Prevent user from dropping into orderZone
     }
 } //orderZone.replaceWith(orderZone.cloneNode(true)); //clear all listeners, use this since we used anonymous types for subscriptions https://bobbyhadz.com/blog/javascript-remove-all-event-listeners-from-element
