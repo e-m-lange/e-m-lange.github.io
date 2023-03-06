@@ -61,7 +61,7 @@ html, body {
     margin-left: 3%;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../jpg/EditIcon.png");
+    background-image: url("../ImageAssets/EditIcon.png");
     transition: background-color 200ms;
 }
 
@@ -204,10 +204,14 @@ html, body {
 }
 
 #undoBtn {
-    padding: 15px;
-    padding-left: 20px;
+    padding: 28px;
     background: transparent;
     border-style: none;
+
+    background-image: url("../ImageAssets/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #undoBtn:hover {
@@ -215,17 +219,31 @@ html, body {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     transition: background-color 100ms ease-out;
+
+    background-image: url("../ImageAssets/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #undoBtn:active {
     background: #EFB93C;
+
+    background-image: url("../ImageAssets/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #redoBtn {
-    padding: 15px;
-    padding-right: 20px;
+    padding: 28px;
     background: transparent;
     border-style: none;
+
+    background-image: url("../ImageAssets/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #redoBtn:hover {
@@ -233,8 +251,18 @@ html, body {
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     transition: background-color 100ms ease-out;
+
+    background-image: url("../ImageAssets/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #redoBtn:active {
     background: #EFB93C;
+
+    background-image: url("../ImageAssets/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
 }

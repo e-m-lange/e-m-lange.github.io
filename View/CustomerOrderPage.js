@@ -39,9 +39,6 @@ function CustomerSetTextLabels(){
     document.getElementById("addCustomerZone").textContent = "+ " + getString("string new customer");
     document.getElementById("orderBtn").textContent = getString("string order menu");
     document.getElementById("orderLabel").textContent = getString("string order menu");
-    //For now undo redo is text, will be replaced later.
-    document.getElementById("undoBtn").textContent = "undo";
-    document.getElementById("redoBtn").textContent = "redo";
 }
 
 //VIEW RELATED FUNCTIONS
@@ -212,7 +209,7 @@ function CreateCustomer(customerName, id = "cust_0", appendTo)
     var headerContainerEl = createElement("div", {"class": "custContainHeader"}, [nameCustEl, editCustNameEl]);
     var customerEl = createElement("div", {"class": "customerItem", "id": id});
     var customerContainerEl = createElement("div", {"class": "customerContainer", "id": id});
-    nameCustEl.textContent = "Order " + id.charAt(id.length - 1) + ": " + customerName;
+    nameCustEl.textContent = "Order " + (parseInt(id.charAt(id.length - 1)) + 1) + ": " + customerName;
 
     appendTo.appendChild(customerContainerEl).appendChild(headerContainerEl);
     appendTo.appendChild(customerContainerEl).appendChild(customerEl);

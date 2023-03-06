@@ -7,8 +7,11 @@
     transition: color 200ms;
     font-family: Tahoma;
 }
-.dropDownItem:hover {
-    background: #EFB93C;
+
+.langFlagIcon {
+    height: 20px;
+    width: 20px;
+    margin: 5px;
 }
 
 #menuBar {
@@ -80,7 +83,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     transition: transform 300ms;
-    background-image: url(../jpg/DropDownArrowIcon.png);
+    background-image: url(../ImageAssets/DropDownArrowIcon.png);
 }
 
 #langDropDown {

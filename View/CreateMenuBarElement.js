@@ -11,12 +11,14 @@ function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, Waiter = 
     var langBtnIconEl = createElement("div", {"id": "langBtnIcon"});
     var langBtnEl = createElement("button", {"id": "langBtn", "content": "textContent"});
     langBtnEl.textContent = parameters.lang;
-    var langBtnContainerEl = createElement("div", {"id": "langBtnContainer", "onclick": "ShowLangDropDown()"}, [langBtnEl, langBtnIconEl]);
+    var langFlagIconEl = createElement("img", {"class": "langFlagIcon"});
+    var langBtnContainerEl = createElement("div", {"id": "langBtnContainer", "onclick": "ShowLangDropDown()"}, [langFlagIconEl, langBtnEl, langBtnIconEl]);
 
     var langContainerEl = createElement("div", {"id": "langContainer"}, [langBtnContainerEl, CreateMenuBarItem()]);
     var loginBtnEl = createElement("button", {"id": "loginButton", "content": "textContent"});
 
     var menuBarEl = createElement("div", {"id": "menuBar"}, [loginBtnEl, langContainerEl]);
+    SetLangIcon(langFlagIconEl);
 
     return menuBarEl;
 }
@@ -87,5 +89,21 @@ function ShowLangDropDown() {
             break;
     }
 
+    SetLangIcon();
     console.log("showing");
+}
+
+function SetLangIcon(flagIcon = document.getElementsByClassName("langFlagIcon")[0]) {
+
+    switch (parameters.lang) {
+        case("eng"):
+            flagIcon.src = "../ImageAssets/EngFlagIcon.png";
+            break;
+        case ("fra"):
+            flagIcon.src = "../ImageAssets/FraFlagIcon.png";
+            break;
+        case("indo"):
+            flagIcon.src = "../ImageAssets/IndoFlagIcon.png";
+            break;
+    }
 }

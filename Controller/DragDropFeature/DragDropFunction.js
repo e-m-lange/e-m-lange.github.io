@@ -13,23 +13,9 @@ function RemoveCustomer(customerID = "cust_0")
     for (i = 0; i < cstmrOrderListModel.length; i++){
         if (cstmrOrderListModel[i].ID == customerID) {
             const deleted = cstmrOrderListModel.splice(i, 1);
+            ReassignIds(); //Mostly helps with organisation and keeping track of the orders.
             break;
         }
-    }
-
-    //If only one customer, do some renaming if need be. Enables use of default values for parameters.
-    if (cstmrOrderListModel.length == 1 && cstmrOrderListModel[0].ID != "cust_0") {
-        var oldCustomer = cstmrOrderListModel[0];
-        var replacementOrders = [];
-
-        for (i = 0; i < oldCustomer.orders.length; i++){
-            var orderItem = {ID: "cust_0" + oldCustomer.orders[i].ID.substring(6), name: oldCustomer.orders[i].name };
-            replacementOrders.push(orderItem);
-        }
-
-        var replacementCustomer = {ID: "cust_0", cstmrName: oldCustomer.cstmrName, orders: replacementOrders}
-        cstmrOrderListModel.pop();
-        cstmrOrderListModel.push(replacementCustomer);
     }
 }
 
@@ -69,7 +55,8 @@ function RemoveItem(itemID, customerID = "cust_0"){
 //Purpose: Retrieve the customer by their ID.
 //Returns a cstmrOrderModel based on the ID.
 function RetrieveCustomer(customerID = "cust_0"){
-    var customer = cstmrOrderListModel.find(x => x.ID == customerID);
+    var customer = null;
+    customer = cstmrOrderListModel.find(x => x.ID == customerID);
     return customer;
 }
 
@@ -104,27 +91,24 @@ function SetCstmrOrderListModel(inputList){
 //Purpose: Function drag and drop passes to undo redo manager.
 function UndoRedoDragDrop(inputList, undoOrRedo)
 {
-    if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "undo"){ //To remove the redundant undoredoobject when there is only one customer, otherwise user needs to click twice
-        console.log("Extra Action");
-        setTimeout(function(){
-            Undo();
-            console.log("end timeout"); //Wait for the task to complete first before starting the next one otherwise it will not store objects in the stack corrently.
-        }, 50)
+    SetCstmrOrderListModel(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
+}
+
+//Purpose: Reassign IDs so that the orders are easier to organise.
+function ReassignIds() {
+    for (i = 0; i < RetrieveAllCustomers().length; i++) {
+        if (!RetrieveCustomer("cust_" + i)) {
+            RetrieveAllCustomers()[i].ID = CstmrIdGenerator();
+            RetrieveAllCustomers()[i].orders.forEach(x => x.ID = ItemIdGenerator(RetrieveAllCustomers()[i].ID));
+            console.log("New IDS");
+            console.log(RetrieveAllCustomers()[i].ID);
+            console.log(RetrieveAllCustomers()[i].orders);
+        }
     }
-    else if (deepEqual(RetrieveAllCustomers(), inputList) && undoOrRedo == "redo"){
-        console.log("Extra Action");
-        setTimeout(function(){
-            Redo();
-            console.log("end timeout"); //Wait for the task to complete first before starting the next one otherwise it will not store objects in the stack corrently.
-        }, 50)
-    }
-    else
-        SetCstmrOrderListModel(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
 }
 
 //Purpose: Generates the ID for the customer.
-function CstmrIdGenerator()
-{
+function CstmrIdGenerator() {
     var index = 0;
     var contains = false;
 
@@ -141,8 +125,7 @@ function CstmrIdGenerator()
 }
 
 //Purpose: Generates ID for an order item. Has the customer ID as the prefix.
-function ItemIdGenerator(customerID)
-{
+function ItemIdGenerator(customerID) {
     var index = 0;
     var contains = false;
     var listToCheck = cstmrOrderListModel.find(x => x.ID == customerID).orders;
@@ -157,28 +140,4 @@ function ItemIdGenerator(customerID)
     } while (contains == true);
 
     return customerID + "_" + index; //e.g. cust_0_1
-}
-
-//Purpose: Check equality of objects, recursive solution. Source: https://dmitripavlutin.com/how-to-compare-objects-in-javascript/
-function deepEqual(object1, object2) {
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
-    if (keys1.length !== keys2.length) { //Of course if num of keys differ, not the same. And prevents issue of checking against one another if uneven number.
-        return false;
-    }
-    for (const key of keys1) {
-        const val1 = object1[key];
-        const val2 = object2[key];
-        const areObjects = isObject(val1) && isObject(val2);
-        if (
-            areObjects && !deepEqual(val1, val2) || //Will recurse until reach end of nest.
-            !areObjects && val1 !== val2 //Once they are not of object type they can be compared.
-        ) {
-            return false;
-        }
-    }
-    return true;
-}
-function isObject(object) { //To check if is object type.
-    return object != null && typeof object === 'object';
 }

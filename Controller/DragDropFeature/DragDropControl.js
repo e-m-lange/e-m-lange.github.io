@@ -8,7 +8,7 @@
 //menuItem = used to identify items that have been classified as menu items
 //addNewCustomer = used to
 //customerItem =
-//customerContainer =
+//customerContainer = encapsulates the customer elements, allows identification of where the items are placed.
 
 //Should only have 10 orders in total
 const maxNumOrders = 10;
@@ -74,6 +74,9 @@ function AddOrderItem(target, addItemName, parent)
 {
     const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers())); //Used to save the model state before changes made for the UndoRedoManager. Clone the model, https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/.
 
+    if (document.getElementById(target).classList.contains('addNewCustomer')) //Shouldn't run this function yet if adding new customer. Add customer first THEN add the item.
+        return;
+
     //ADD ORDER ITEM: If the div has the class orderTab, items dragged here are added.
     if (document.getElementById(target).classList.contains('orderTab')){ //If the item is being dragged into the div with class orderTab
         if (TotalCstmrCount().length > 1)
@@ -107,7 +110,7 @@ function RemoveOrderItem(parent, target, itemId){
 }
 
 //Purpose: For adding a new customer.
-async function AddCustomerItem(target, addItemName){
+function AddCustomerItem(target, addItemName){
     var targetElement = document.getElementById(target).classList;
 
     if (targetElement.contains('addNewCustomer')){
@@ -116,20 +119,17 @@ async function AddCustomerItem(target, addItemName){
             document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox(getString("message customer name"), true));
             document.getElementById("defMessBox").addEventListener("MessageClosedEv", function(evt) {
                 AddCustomerWithName(evt.input, addItemName);
+                ManageListeners();
             }, false);
         }
     }
 }
 
 function AddCustomerWithName(customerName, addItemName) {
-    console.log("made customer");
     const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers()));
     var newlyAddedCstmrID = AddCustomer(customerName);
-    console.log(customerName);
-    console.log(newlyAddedCstmrID);
     AddItem(addItemName, newlyAddedCstmrID);
 
-    console.log(TotalCstmrCount());
     CstmrActionUndoRedo(oldState);
     LoadView();
 }

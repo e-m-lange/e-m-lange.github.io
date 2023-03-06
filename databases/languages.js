@@ -27,7 +27,7 @@ var languages = {
         "button fridge code explanation": "hold to view",
         "pop up order sent": "The order has been sent to our bartender",
         "string drag order": "Drag item here to order",
-        "message customer name": "Please input the name of your customer:"
+        "message customer name": "(Fra)Please input your name:"
     },
 
     fra : {
@@ -58,7 +58,7 @@ var languages = {
         "button fridge code explanation": "maintenir to voir",
         "pop up order sent": "La commande a été envoyée a notre barman",
         "string drag order": "(fra):Drag item here to order",
-        "message customer name": "(Fra)Please input the name of your customer:"
+        "message customer name": "Please input your name:"
     },
 
     indo : {
@@ -89,6 +89,6 @@ var languages = {
         "button fridge code explanation": "tekan untuk melihat",
         "pop up order sent": "Pesanan telah terkirim ke bartender kami",
         "string drag order": "Tarik item kesini untuk memesan",
-        "message customer name": "(Indo)Please input the name of your customer:"
+        "message customer name": "(Indo)Please input your name:"
     }
 }
