@@ -47,10 +47,25 @@ html, body {
     margin-left: 2%;
     margin-right: 5%;
     margin-bottom: 5%;
+    padding-bottom: 5%;
+    position: relative;
 }
 
-.custNameTxt{
+.custNameTxt {
 
+}
+
+.allCustOrderSumTxt {
+    font-family: Tahoma;
+    margin-right: 35px;
+}
+
+.custOrderSumTxt {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 10px;
 }
 
 .editCustomerName {
@@ -159,6 +174,7 @@ html, body {
 #optionZone {
     height: 23%;
     padding-top: 2%;
+    text-align: right;
 }
 
 #orderBtn {

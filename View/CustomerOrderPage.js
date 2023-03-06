@@ -18,9 +18,10 @@ function CreatePage(){
     var addCustomerEl = createElement("div", {"id": "addCustomerZone", "class": "addNewCustomer", "content": "textContent"});
     var horizLineEl = createElement("div", {"class": "horizLine"});
     var orderBtnEl = createElement("button", {"id": "orderBtn", "content": "textContent"});
+    var allCustOrderSumTxtEl = createElement("label", {"class": "allCustOrderSumTxt"});
 
     var orderZoneEl = createElement("div", {"id": "orderZone", "class": "orderTab orderZoneOpened"});
-    var optionZoneEl = createElement("div", {"id": "optionZone"}, [addCustomerEl, horizLineEl, orderBtnEl]);
+    var optionZoneEl = createElement("div", {"id": "optionZone"}, [allCustOrderSumTxtEl, addCustomerEl, horizLineEl, orderBtnEl]);
     //--------------------------------------------------------------------------------------//
     var columnRightEl = createElement("div", {"class": "columnRight"}, [orderZoneEl, optionZoneEl]);
     var labelEl = createElement("label", {"id": "orderLabel", "content": "textContent"});
@@ -144,6 +145,7 @@ function LoadView(){
         for (i = 0; i < RetrieveCstmrItems().length; i++) {
             document.getElementById("orderZone").appendChild(CreateItem(RetrieveCstmrItems()[i].name, RetrieveCstmrItems()[i].ID, "orderItem"));
         }
+        document.getElementById("optionZone").getElementsByClassName("allCustOrderSumTxt")[0].textContent = "Total: $XX"; //If only one item, display it this way
     }
 
     //If there are no items in the order zone, display this text.
@@ -165,6 +167,7 @@ function LoadViewMultipleCustomer(){ //If there are more than one customer, this
     document.getElementById("orderZone").style.paddingRight = "0px";
     document.getElementById("orderZone").style.height = "70%";
 
+
     for (i = 0; i < RetrieveAllCustomers().length; i++) {
         CreateCustomer(RetrieveAllCustomers()[i].cstmrName, RetrieveAllCustomers()[i].ID, document.getElementById("orderZone")); //Create Customer
         var customerId = RetrieveAllCustomers()[i].ID;
@@ -173,6 +176,10 @@ function LoadViewMultipleCustomer(){ //If there are more than one customer, this
             var addElementTo = $(".customerItem#" + customerId) //first find the ones with customer class, then identify with ID
             addElementTo.append(CreateItem(RetrieveCstmrItems(customerId)[j].name, RetrieveCstmrItems(customerId)[j].ID, "orderItem"));
         }
+        //Adding sum text
+        var custOrderSumTxtEl = createElement("label", {"class": "custOrderSumTxt"});
+        custOrderSumTxtEl.textContent = "Total: $XX"; //NEED TO REPLACE!
+        addElementTo.append(custOrderSumTxtEl);
     }//https://stackoverflow.com/questions/9681601/how-can-i-count-the-number-of-elements-with-same-class
 }
 
