@@ -13,7 +13,7 @@ function CreatePage(){
     var undoRedoBtnEl = createElement("div", {"id": "undoRedoBtn"}, [undoBtnEl, vertiLineEl, redoBtnEl]);
 
     var filterDivEl = createElement("div", {"id": "filters"}, [undoRedoBtnEl]);
-    var menuZoneEl = createElement("div", {"id": "menuZone", "class": "menu"});
+    var menuZoneEl = createElement("div", {"id": "menuZone", "class": "menuTab"});
     //--------------------------------------------------------------------------------------//
     var addCustomerEl = createElement("div", {"id": "addCustomerZone", "class": "addNewCustomer", "content": "textContent"});
     var horizLineEl = createElement("div", {"class": "horizLine"});
@@ -28,7 +28,7 @@ function CreatePage(){
 
     var columnAllEl = createElement("div",{"class": "column"}, [columnRightEl, labelEl]);
     //--------------------------------------------------------------------------------------//
-    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); console.log(this.getAttribute("langType")); CustomerSetTextLabels(); LoadView();} ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
+    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); console.log(this.getAttribute("langType")); CustomerSetTextLabels(); LoadView(); ManageListeners();} ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
     var mainContentEl = createElement("div", {"class": "mainContent"}, [filterDivEl, menuZoneEl, columnAllEl, CreateMenuBar()]);
 
     document.body.appendChild(mainContentEl);
@@ -74,10 +74,12 @@ function HoverOrderTab(ev){
 
     setTimeout(function(){
         for (let x of rightColumn.children) {
-            if (x.id == "orderZone" && x.classList.contains("orderZoneOpened"))
+            if (x.id == "orderZone" && x.classList.contains("orderZoneOpened")) {
                 x.style.display = "flex";
-            else
+            }
+            else {
                 x.style.display = "block";
+            }
         }
         rightColumn.addEventListener("mouseleave", UnhoverOrderTab);
     }, 550);
@@ -118,8 +120,9 @@ function CustomerControlInit(){
     rightColumn.addEventListener("dragover", HoverOrderTab);
 
     //If is VIP, just hide the add customer part
-    if (isVIP)
+    if (isVIP) {
         $(".addNewCustomer").hide();
+    }
 
     //Fill up with some items.
     for (i = 0; i < 10; i++){
@@ -136,8 +139,9 @@ function LoadView(){
     $("#orderZone").empty(); //https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20detach()%20method.
 
     //If there are more than one customer, this needs to be presented visually.
-    if (TotalCstmrCount() > 1)
+    if (TotalCstmrCount() > 1) {
         LoadViewMultipleCustomer();
+    }
 
     //For each item in a customer, display them.
     else {
@@ -145,7 +149,7 @@ function LoadView(){
         for (i = 0; i < RetrieveCstmrItems().length; i++) {
             document.getElementById("orderZone").appendChild(CreateItem(RetrieveCstmrItems()[i].name, RetrieveCstmrItems()[i].ID, "orderItem"));
         }
-        document.getElementById("optionZone").getElementsByClassName("allCustOrderSumTxt")[0].textContent = "Total: $XX"; //If only one item, display it this way
+        document.getElementById("optionZone").getElementsByClassName("allCustOrderSumTxt")[0].textContent = getString("string total order") + ": $XX"; //If only one item, display it this way
     }
 
     //If there are no items in the order zone, display this text.
@@ -178,7 +182,7 @@ function LoadViewMultipleCustomer(){ //If there are more than one customer, this
         }
         //Adding sum text
         var custOrderSumTxtEl = createElement("label", {"class": "custOrderSumTxt"});
-        custOrderSumTxtEl.textContent = "Total: $XX"; //NEED TO REPLACE!
+        custOrderSumTxtEl.textContent = getString("string total order") + ": $XX"; //NEED TO REPLACE!
         addElementTo.append(custOrderSumTxtEl);
     }//https://stackoverflow.com/questions/9681601/how-can-i-count-the-number-of-elements-with-same-class
 }
@@ -201,8 +205,9 @@ function CreateItem(text, id, className)
     divItem.textContent = text;
     divItem.id = id; //allows for removal later
 
-    if (className != null)
+    if (className != null) {
         divItem.className = className;//to allow for dropping into the order tab ("menuItem") OR to prevent deletion upon being dropped on top of each other in the order tab ("order tab")
+    }
 
     return divItem;
 }

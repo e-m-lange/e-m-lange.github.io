@@ -76,7 +76,7 @@ html, body {
     margin-left: 3%;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../ImageAssets/EditIcon.png");
+    background-image: url("../jpg/EditIcon.png");
     transition: background-color 200ms;
 }
 
@@ -224,7 +224,7 @@ html, body {
     background: transparent;
     border-style: none;
 
-    background-image: url("../ImageAssets/UndoArrowLeftIcon.png");
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;
@@ -236,7 +236,7 @@ html, body {
     border-bottom-left-radius: 15px;
     transition: background-color 100ms ease-out;
 
-    background-image: url("../ImageAssets/UndoArrowLeftIcon.png");
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;
@@ -245,7 +245,7 @@ html, body {
 #undoBtn:active {
     background: #EFB93C;
 
-    background-image: url("../ImageAssets/UndoArrowLeftIcon.png");
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;
@@ -256,7 +256,7 @@ html, body {
     background: transparent;
     border-style: none;
 
-    background-image: url("../ImageAssets/UndoArrowRightIcon.png");
+    background-image: url("../jpg/UndoArrowRightIcon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;
@@ -268,7 +268,7 @@ html, body {
     border-bottom-right-radius: 15px;
     transition: background-color 100ms ease-out;
 
-    background-image: url("../ImageAssets/UndoArrowRightIcon.png");
+    background-image: url("../jpg/UndoArrowRightIcon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;
@@ -277,7 +277,7 @@ html, body {
 #redoBtn:active {
     background: #EFB93C;
 
-    background-image: url("../ImageAssets/UndoArrowRightIcon.png");
+    background-image: url("../jpg/UndoArrowRightIcon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;

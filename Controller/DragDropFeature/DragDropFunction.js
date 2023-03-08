@@ -70,10 +70,20 @@ function TotalCstmrCount(){
     return cstmrOrderListModel.length;
 }
 
+function SumOfCstmrOrder(customer= "cust_0"){
+    RetrieveCustomer(customer).orders; //INCOMPLETE need to know what the drink card will be...
+}
+
 //Purpose: Returns the order items of a given customer.
 function RetrieveCstmrItems(customerID = "cust_0"){
     var items = cstmrOrderListModel.find(x => x.ID == customerID).orders;
     return items;
+}
+
+//Purpose: Returns a specific item from a specific customer.
+function RetrieveCstmrSingleItem(itemID, customerID = "cust_0"){
+    var orderItem = RetrieveCstmrItems(customerID).find(x => x.ID == itemID); //WILL NEED TO BE EDITED, WAITING FOR DRINK CARD
+    return orderItem;
 }
 
 //Purpose: Returns the total number of orders of a given customer.
@@ -100,9 +110,6 @@ function ReassignIds() {
         if (!RetrieveCustomer("cust_" + i)) {
             RetrieveAllCustomers()[i].ID = CstmrIdGenerator();
             RetrieveAllCustomers()[i].orders.forEach(x => x.ID = ItemIdGenerator(RetrieveAllCustomers()[i].ID));
-            console.log("New IDS");
-            console.log(RetrieveAllCustomers()[i].ID);
-            console.log(RetrieveAllCustomers()[i].orders);
         }
     }
 }

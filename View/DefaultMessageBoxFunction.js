@@ -12,8 +12,9 @@ function CreateMessageBox(message, allowInput = false){
     textEl.textContent = message;
     var messTxtContainEl = createElement("div", {"style": "height: 35%"}, [textEl]);
 
-    if (allowInput == false) //If we want to include a box for users to input something.
+    if (allowInput == false) { //If we want to include a box for users to input something.
         var messBoxContainEl = createElement("div", {"id": "defMessBox"}, [messTxtContainEl, messBtnContainEl]);
+    }
     else {
         var inputBoxEl = createElement("input", {"id": "defMessInput"});
         var messBoxContainEl = createElement("div", {"id": "defMessBox"}, [messTxtContainEl, inputBoxEl, messBtnContainEl]);
@@ -31,6 +32,7 @@ function CreateMessageBox(message, allowInput = false){
     return containerAllEl;
 }
 
+//Purpose: Will set the message shown in the message box.
 function SetMessage(message = "Default message."){
     $(".messageTxt").text(message);
 }
@@ -44,8 +46,9 @@ function UnpressBtn(ev){
     var messageBox = document.getElementById("defMessBoxAll");
 
     var input = document.getElementById("defMessInput").value;
-    if (input && input.length > 0 && input.trim()) //Make sure it's valid before saving it.
+    if (input && input.length > 0 && input.trim()) { //Make sure it's valid before saving it.
         messageClosed.input = input; //To pass on the string user inputs so it can be saved.
+    }
 
     ev.target.style.transition = "background-color 500ms";
 

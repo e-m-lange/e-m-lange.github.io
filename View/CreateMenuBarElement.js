@@ -47,7 +47,7 @@ function CreateMenuBarItem() {
         //If it isn't the selected language...
         if (lang != parameters.lang){
             var item = createElement("div", {"class": "dropDownItem", "content": "textContent", "langType": lang});
-            item.after('background: url("../ImageAssets/DropDownArrowIcon.png")');
+            item.after('background: url("./jpg/DropDownArrowIcon.png")');
             item.textContent = languages[lang]["language"]; //We want to get all the languages.
             langDropDownEl.appendChild(item);
             //Make sure there is a function to attach as a listener.
@@ -97,13 +97,13 @@ function SetLangIcon(flagIcon = document.getElementsByClassName("langFlagIcon")[
 
     switch (parameters.lang) {
         case("eng"):
-            flagIcon.src = "../ImageAssets/EngFlagIcon.png";
+            flagIcon.src = "./jpg/EngFlagIcon.png";
             break;
         case ("fra"):
-            flagIcon.src = "../ImageAssets/FraFlagIcon.png";
+            flagIcon.src = "./jpg/FraFlagIcon.png";
             break;
         case("indo"):
-            flagIcon.src = "../ImageAssets/IndoFlagIcon.png";
+            flagIcon.src = "./jpg/IndoFlagIcon.png";
             break;
     }
 }
