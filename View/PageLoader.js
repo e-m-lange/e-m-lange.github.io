@@ -22,7 +22,7 @@ function SetPage() {
 
 function ClearPage() {
     for (i = 0; i < document.body.children.length; i++)
-        document.body.children[i].remove();
+        document.body.lastChild.remove();
 }
 
 function PageLoadCustomerOrder() {
