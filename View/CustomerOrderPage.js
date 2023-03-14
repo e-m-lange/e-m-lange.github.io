@@ -1,16 +1,6 @@
-$(document).ready(function(){
-    CreatePage();
-    CustomerSetTextLabels();
-    ResetUndoRedo(); //Since user is opening another page
-})
-
-function CreatePage(){
-    //Separated to make it easier to understand...
+function CreateCstmrOrderPage(){
     //--------------------------------------------------------------------------------------//
-    var undoBtnEl = createElement("button", {"id": "undoBtn", "onclick": "Undo()"});
-    var vertiLineEl = createElement("div", {"class": "vertiLine"});
-    var redoBtnEl = createElement("button", {"id": "redoBtn", "onclick": "Redo()"});
-    var undoRedoBtnEl = createElement("div", {"id": "undoRedoBtn"}, [undoBtnEl, vertiLineEl, redoBtnEl]);
+    var undoRedoBtnEl = CreateUndoRedoBtn();
 
     var filterDivEl = createElement("div", {"id": "filters"}, [undoRedoBtnEl]);
     var menuZoneEl = createElement("div", {"id": "menuZone", "class": "menuTab"});
@@ -28,14 +18,14 @@ function CreatePage(){
 
     var columnAllEl = createElement("div",{"class": "column"}, [columnRightEl, labelEl]);
     //--------------------------------------------------------------------------------------//
-    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); console.log(this.getAttribute("langType")); CustomerSetTextLabels(); LoadView(); ManageListeners();} ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
+    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); CstmrOrderSetTextLabels(); LoadView(); CstmrManageListeners();} ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
     var mainContentEl = createElement("div", {"class": "mainContent"}, [filterDivEl, menuZoneEl, columnAllEl, CreateMenuBar()]);
 
     document.body.appendChild(mainContentEl);
 
     CustomerControlInit();
 }
-function CustomerSetTextLabels(){
+function CstmrOrderSetTextLabels(){
     document.getElementById("loginButton").textContent = getString("button login");
     document.getElementById("addCustomerZone").textContent = "+ " + getString("string new customer");
     document.getElementById("orderBtn").textContent = getString("string order menu");
@@ -110,11 +100,11 @@ function CustomerControlInit(){
 
     //Subscribing functions to the drag drop events:
     menuZone.addEventListener("dragover", (event) => {event.preventDefault();} );
-    menuZone.addEventListener("drop", Drop );
+    menuZone.addEventListener("drop", CstmrDrop );
     orderZone.addEventListener("dragover", (event) => {event.preventDefault();} );
-    orderZone.addEventListener("drop", Drop );
+    orderZone.addEventListener("drop", CstmrDrop );
     customerZone.addEventListener("dragover", (event) => {event.preventDefault();} );
-    customerZone.addEventListener("drop", Drop );
+    customerZone.addEventListener("drop", CstmrDrop );
     rightColumn.addEventListener("mouseover", HoverOrderTab);
     rightColumn.addEventListener("mouseleave", UnhoverOrderTab);
     rightColumn.addEventListener("dragover", HoverOrderTab);
@@ -130,6 +120,7 @@ function CustomerControlInit(){
         element.appendChild(CreateItem("Temp Item" + i, "cust_-1", "menuItem")); //-1 since it is basically unassigned atm
     }
 
+    ClearAllEmptyCustomers();
     UnhoverOrderTab();
     LoadView();
 }
@@ -201,7 +192,7 @@ function CreateItem(text, id, className)
     divItem.style.minWidth = "100px";
     divItem.style.backgroundColor = "#E4E4E4";
     divItem.draggable = true;
-    divItem.ondragstart = Drag;
+    divItem.ondragstart = CstmrDrag;
     divItem.textContent = text;
     divItem.id = id; //allows for removal later
 
@@ -216,7 +207,7 @@ function CreateItem(text, id, className)
 function CreateCustomer(customerName, id = "cust_0", appendTo)
 {
     var editCustNameEl = createElement("button", {"class": "editCustomerName", "id": id});
-    editCustNameEl.onclick = function() { EditCustomerNameCtrl(id); };
+    editCustNameEl.onclick = function() { CstmrEditCustomerNameCtrl(id); };
     var nameCustEl = createElement("p", {"class": "custNameTxt"});
     var headerContainerEl = createElement("div", {"class": "custContainHeader"}, [nameCustEl, editCustNameEl]);
     var customerEl = createElement("div", {"class": "customerItem", "id": id});

@@ -19,6 +19,11 @@ function RemoveCustomer(customerID = "cust_0")
     }
 }
 
+//Purpose: Remove all customers from the list.
+function RemoveAllCustomers() {
+    cstmrOrderListModel.length = 0; //https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+}
+
 function EditCustomerName(customerID, newName = "Crewmate"){
     for (i = 0; i < cstmrOrderListModel.length; i++){
         if (cstmrOrderListModel[i].ID == customerID) {
@@ -45,10 +50,29 @@ function RemoveItem(itemID, customerID = "cust_0"){
             break;
         }
     }
+}
 
-    if (cstmrOrderListModel.length > 1 && RetrieveCstmrItems(customerID).length == 0) //If customer has no more items, remove that customer. Does this until 1 customer left (default)
+function GetParentIDOfItem(itemID) {
+    for (i = 0; i < cstmrOrderListModel.length; i++) {
+        for (j = 0; j < cstmrOrderListModel[i].orders.length; j++) {
+            if (cstmrOrderListModel[i].orders[j].ID == itemID) {
+                return cstmrOrderListModel[i].ID;
+            }
+        }
+    }
+}
+
+function ClearEmptyCustomer(customerID) {
+    //If customer has no more items, remove that customer. Does this until 1 customer left (default)
+    if (cstmrOrderListModel.length > 1 && RetrieveCstmrItems(customerID).length == 0)
     {
         RemoveCustomer(customerID);
+    }
+}
+
+function ClearAllEmptyCustomers() {
+    for (i = 0; i < cstmrOrderListModel.length; i++) {
+        ClearEmptyCustomer(cstmrOrderListModel[i].ID);
     }
 }
 
@@ -86,6 +110,21 @@ function RetrieveCstmrSingleItem(itemID, customerID = "cust_0"){
     return orderItem;
 }
 
+function RetrieveCstmrAllItems() {
+    var allOrders = [];
+
+    for (i = 0; i < TotalCstmrCount(); i++) {
+        var customer = RetrieveAllCustomers()[i];
+        for (j = 0; j < customer.orders.length; j++) {
+            var order = JSON.parse(JSON.stringify(customer.orders[j]));
+            allOrders.push(order);
+        }
+    }
+
+    console.log(allOrders);
+    return allOrders;
+}
+
 //Purpose: Returns the total number of orders of a given customer.
 function TotalCstmrOrderCount(customerID = "cust_0"){
     var itemCount = cstmrOrderListModel.find(x => x.ID == customerID).orders.length;
@@ -93,7 +132,7 @@ function TotalCstmrOrderCount(customerID = "cust_0"){
 }
 
 //Purpose: Replaces the current cstmrOrderListModel with a new cstmrOrderListModel;
-function SetCstmrOrderListModel(inputList){
+function SetCstmrOrderListModelState(inputList){
     cstmrOrderListModel = [];
     cstmrOrderListModel = JSON.parse(JSON.stringify(inputList));
 }
@@ -101,7 +140,21 @@ function SetCstmrOrderListModel(inputList){
 //Purpose: Function drag and drop passes to undo redo manager.
 function UndoRedoDragDrop(inputList, undoOrRedo)
 {
-    SetCstmrOrderListModel(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
+    SetCstmrOrderListModelState(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
+}
+
+function UndoRedoUnassigned(inputList) {
+    SetUnassignedOrders(inputList);
+}
+
+//Move all orders onto one customer, thus creating a single order.
+function CreateSingleOrder() {
+    var replacementList = RetrieveCstmrAllItems();
+    RemoveAllCustomers();
+    var replacementCstmrId = AddCustomer();
+    RetrieveCustomer(replacementCstmrId).orders = replacementList;
+    replacementList.forEach(x => x.ID = ItemIdGenerator(replacementCstmrId));
+    ReassignIds();
 }
 
 //Purpose: Reassign IDs so that the orders are easier to organise.
@@ -147,4 +200,55 @@ function ItemIdGenerator(customerID) {
     } while (contains == true);
 
     return customerID + "_" + index; //e.g. cust_0_1
+}
+
+function ItemIdGeneratorUnassigned() {
+    var index = 0;
+    var contains = false;
+    var listToCheck = unassignedOrderModel.orders;
+
+    do {
+        if (listToCheck.find(x => x.ID == unassignedOrderModel.ID + "_" + index) != null) {
+            contains == true;
+            index++;
+        }
+        else
+            contains = false;
+    } while (contains == true);
+
+    return unassignedOrderModel.ID + "_" + index;
+}
+
+//Functions dealing with the unassigned model.
+function AddItemToUnassigned(itemName) { //Will need, for example, drink item ID later.
+    unassignedOrderModel.orders.push();
+    var itemToAdd = { id: ItemIdGeneratorUnassigned(), name: itemName };
+    unassignedOrderModel.orders.push(itemToAdd);
+
+    return itemToAdd;
+}
+
+function RemoveItemFromUnassigned(itemID) {
+    for (i = 0; i < unassignedOrderModel.orders.length; i++) {
+        if (unassignedOrderModel.orders[i].id == itemID) {      //Find the item
+            unassignedOrderModel.orders.splice(i, 1); //and remove it
+        }
+    }
+}
+function RetrieveUnassignedAll() {
+    return unassignedOrderModel;
+}
+
+function RetrieveUnassignedOrders() {
+    return unassignedOrderModel.orders;
+}
+
+function ClearUnassignedOrders() {
+    for (i = unassignedOrderModel.orders.length - 1; i >= 0; i--) {
+        unassignedOrderModel.orders[i].remove();
+    }
+}
+
+function SetUnassignedOrders(input) {
+    unassignedOrderModel = input;
 }

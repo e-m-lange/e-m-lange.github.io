@@ -57,3 +57,13 @@
     width: 100%;
     background: rgba(0, 0, 0, 0.35);
 }
+
+#testTool {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 80px;
+    width: 80px;
+    height: 50px;
+    background: white;
+}

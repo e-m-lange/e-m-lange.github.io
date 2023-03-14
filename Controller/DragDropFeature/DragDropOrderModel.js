@@ -1,6 +1,9 @@
+//Model of the current session. Used in the order pages.
+
 //Default values.
 const defaultCustomerID = "cust_0";
 const defaultCustomerName = "Crewmate";
+var currentOrderID;
 
 //This will hold a list of the orders.
 var orderModel = [];
@@ -17,3 +20,13 @@ var cstmrOrderModel = {
 //1 customer is the same as doing a group order, but once there are
 //several customers there is the need to split them visually
 var cstmrOrderListModel = [cstmrOrderModel];
+
+//OTHER:
+//Will hold a temporary list of orders that are not assigned to any specific customer. Should not be saved in the final order!
+var unassigned = [];
+
+var unassignedOrderModel = {
+    ID: "unassignedOrderModel",
+    name: "Unassigned",
+    orders: unassigned,
+}

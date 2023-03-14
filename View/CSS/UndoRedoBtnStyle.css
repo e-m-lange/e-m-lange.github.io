@@ -1,0 +1,78 @@
+#undoRedoBtn {
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #E4E4E4;
+    display: flex;
+    width: fit-content;
+    border-radius: 15px;
+}
+
+#undoBtn {
+    padding: 28px;
+    background: transparent;
+    border-style: none;
+
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#undoBtn:hover {
+    background: #B3D0AE;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: background-color 100ms ease-out;
+
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#undoBtn:active {
+    background: #EFB93C;
+
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#redoBtn {
+    padding: 28px;
+    background: transparent;
+    border-style: none;
+
+    background-image: url("../jpg/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#redoBtn:hover {
+    background: #B3D0AE;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transition: background-color 100ms ease-out;
+
+    background-image: url("../jpg/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#redoBtn:active {
+    background: #EFB93C;
+
+    background-image: url("../jpg/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.vertiLine {
+    border-left: 2px solid rgb(80, 80, 78);
+    margin: auto;
+    height: 20px;
+}

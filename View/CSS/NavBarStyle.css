@@ -1,0 +1,40 @@
+.navItemTxt {
+    font-size: 17px;
+    font-family: Tahoma;
+}
+
+.navItem {
+    text-align: center;
+    position: relative;
+    height: 100%;
+    width: 33.333%;
+    display: inline-block;
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    border-style: none;
+    background: none;
+}
+
+.navItem:hover {
+    background: #B3D0AE;
+}
+
+.horizLineNav {
+    border-bottom: 3px solid rgb(0, 0, 0);
+    margin: auto;
+    transform: translate(0, 10px);
+    width: 50%;
+}
+
+#navBar {
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    height: 77px;
+    min-width: 300px;
+    width: 30%;
+    position: absolute;
+    right: 35%;
+    left: 35%;
+    bottom: 0;
+    background: #D4E4DE;
+}

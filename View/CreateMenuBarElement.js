@@ -2,11 +2,7 @@ let changeLangAfterFunc = null; //Save the function to run when the language is 
 function SetChangeLangAfterFunc(func) {
     changeLangAfterFunc = func;
 }
-function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, Waiter = 2, Owner = 3
-    switch (userType){ //This will be used in the future as the different user types have different elements.
-        case 0:
-    }
-
+function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, General Staff = 2, Owner = 3
     //Creating the html elements:
     var langBtnIconEl = createElement("div", {"id": "langBtnIcon"});
     var langBtnEl = createElement("button", {"id": "langBtn", "content": "textContent"});
@@ -19,6 +15,11 @@ function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, Waiter = 
 
     var menuBarEl = createElement("div", {"id": "menuBar"}, [loginBtnEl, langContainerEl]);
     SetLangIcon(langFlagIconEl);
+
+    switch (userType){ //This will be used in the future as the different user types have different elements.
+        case 2:
+            break;
+    }
 
     return menuBarEl;
 }
@@ -47,7 +48,7 @@ function CreateMenuBarItem() {
         //If it isn't the selected language...
         if (lang != parameters.lang){
             var item = createElement("div", {"class": "dropDownItem", "content": "textContent", "langType": lang});
-            item.after('background: url("./jpg/DropDownArrowIcon.png")');
+            item.after('background: url("../jpg/DropDownArrowIcon.png")');
             item.textContent = languages[lang]["language"]; //We want to get all the languages.
             langDropDownEl.appendChild(item);
             //Make sure there is a function to attach as a listener.
@@ -97,13 +98,13 @@ function SetLangIcon(flagIcon = document.getElementsByClassName("langFlagIcon")[
 
     switch (parameters.lang) {
         case("eng"):
-            flagIcon.src = "./jpg/EngFlagIcon.png";
+            flagIcon.src = "jpg/EngFlagIcon.png";
             break;
         case ("fra"):
-            flagIcon.src = "./jpg/FraFlagIcon.png";
+            flagIcon.src = "jpg/FraFlagIcon.png";
             break;
         case("indo"):
-            flagIcon.src = "./jpg/IndoFlagIcon.png";
+            flagIcon.src = "jpg/IndoFlagIcon.png";
             break;
     }
 }
