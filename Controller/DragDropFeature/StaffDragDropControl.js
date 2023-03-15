@@ -59,7 +59,7 @@ function StaffDoAction(action, parent, target, itemName, itemId) {
             }, false);
             break;
         case "RemoveCustomer":
-            if (selectedCustomer != null) {
+            if (selectedCustomer != null && TotalCstmrCount() > 1) { //Don't allow for deletion if only one customer left.
                 RemoveCustomer(selectedCustomer);
                 LoadMultipleCstmrTabs();
                 SetSelectedCustomer(null);
