@@ -115,9 +115,11 @@ function CustomerControlInit(){
     }
 
     //Fill up with some items.
-    for (i = 0; i < 10; i++){
+    var beverages = allBeverages();
+    for (i = 0; i < beverages.length; i++){
         const element = document.getElementById("menuZone");
-        element.appendChild(CreateItem("Temp Item" + i, "cust_-1", "menuItem")); //-1 since it is basically unassigned atm
+        //element.appendChild(CreateItem("Temp Item" + i, "cust_-1", "menuItem")); //-1 since it is basically unassigned atm
+        element.appendChild(CreateItem(beverages[i]));
     }
 
     ClearAllEmptyCustomers();
@@ -179,7 +181,7 @@ function LoadViewMultipleCustomer(){ //If there are more than one customer, this
 }
 
 //Purpose: Creates a placeholder item. SHOULD BE DELETED ONCE THE DRINK CARDS HAVE BEEN MADE.
-function CreateItem(text, id, className)
+/*function CreateItem(text, id, className)
 {
     var divItem = document.createElement("div");
     //Temporary. This can easily be changed by setting a class / a function.
@@ -201,7 +203,7 @@ function CreateItem(text, id, className)
     }
 
     return divItem;
-}
+}*/
 
 //Purpose: Create placeholder customer container.
 function CreateCustomer(customerName, id = "cust_0", appendTo)
