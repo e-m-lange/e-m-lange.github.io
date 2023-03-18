@@ -34,7 +34,6 @@ function VIPUsers() {
 
     for (i = 0; i < users.length; i++) {
         // We check if the user is VIP
-        console.log(users[i]);
         if (getCategoryUser(users[i]) == 3) collector.push(users[i]);
     };
 

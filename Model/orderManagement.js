@@ -1,5 +1,5 @@
 // Modify the credits of the user
-function UpdateVIPcredits(user_id, number){
+function Updatecredits(user_id, number){
     var i=0;
     // Search for the corresponding id in the database
     while(user_id != users[i].user_id) i++;
@@ -7,3 +7,5 @@ function UpdateVIPcredits(user_id, number){
     // modify the credits number
     accounts[i].creditSEK = accounts[i].creditSEK + number;
 }
+
+//delete order older that 24h
