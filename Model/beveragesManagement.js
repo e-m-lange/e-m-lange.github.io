@@ -38,7 +38,7 @@ function filterBeverageCategory(beverages, category) {
     for (i = 0; i < beverages.length; i++) {
         //We check if the beverage is from the selected category
         if (getCategoryBeverage(beverages[i]) == category){
-            collector.push(getInfoBeverage(beverages[i]));
+            collector.push(beverages[i]);
         }
     };
     
@@ -52,15 +52,35 @@ function filterBeverageStrength(beverages, strength_min, strength_max) {
     for (i = 0; i < beverages.length; i++) {
         // We check if the percentage alcohol strength within the given strength range
         if (getAlcoholBeverage(beverages[i]) > strength_min && getAlcoholBeverage(beverages[i]) < strength_max) {
-            collector.push(getInfoBeverage(beverages[i]));
+            collector.push(beverages[i]);
         };
     };
 
     return collector;
 }
 
-console.log(allBeverages());
-console.log(filterBeverageCategory(allBeverages(), getTypesBeverage()[1]));
+// Returns the beverage infomation that does not contain the allergies from a list of beverages
+function filterBeverageAllergies(beverages, allergies) {
+    var collector = [];
 
-//TO DO allergies
+    for (i = 0; i < beverages.length; i++) {
+        var checkmark = 0; // Check the number of allergies the drink pass
 
+        // We check if the drink contains gluten and one allergy is gluten
+        if (!getGlutenBeverage(beverages[i]) && allergies.includes("gluten")) checkmark++;
+
+        // We check if the drink contains nuts and one allergy is nuts
+        if (!getNutsBeverage(beverages[i]) && allergies.includes("nuts")) checkmark++;
+
+        // We check if the drink contains lactose and one allergy is lactose
+        if (!getLactoseBeverage(beverages[i]) && allergies.includes("lactose")) checkmark++;
+
+        if (checkmark == allergies.length) collector.push(beverages[i]);
+    };
+
+    return collector;
+}
+
+var b = filterBeverageAllergies(allBeverages(), ["nuts","lactose","gluten"]);
+var a = filterBeverageStrength(allBeverages(), 10,45);
+console.log(filterBeverageAllergies(a, ["lactose","gluten"]));
