@@ -8,7 +8,7 @@ function CreateItem(beverage){
   var icon = document.createElement("img", {"href": "./jpg/DrinksIcon.jpg", "height": "20px", "width" : "10px", "class": "img_card"});
   var text = document.createElement("div", {"class": "text_card"}, [name,category,country,price]);
   
-  var info_popup = document.createElement("p", {"class": "info_popup_card"}, [/*getInfoBeverage(beverage)*/]);
+  var info_popup = document.createElement("p", {"class": "info_popup_card"}, [beverage]);
   var info = document.createElement("div", {"class":"info_card"}, [getString("button info"), info_popup]);
   
   var card = document.createElement("div", {"class": "item"}, [info, icon, text]);

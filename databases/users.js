@@ -1,4 +1,4 @@
-var VIP = [ // credentials 0 means waiter, crendential 1 means manager, credentials 3 means VIP
+var users = [ // credentials 0 means waiter, crendential 1 means manager, credentials 3 means VIP
     {
         "user_id": "2",
         "credentials": "1",

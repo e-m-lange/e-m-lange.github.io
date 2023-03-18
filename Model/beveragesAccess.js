@@ -16,6 +16,11 @@ function getBeveragefromDrinksInformation(beverage_id){
     return drinks_information[i];
 }
 
+// Return the id of the beverage
+function getIdBeverage(beverage){
+    return beverage.articleid;
+}
+
 // Return the name of the beverage
 function getNameBeverage(beverage){
     if (beverage.name2) return beverage.name + ", " + beverage.name2;
@@ -100,11 +105,13 @@ function getNutsBeverage(beverage){
 }
 
 // Return all informations relative to the beverage
-function getInfoBeverage(beverage_id){
+// Used once to generate a proper beverage object, then use the object
+function createInfoBeverage(beverage_id){
     var beverage = getBeveragefromDrinks(beverage_id);
     var info = getBeveragefromDrinksInformation(beverage_id);
 
-    return { "name" : getNameBeverage(beverage),
+    return { "articleid" : getIdBeverage(beverage),
+        "name" : getNameBeverage(beverage),
         "category" : getCategoryBeverage(beverage),
         "strength" : getAlcoholBeverage(beverage),
         "producer" : getProducerBeverage(beverage),
