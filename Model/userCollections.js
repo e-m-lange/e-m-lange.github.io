@@ -40,3 +40,5 @@ function VIPUsers() {
     return collector;
 }
 
+//console.log(allUsers());
+

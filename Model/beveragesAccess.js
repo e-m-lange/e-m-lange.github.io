@@ -1,6 +1,5 @@
 // Return the object referenced by the id from the drinks database
 function getBeveragefromDrinks(beverage_id){
-    var i=0;
     // Search for the corresponding id in the database by ChatGPT
     const beverage = drinks.find(beverage => beverage.articleid == beverage_id);
 
@@ -10,7 +9,6 @@ function getBeveragefromDrinks(beverage_id){
 
 // Return the object referenced by the id from the drinks_information database
 function getBeveragefromDrinksInformation(beverage_id){
-    var i=0;
     // Search for the corresponding id in the database by ChatGPT
     const beverage = drinks_information.find(beverage => beverage.articleid == beverage_id);
     
@@ -235,7 +233,7 @@ function getNutsBeverage(beverage){
 }
 
 // Return all informations relative to the beverage from an ID
-// Used to generate a proper beverage object, then use the object
+// Used to generate a proper beverage object
 function getInfoBeverage(beverage_id){
     var beverage = getBeveragefromDrinks(beverage_id);
     var info = getBeveragefromDrinksInformation(beverage_id);
@@ -255,7 +253,8 @@ function getInfoBeverage(beverage_id){
         "tannin": getTanninBeverage(info),
         "gluten": getGlutenBeverage(info),
         "lactose": getLactoseBeverage(info),
-        "nuts": getNutsBeverage(info)} ;
+        "nuts": getNutsBeverage(info)
+    } ;
 }
 
 // Return the list of all beverage types in the database

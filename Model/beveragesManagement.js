@@ -21,3 +21,5 @@ function updateBeverageStock(beverage, number){
     // Modify the stock number
     drinks_information[i].stock += number;
 }
+
+console.log(allBeverages()[0]);

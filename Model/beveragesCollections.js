@@ -132,4 +132,4 @@ function BeveragesToRestock(beverages) {
     return collector;
 }
 
-//console.log(filterBeverageCategory(getTypesBeverage()[1]));
+//console.log(allBeverages());
