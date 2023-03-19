@@ -18,6 +18,13 @@ function CstmrDrag(ev){
     ev.dataTransfer.setData("string", ev.target.parentElement.id); //storing this ID will allow for us to know where the item came from
     ev.dataTransfer.setData("text", ev.target.textContent); //store the name of the item
     ev.dataTransfer.setData("idText", ev.target.id); //store the id for removal later
+
+    console.log("parentelement");
+    console.log(ev.dataTransfer.getData("string", ev.target.parentElement.id));
+    console.log("textcontent");
+    console.log(ev.dataTransfer.getData("text", ev.target.textContent));
+    console.log("id");
+    console.log(ev.dataTransfer.getData("idText", ev.target.id));
 }
 
 

@@ -96,7 +96,15 @@ html, body {
 }
 
 .menuItem {
-
+    border-style: solid;
+    border-width: 1px;
+    height: 80px;
+    margin: 15px;
+    padding: 15px;
+    max-width: 100px;
+    min-width: 100px;
+    background-color: #E4E4E4;
+    display: flex;
 }
 
 .orderItem {

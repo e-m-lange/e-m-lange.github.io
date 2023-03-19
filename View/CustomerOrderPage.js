@@ -109,19 +109,17 @@ function CustomerControlInit(){
     rightColumn.addEventListener("mouseleave", UnhoverOrderTab);
     rightColumn.addEventListener("dragover", HoverOrderTab);
 
-    //If is VIP, just hide the add customer part
+
+    //If is VIP, just hide the add customer part & append a specials section.
     if (isVIP) {
         $(".addNewCustomer").hide();
+        var specialsZoneEl = createElement("div", {"id": "specialsZone"});
+        $("#menuZone").append(specialsZoneEl);
+        $("#specialsZone").append(CreateItem("Specials Item", "specials_1", "menuItem")); //For testing.
     }
 
-    //Fill up with some items.
-    var beverages = allBeverages();
-    for (i = 0; i < beverages.length; i++){
-        const element = document.getElementById("menuZone");
-        //element.appendChild(CreateItem("Temp Item" + i, "cust_-1", "menuItem")); //-1 since it is basically unassigned atm
-        element.appendChild(CreateItem(beverages[i]));
-    }
-
+    LoadCustomerMenu();
+    CreateAllMenuItems("menuItem");
     ClearAllEmptyCustomers();
     UnhoverOrderTab();
     LoadView();
@@ -180,30 +178,24 @@ function LoadViewMultipleCustomer(){ //If there are more than one customer, this
     }//https://stackoverflow.com/questions/9681601/how-can-i-count-the-number-of-elements-with-same-class
 }
 
-//Purpose: Creates a placeholder item. SHOULD BE DELETED ONCE THE DRINK CARDS HAVE BEEN MADE.
-/*function CreateItem(text, id, className)
-{
-    var divItem = document.createElement("div");
-    //Temporary. This can easily be changed by setting a class / a function.
-    divItem.style.borderStyle = "solid";
-    divItem.style.borderWidth = "1px";
-    divItem.style.height = "80px";
-    divItem.style.margin = "15px";
-    divItem.style.padding = "15px";
-    divItem.style.maxWidth = "100px";
-    divItem.style.minWidth = "100px";
-    divItem.style.backgroundColor = "#E4E4E4";
-    divItem.draggable = true;
-    divItem.ondragstart = CstmrDrag;
-    divItem.textContent = text;
-    divItem.id = id; //allows for removal later
-
-    if (className != null) {
-        divItem.className = className;//to allow for dropping into the order tab ("menuItem") OR to prevent deletion upon being dropped on top of each other in the order tab ("order tab")
+function LoadCustomerMenu() {
+    //Load the menu items.
+    var beverages = allBeverages();
+    for (i = 0; i < beverages.length; i++) {
+        const element = document.getElementById("menuZone");
+        element.appendChild(CreateItem(beverages[i]));
     }
+}
 
-    return divItem;
-}*/
+function CreateAllMenuItems(className) {
+    //Make the items menu items
+    var beverage = document.getElementsByClassName("item");
+    for (let i = 0; i < beverage.length; i++) {
+        if (className != null) {
+            beverage[i].classList.add(className);
+        }
+    }
+}
 
 //Purpose: Create placeholder customer container.
 function CreateCustomer(customerName, id = "cust_0", appendTo)
