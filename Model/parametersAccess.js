@@ -1,9 +1,9 @@
 // Return the id of the user connected
 function getIdConnected(parameters){
-    return parameters.connected_id;
+    return Number(parameters.connected_id) || undefined;
 }
 
 // Return language settings
 function getLanguage(parameters){
-    return parameters.lang;
+    return parameters.lang || "eng";
 }

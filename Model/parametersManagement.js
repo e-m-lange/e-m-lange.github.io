@@ -1,6 +1,6 @@
 // Modify the user connected
 function UpdateUserConnected(id){
-    parameters.user_id = id;
+    parameters.user_id = Number(id);
 }
 
 // Modify the language of the interface
