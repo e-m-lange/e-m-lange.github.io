@@ -10,7 +10,7 @@ function allOrders(){
 }
 
 // Custom sorting function
-function compareUsers(a, b) {
+function compareOrders(a, b) {
     // Sort by time
     if (getTimeOrder(a) < getTimeOrder(b)) return -1;
     if (getTimeOrder(a) > getTimeOrder(b)) return 1;
@@ -18,7 +18,7 @@ function compareUsers(a, b) {
     return 0;
 }
 
-//Return all the orders sorted time
+//Return all the orders sorted by time
 function sortOrders(orders) {  
     return orders.sort(compareUsers);
 }

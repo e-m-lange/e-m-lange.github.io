@@ -1,9 +1,9 @@
-// Returns all the beverages information
+// Returns all the beverages information in a array sorted by category and alcohol strength
 function allBeverages(){
     var collector = [];
 
     for (i = 0 ; i < parameters.menu_size ; i++){
-        collector.push(createInfoBeverage(drinks[i].articleid));
+        collector.push(getInfoBeverage(drinks[i].articleid));
     }
 
     return sortBeverages(collector);
@@ -31,10 +31,10 @@ function sortBeverages(beverages) {
     return beverages.sort(compareBeverages);
 }
 
-// Returns the beverages on the menu
+// Returns the beverages on the menu from all the available drinks
 function BeveragesOnMenu() {
     var collector = [];
-    var beverages = allBeverages();
+    var beverages = allBeverages(); // all the drinks available
 
     for (i = 0; i < beverages.length; i++) {
         // We check if the drink is not hidden
@@ -44,10 +44,10 @@ function BeveragesOnMenu() {
     return collector;
 }
 
-// Returns the beverages hidden
+// Returns the beverages hidden from all the available drinks
 function BeveragesHidden() {
     var collector = [];
-    var beverages = allBeverages()
+    var beverages = allBeverages();
 
     for (i = 0; i < beverages.length; i++) {
         // We check if the drink is hidden
@@ -58,8 +58,11 @@ function BeveragesHidden() {
 }
 
 // Returns the beverage information within a category from a list of beverages
-function filterBeverageCategory(beverages, category) {
+function filterBeverageCategory(category, beverages) {
     var collector = [];
+
+    // if there is no list specified get all the drinks
+    if(typeof beverages === "undefined") beverages = allBeverages();
 
     for (i = 0; i < beverages.length; i++) {
         //We check if the beverage is from the selected category
@@ -72,8 +75,11 @@ function filterBeverageCategory(beverages, category) {
 }
 
 // Returns the beverage infomation that contain a percentage of alcohol within the strength range given in percent from a list of beverages
-function filterBeverageStrength(beverages, strength_min, strength_max) {
+function filterBeverageStrength(strength_min, strength_max, beverages) {
     var collector = [];
+
+    // if there is no list specified get all the drinks
+    if(typeof beverages === "undefined") beverages = allBeverages();
 
     for (i = 0; i < beverages.length; i++) {
         // We check if the percentage alcohol strength within the given strength range
@@ -86,8 +92,11 @@ function filterBeverageStrength(beverages, strength_min, strength_max) {
 }
 
 // Returns the beverage infomation that does not contain the allergies from a list of beverages
-function filterBeverageAllergies(beverages, allergies) {
+function filterBeverageAllergies(allergies, beverages) {
     var collector = [];
+    
+    // if there is no list specified get all the drinks
+    if(typeof beverages === "undefined") beverages = allBeverages();
 
     for (i = 0; i < beverages.length; i++) {
         var checkmark = 0; // Check the number of allergies the drink pass
@@ -110,7 +119,10 @@ function filterBeverageAllergies(beverages, allergies) {
 // Returns the beverages with less that 5 items left from a list of beverages
 function BeveragesToRestock(beverages) {
     var collector = [];
-
+    
+    // if there is no list specified get all the drinks
+    if(typeof beverages === "undefined") beverages = allBeverages();
+    
     for (i = 0; i < beverages.length; i++) {
 
         // We check if the drink has less that 5 items in stock
@@ -120,7 +132,4 @@ function BeveragesToRestock(beverages) {
     return collector;
 }
 
-
-var b = filterBeverageAllergies(allBeverages(), ["nuts","lactose","gluten"]);
-var a = filterBeverageStrength(allBeverages(), 10,45);
-
+//console.log(filterBeverageCategory(getTypesBeverage()[1]));
