@@ -6,7 +6,7 @@ function CreateStaffOrderPage() {
     modifyOrderOn = false;
 
     var tabItem1El = createElement("div", {"id": "unassigned", "class": "tabItem"});
-    tabItem1El.textContent = "Unassigned";
+    tabItem1El.textContent = getString("string unassigned");
     var defTabContainerEl = createElement("div", {"id": "defCustTabContainer"}, [tabItem1El]);
     //This div holds the multiple customer divs.
     var splitCustTabContainerEl = createElement("div", {"id": "splitCustTabContainer"});
@@ -30,7 +30,7 @@ function CreateStaffOrderPage() {
     //-----------------------------------------------------------------------//
     var navBarEl = CreateNavBar();
     //-----------------------------------------------------------------------//
-    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); StaffOrderSetTextLabels(); } );
+    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); StaffOrderSetTextLabels(); UpdateNavigationLabels(); } );
     var staffOrderPageEl = createElement("div", {"class": "mainContent"}, [actionZoneEl, navBarEl, CreateMenuBar(), custOrderZoneEl]);
 
     document.body.appendChild(staffOrderPageEl);
@@ -61,6 +61,7 @@ function ManageListenersOrders(orderItem) {
     orderItem.addEventListener("click", ExpandOrderItemOption);
 }
 
+//Purpose: Call this function when clicking the option button on an order item (3 dots). Shows the options available for the order.
 function ExpandOrderItemOption(ev) {
     //Close the other expanded items.
     var expandOptionContainer = document.querySelectorAll(".expandOptionContainer");
@@ -71,12 +72,12 @@ function ExpandOrderItemOption(ev) {
     var parent = ev.target.parentElement.parentElement; //should be staffOrderContainer
     var target = ev.target; //should be staffOrderItem
 
-    //Create the buttons.
+    //Create the buttons and listeners.
     var duplicateEl = createElement("div", {"class": "duplicateOption"});
     duplicateEl.textContent = getString("button duplicate");
     duplicateEl.addEventListener("click", function() { StaffDoAction("DuplicateItem", null, null,
-        getNameBeverage(RetrieveCstmrSingleItem(ev.target.parentElement.parentElement.id, GetParentIDOfItem(ev.target.parentElement.parentElement.id)),
-        ev.target.parentElement.parentElement.id)); LoadOrder(); } );
+        getNameBeverage(RetrieveCstmrSingleItem(ev.target.parentElement.parentElement.id, GetParentIDOfItem(ev.target.parentElement.parentElement.id))),
+        ev.target.parentElement.parentElement.id); LoadOrder(); } );
     var freeEl = createElement("div", {"class": "freeOption"});
     freeEl.textContent = getString("button free");
     var discountEl = createElement("div", {"class": "discountOption"});
@@ -105,9 +106,10 @@ function ExpandOrderItemOption(ev) {
     target.addEventListener("click", CloseOrderItemOption); //so when clicked again, it will close the option bar.
 }
 
+//Purpose: Call this when clicking the option button again to close the dropdown.
 function CloseOrderItemOption(ev) {
     console.log(ev.target);
-    var parent = ev.target.parentElement.parentElement;;
+    var parent = ev.target.parentElement.parentElement;
 
     parent.style.backgroundColor = "white";
     parent.style.borderRadius = "15px";
@@ -168,11 +170,12 @@ function SetSelectedCustomer(newID) {
     }
 }
 
-//Purpose: Upon splitting, need to add new elements and functionality.
+//Purpose: Called when user clicks modify button. Used to add new elements and functionality or remove them, based on the current state.
 function LoadModifyOrder() {
-    if (!modifyOrderOn){ //If it hasn't been split yet.
+    //If it hasn't been split yet.
+    if (!modifyOrderOn){
         if (TotalCstmrCount() > 1) {
-            document.getElementById("unassigned").textContent = getString("string unassigned");
+                document.getElementById("unassigned").textContent = getString("string unassigned");
         }
         else {
             document.getElementsByClassName("tabItem")[0].textContent = getString("string unassigned");
@@ -198,11 +201,13 @@ function LoadModifyOrder() {
 
         modifyOrderOn = true;
     }
-    else { //If modify order is already on.
+    //If modify order is already on.
+    else {
         document.getElementById("splitOrderBtn").textContent = getString("button modify order");
         document.getElementById("newCustomerTab").remove();
         document.getElementById("removeCustomerTab").remove();
         document.getElementById("unassignedTab").remove();
+
         if (TotalCstmrCount() > 1) {
             document.getElementById("unassigned").textContent = getString("string multiple customers");
         }
@@ -234,22 +239,24 @@ function LoadSingleCstmrTab() {
         splitCustTabContainer.lastChild.remove();
     }
 
-    document.getElementsByClassName("tabItem")[0].textContent = "Order";
+    document.getElementsByClassName("tabItem")[0].textContent = getString("string order menu");
     document.getElementById("defCustTabContainer").getElementsByClassName("tabItem")[0].id = RetrieveAllCustomers()[0].ID;
     SetSelectedCustomer(RetrieveAllCustomers()[0].ID);
 }
 
 //Purpose: Append every customer as a tab.
 function LoadMultipleCstmrTabs() {
-    if (!document.getElementById("unassignedTab")) {
-        if (!document.getElementById("unassigned")) { //Need to change order 1 to unassigned if multiple customers.
-            document.getElementsByClassName("tabItem")[0].id = "unassigned";
-        }
-        document.getElementById("unassigned").textContent = getString("string multiple customers");
+    //Need to change order 1 to unassigned if multiple customers. First change ID if it isn't already there.
+    if (!document.getElementById("unassigned")) {
+        document.getElementsByClassName("tabItem")[0].id = "unassigned";
     }
-
+    //Then change the text if modifying.
+    if (modifyOrderOn) {
+        document.getElementById("unassigned").textContent = getString("string unassigned");
+    }
+    //Reset by removing all the children in the splitCustTabContainer.
     var splitCustTabContainer = document.getElementById("splitCustTabContainer");
-    while (splitCustTabContainer.childNodes.length > 0) { //Reset by removing all the children in the splitCustTabContainer.
+    while (splitCustTabContainer.childNodes.length > 0) {
         splitCustTabContainer.lastChild.remove();
     }
     //Add each customer as a tab.
@@ -273,8 +280,8 @@ function LoadOrder(appendToID = "mainTab", customer = selectedCustomer) {
     }
 }
 
+//Purpose: Loading the items in unassigned tab.
 function LoadUnassigned() {
-    //Loading the unassigned.
     if (document.getElementById("unassignedTab")) {
         while (document.getElementById("unassignedTab").childNodes.length > 0) { //Empty out the unassigned list.
             document.getElementById("unassignedTab").lastChild.remove();
@@ -302,19 +309,25 @@ function LoadStaffOrderView() {
 function StaffOrderSetTextLabels() {
     document.getElementById("loginButton").textContent = getString("button login");
     document.getElementById("singleOrderBtn").textContent = getString("button single order");
-    if (!modifyOrderOn) { //If not currently modifying.
+    //If not currently modifying.
+    if (!modifyOrderOn) {
         document.getElementById("splitOrderBtn").textContent = getString("button modify order");
         document.getElementById("splitOrderBtn").textContent = getString("button modify order");
         if (TotalCstmrCount() <= 1) {
             document.getElementsByClassName("tabItem")[0].textContent = getString("string order menu");
         }
+        else {
+            document.getElementById("unassigned").textContent = getString("string multiple customers");
+        }
     }
-    else if (modifyOrderOn && TotalCstmrCount() > 1) { //If currently modifying.
+    //If currently modifying.
+    else if (modifyOrderOn && TotalCstmrCount() > 1) {
         document.getElementById("splitOrderBtn").textContent = getString("button finished modify");
         document.getElementById("unassigned").textContent = getString("string unassigned");
         document.getElementById("newCustomerTab").textContent = getString("string add customer allcaps");
         document.getElementById("removeCustomerTab").textContent = getString("string remove customer allcaps");
     }
+    //If currently modifying and only one customer.
     else {
         document.getElementById("splitOrderBtn").textContent = getString("button finished modify");
         document.getElementsByClassName("tabItem")[0].textContent = getString("string unassigned");

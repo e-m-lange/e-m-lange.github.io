@@ -12,7 +12,7 @@ function RemoveCustomer(customerID = "cust_0")
 {
     for (i = 0; i < cstmrOrderListModel.length; i++){
         if (cstmrOrderListModel[i].ID === customerID) {
-            const deleted = cstmrOrderListModel.splice(i, 1);
+            cstmrOrderListModel.splice(i, 1);
             ReassignIds(); //Mostly helps with organisation and keeping track of the orders.
             break;
         }
@@ -46,7 +46,7 @@ function RemoveItem(itemID, customerID = "cust_0"){
 
     for (i = 0; i < RetrieveCstmrItems(customerID).length; i++){
         if (customer.orders[i].ID === itemID){
-            const deleted = customer.orders.splice(i, 1); //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
+            customer.orders.splice(i, 1); //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
             break;
         }
     }
@@ -121,21 +121,8 @@ function RetrieveCstmrAllItems() {
         }
     }
 
-    console.log(allOrders);
     return allOrders;
 }
-
-//Purpose: Give a customer item id and find out who the customer (who has the item) is.
-/*function RetrieveCustomerOfItem(custItem = "cust_0_0") {
-    for (let i = 0; i < RetrieveAllCustomers().length; i++) {
-        var orders = RetrieveAllCustomers()[i].orders;
-        for (let j = 0; j < orders.length; j++) {
-            if (orders[j].ID == custItem) {
-                return RetrieveAllCustomers()[i];
-            }
-        }
-    }
-}*/
 
 //Purpose: Returns the total number of orders of a given customer.
 function TotalCstmrOrderCount(customerID = "cust_0"){
@@ -150,7 +137,7 @@ function SetCstmrOrderListModelState(inputList){
 }
 
 //Purpose: Function drag and drop passes to undo redo manager.
-function UndoRedoDragDrop(inputList, undoOrRedo)
+function UndoRedoDragDrop(inputList)
 {
     SetCstmrOrderListModelState(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
 }

@@ -18,7 +18,7 @@ function CreateCstmrOrderPage(){
 
     var columnAllEl = createElement("div",{"class": "column"}, [columnRightEl, labelEl]);
     //--------------------------------------------------------------------------------------//
-    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); CstmrOrderSetTextLabels(); LoadView(); CstmrManageListeners();} ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
+    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); CstmrOrderSetTextLabels(); LoadView(); CstmrManageListeners(); UpdateNavigationLabels(); } ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
     var mainContentEl = createElement("div", {"class": "mainContent"}, [filterDivEl, menuZoneEl, columnAllEl, CreateMenuBar()]);
 
     document.body.appendChild(mainContentEl);
@@ -39,11 +39,8 @@ var isVIP = false;
 function SetVIPStatus (boolValue){
     isVIP = boolValue;
 }
-function CreateMenuItems(){
 
-}
-
-function HoverOrderTab(ev){
+function HoverOrderTab(ev) {
     var rightColumn = document.getElementsByClassName("columnRight")[0];
 
     rightColumn.style.background = "transparent";
@@ -64,7 +61,7 @@ function HoverOrderTab(ev){
 
     setTimeout(function(){
         for (let x of rightColumn.children) {
-            if (x.id == "orderZone" && x.classList.contains("orderZoneOpened")) {
+            if (x.id === "orderZone" && x.classList.contains("orderZoneOpened")) {
                 x.style.display = "flex";
             }
             else {
@@ -75,8 +72,7 @@ function HoverOrderTab(ev){
     }, 550);
 }
 
-function UnhoverOrderTab()
-{
+function UnhoverOrderTab() {
     var rightColumn = document.getElementsByClassName("columnRight")[0];
     rightColumn.removeEventListener("mouseleave", UnhoverOrderTab);
 
@@ -92,7 +88,7 @@ function UnhoverOrderTab()
     }, 100);
 }
 
-function CustomerControlInit(){
+function CustomerControlInit() {
     var menuZone = document.getElementById("menuZone");
     var orderZone = document.getElementById("orderZone");
     var customerZone = document.getElementsByClassName("addNewCustomer")[0]; //since there is only 1 anyway
@@ -125,7 +121,7 @@ function CustomerControlInit(){
     LoadView();
 }
 
-function LoadView(){
+function LoadView() {
     //Clear all items.
     $("#orderZone").empty(); //https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20detach()%20method.
 
@@ -146,7 +142,7 @@ function LoadView(){
     }
 
     //If there are no items in the order zone, display this text.
-    if (document.getElementById("orderZone").children.length == 0) {
+    if (document.getElementById("orderZone").children.length === 0) {
         $("#orderZone").text(getString("string drag order"));
         document.getElementById("orderZone").style.paddingTop = "36%";
         document.getElementById("orderZone").style.paddingLeft = "30%";
@@ -161,7 +157,8 @@ function LoadView(){
     CreateAllOrderItems("orderItem");
 }
 
-function LoadViewMultipleCustomer(){ //If there are more than one customer, this needs to be presented visually.
+//Purpose: If there are more than one customer, this needs to be presented visually.
+function LoadViewMultipleCustomer() {
     document.getElementById("orderZone").style.paddingTop = "0%";
     document.getElementById("orderZone").style.paddingRight = "0px";
     document.getElementById("orderZone").style.height = "70%";
@@ -202,7 +199,8 @@ function CreateAllMenuItems(className) { //Make the items menu items by adding t
     }
 }
 
-function CreateAllOrderItems(className) { //Make the items order items by adding the class.
+//Purpose: Make the items order items by adding the class.
+function CreateAllOrderItems(className) {
     if (TotalCstmrCount() <= 1) {
         var columnChildren = document.getElementById("orderZone").children;
         for (let i = 0; i < columnChildren.length; i++) {

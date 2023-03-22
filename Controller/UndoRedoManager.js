@@ -3,11 +3,10 @@ let redoStack = [];
 
 //Purpose: Creates an UndoRedo item that will be added to undoStack. Has stored undo function and redo function that can be called.
 function CreateUndoRedoItem(inputExecute, inputUnexecute) { //Can assign the redo and undo functions that should be executed, ideally the parameters are anonymous functions, see DragDropControl for example.
-    if (inputExecute != null && inputExecute != null){
+    if (inputUnexecute != null && inputExecute != null){
         var executionObj = {"reexecute": inputExecute, "unexecute": inputUnexecute};
         undoStack.push(executionObj); //Add to undo stack to be able to unexecute.
         redoStack = []; //Reset the redostack.
-        console.log("created undoredo");
     }
 }//cloning: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 

@@ -1,6 +1,5 @@
 
 function StaffDrag(ev){
-    console.log(ev);
     ev.dataTransfer.setData("customerID", selectedCustomer); //storing this ID will allow for us to know where the item came from. Customer id.
     ev.dataTransfer.setData("targetID", ev.target.id); //store the id for removal later.
     if (ev.target.parentElement.id === "mainTab") {

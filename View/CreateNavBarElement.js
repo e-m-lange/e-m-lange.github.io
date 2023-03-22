@@ -16,6 +16,7 @@ function CreateNavBar() {
     return navBarEl;
 }
 
+//Purpose: Called when an item on the navigation bar is selected.
 function SelectNavItem(ev) {
     var selectedId = null;
 
@@ -26,10 +27,23 @@ function SelectNavItem(ev) {
         selectedId = ev.target.parentElement.id;
     }
 
+    //Change the page accordingly.
+    switch(selectedId) {
+        case "orderNav":
+            break;
+        case "inventoryNav":
+            ChangePage(3); //Load the staff inventory page.
+            break;
+        case "vipNav":
+            break;
+    }
+
+    //Update the looks of the selected page on the navigation bar.
     if (selectedId)
         SetFocusedNav(document.getElementById(selectedId));
 }
 
+//Purpose: Change which item appears selected.
 function SetFocusedNav(elToChange) {
     var lineEl = createElement("div", {"class": "horizLineNav"});
 
@@ -45,4 +59,10 @@ function SetFocusedNav(elToChange) {
 
     elToChange.querySelector(".navItemTxt").style.fontWeight = "bold";
     elToChange.append(lineEl);
+}
+
+//Purpose:
+function UpdateNavigationLabels() {
+    document.getElementById("orderNav").firstChild.textContent = getString("navigation order");
+    document.getElementById("inventoryNav").firstChild.textContent = getString("navigation inventory");
 }

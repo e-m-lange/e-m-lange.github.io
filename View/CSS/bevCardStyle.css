@@ -1,0 +1,60 @@
+.img_card {
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+}
+
+.textIconGroup {
+    display: flex;
+}
+
+.info_card {
+    font-family: Tahoma;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 85%;
+    width: 15px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.info_popup_card {
+    display: none;
+}
+
+.text_card {
+    display: block;
+    font-family: Calibri;
+    font-size: 13px;
+}
+
+.bev_name {
+    width: 75px;
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 5px;
+
+    margin-bottom: 2%;
+}
+
+.bev_category {
+    display: none;
+}
+
+.bev_country {
+    width: 75px;
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+.bev_price {
+
+}
