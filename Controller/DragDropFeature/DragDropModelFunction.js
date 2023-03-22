@@ -11,7 +11,7 @@ function AddCustomer(customerName = "Crewmate"){
 function RemoveCustomer(customerID = "cust_0")
 {
     for (i = 0; i < cstmrOrderListModel.length; i++){
-        if (cstmrOrderListModel[i].ID == customerID) {
+        if (cstmrOrderListModel[i].ID === customerID) {
             const deleted = cstmrOrderListModel.splice(i, 1);
             ReassignIds(); //Mostly helps with organisation and keeping track of the orders.
             break;
@@ -26,7 +26,7 @@ function RemoveAllCustomers() {
 
 function EditCustomerName(customerID, newName = "Crewmate"){
     for (i = 0; i < cstmrOrderListModel.length; i++){
-        if (cstmrOrderListModel[i].ID == customerID) {
+        if (cstmrOrderListModel[i].ID === customerID) {
             cstmrOrderListModel[i].cstmrName = newName;
             break;
         }
@@ -37,15 +37,15 @@ function EditCustomerName(customerID, newName = "Crewmate"){
 //the order list to the selected customer.
 function AddItem(itemName, customerID = "cust_0"){
     var itemToAdd = { ID: ItemIdGenerator(customerID), name: itemName };
-    cstmrOrderListModel.find(x => x.ID == customerID).orders.push(itemToAdd);
+    cstmrOrderListModel.find(x => x.ID === customerID).orders.push(itemToAdd);
     return itemToAdd;
 }
 
 function RemoveItem(itemID, customerID = "cust_0"){
-    var customer = cstmrOrderListModel.find(x => x.ID == customerID);
+    var customer = cstmrOrderListModel.find(x => x.ID === customerID);
 
     for (i = 0; i < RetrieveCstmrItems(customerID).length; i++){
-        if (customer.orders[i].ID == itemID){
+        if (customer.orders[i].ID === itemID){
             const deleted = customer.orders.splice(i, 1); //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
             break;
         }
@@ -55,7 +55,7 @@ function RemoveItem(itemID, customerID = "cust_0"){
 function GetParentIDOfItem(itemID) {
     for (i = 0; i < cstmrOrderListModel.length; i++) {
         for (j = 0; j < cstmrOrderListModel[i].orders.length; j++) {
-            if (cstmrOrderListModel[i].orders[j].ID == itemID) {
+            if (cstmrOrderListModel[i].orders[j].ID === itemID) {
                 return cstmrOrderListModel[i].ID;
             }
         }
@@ -64,7 +64,7 @@ function GetParentIDOfItem(itemID) {
 
 function ClearEmptyCustomer(customerID) {
     //If customer has no more items, remove that customer. Does this until 1 customer left (default)
-    if (cstmrOrderListModel.length > 1 && RetrieveCstmrItems(customerID).length == 0)
+    if (cstmrOrderListModel.length > 1 && RetrieveCstmrItems(customerID).length === 0)
     {
         RemoveCustomer(customerID);
     }
@@ -80,7 +80,7 @@ function ClearAllEmptyCustomers() {
 //Returns a cstmrOrderModel based on the ID.
 function RetrieveCustomer(customerID = "cust_0"){
     var customer = null;
-    customer = cstmrOrderListModel.find(x => x.ID == customerID);
+    customer = cstmrOrderListModel.find(x => x.ID === customerID);
     return customer;
 }
 
@@ -100,13 +100,13 @@ function SumOfCstmrOrder(customer= "cust_0"){
 
 //Purpose: Returns the order items of a given customer.
 function RetrieveCstmrItems(customerID = "cust_0"){
-    var items = cstmrOrderListModel.find(x => x.ID == customerID).orders;
+    var items = cstmrOrderListModel.find(x => x.ID === customerID).orders;
     return items;
 }
 
 //Purpose: Returns a specific item from a specific customer.
 function RetrieveCstmrSingleItem(itemID, customerID = "cust_0"){
-    var orderItem = RetrieveCstmrItems(customerID).find(x => x.ID == itemID); //WILL NEED TO BE EDITED, WAITING FOR DRINK CARD
+    var orderItem = RetrieveCstmrItems(customerID).find(x => x.ID === itemID); //WILL NEED TO BE EDITED, WAITING FOR DRINK CARD
     return orderItem;
 }
 
@@ -139,7 +139,7 @@ function RetrieveCstmrAllItems() {
 
 //Purpose: Returns the total number of orders of a given customer.
 function TotalCstmrOrderCount(customerID = "cust_0"){
-    var itemCount = cstmrOrderListModel.find(x => x.ID == customerID).orders.length;
+    var itemCount = cstmrOrderListModel.find(x => x.ID === customerID).orders.length;
     return itemCount;
 }
 
@@ -159,7 +159,7 @@ function UndoRedoUnassigned(inputList) {
     SetUnassignedOrders(inputList);
 }
 
-//Move all orders onto one customer, thus creating a single order.
+//Purpose: Move all orders onto one customer, thus creating a single order.
 function CreateSingleOrder() {
     var replacementList = RetrieveCstmrAllItems();
     RemoveAllCustomers();
@@ -185,13 +185,13 @@ function CstmrIdGenerator() {
     var contains = false;
 
     do { //repeat this until the condition is met
-        if (cstmrOrderListModel.find(x => x.ID == "cust_" + index) != null){
+        if (cstmrOrderListModel.find(x => x.ID === "cust_" + index) != null){
             contains = true; //if the id already exists,
             index++;         //increase the number and repeat the process
         }
         else
             contains = false;
-    } while (contains == true);
+    } while (contains === true);
 
     return "cust_" + index; //e.g. cust_3
 }
@@ -200,16 +200,16 @@ function CstmrIdGenerator() {
 function ItemIdGenerator(customerID) {
     var index = 0;
     var contains = false;
-    var listToCheck = cstmrOrderListModel.find(x => x.ID == customerID).orders;
+    var listToCheck = cstmrOrderListModel.find(x => x.ID === customerID).orders;
 
     do { //repeat this until the condition is met
-        if (listToCheck.find(x => x.ID == customerID + "_" + index) != null){
+        if (listToCheck.find(x => x.ID === customerID + "_" + index) != null){
             contains = true; //if the id already exists,
             index++;         //increase the number and repeat the process
         }
         else
             contains = false;
-    } while (contains == true);
+    } while (contains === true);
 
     return customerID + "_" + index; //e.g. cust_0_1
 }
@@ -220,13 +220,13 @@ function ItemIdGeneratorUnassigned() {
     var listToCheck = unassignedOrderModel.orders;
 
     do {
-        if (listToCheck.find(x => x.ID == unassignedOrderModel.ID + "_" + index) != null) {
-            contains == true;
+        if (listToCheck.find(x => x.ID === unassignedOrderModel.ID + "_" + index) != null) {
+            contains === true;
             index++;
         }
         else
             contains = false;
-    } while (contains == true);
+    } while (contains === true);
 
     return unassignedOrderModel.ID + "_" + index;
 }
@@ -242,7 +242,7 @@ function AddItemToUnassigned(itemName) { //Will need, for example, drink item ID
 
 function RemoveItemFromUnassigned(itemID) {
     for (i = 0; i < unassignedOrderModel.orders.length; i++) {
-        if (unassignedOrderModel.orders[i].id == itemID) {      //Find the item
+        if (unassignedOrderModel.orders[i].id === itemID) {      //Find the item
             unassignedOrderModel.orders.splice(i, 1); //and remove it
         }
     }

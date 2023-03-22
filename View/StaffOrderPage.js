@@ -160,7 +160,7 @@ function SetSelectedCustomer(newID) {
         var custTabChildren = document.getElementById("splitCustTabContainer").children;
         for (let i = 0; i < custTabChildren.length; i++) {
             if (custTabChildren[i].classList.contains("cstmrTab")) {
-                if (custTabChildren[i].id == selectedCustomer) {
+                if (custTabChildren[i].id === selectedCustomer) {
                     custTabChildren[i].style.backgroundColor = "#EFB93C";
                 }
             }
@@ -184,7 +184,7 @@ function LoadModifyOrder() {
         unassignedTabEl.addEventListener("dragover", (event) => {event.preventDefault();} );
         unassignedTabEl.addEventListener("drop", StaffDrop, false);
 
-        //New customer doesn't fall under te basic customer tab (don't want to apply those eventlisteners etc.).
+        //New customer doesn't fall under the basic customer tab (don't want to apply those eventlisteners etc.).
         var newCustTabItemEl = createElement("div", {"id": "newCustomerTab", "class": "tabItem"});
         newCustTabItemEl.textContent = getString("string add customer allcaps");
         newCustTabItemEl.style.background = "#B3D0AE";
@@ -216,8 +216,8 @@ function LoadModifyOrder() {
 
 //Purpose: Remove some elements and functionality when going to single order.
 function LoadSingleOrder() {
-    if ($("#unassignedTab")) {
-        $("#unassignedTab").remove();
+    if (modifyOrderOn) {
+        LoadModifyOrder();
     }
 
     for (let i = 0; i < document.getElementsByClassName("tabItem").length; i++) {
@@ -228,6 +228,12 @@ function LoadSingleOrder() {
 }
 
 function LoadSingleCstmrTab() {
+    //Remove the customer tabs.
+    var splitCustTabContainer = document.getElementById("splitCustTabContainer");
+    while (splitCustTabContainer.childNodes.length > 0) { //Reset by removing all the children in the splitCustTabContainer.
+        splitCustTabContainer.lastChild.remove();
+    }
+
     document.getElementsByClassName("tabItem")[0].textContent = "Order";
     document.getElementById("defCustTabContainer").getElementsByClassName("tabItem")[0].id = RetrieveAllCustomers()[0].ID;
     SetSelectedCustomer(RetrieveAllCustomers()[0].ID);

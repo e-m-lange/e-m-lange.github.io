@@ -1,22 +1,29 @@
 
 function StaffDrag(ev){
-    ev.dataTransfer.setData("string", selectedCustomer); //storing this ID will allow for us to know where the item came from. Customer id.
-    ev.dataTransfer.setData("text", ev.target.childNodes[0].childNodes[0].textContent); //store the name of the item. Staff order info
-    ev.dataTransfer.setData("idText", ev.target.id); //store the id for removal later
+    console.log(ev);
+    ev.dataTransfer.setData("customerID", selectedCustomer); //storing this ID will allow for us to know where the item came from. Customer id.
+    ev.dataTransfer.setData("targetID", ev.target.id); //store the id for removal later.
+    if (ev.target.parentElement.id === "mainTab") {
+        ev.dataTransfer.setData("bevID", RetrieveCstmrSingleItem(ev.target.id, GetParentIDOfItem(ev.target.id)).name); //Will get the beverage ID through the customer order model.
+    }
+    else { //For unassigned.
+        ev.dataTransfer.setData("bevID", RetrieveUnassignedOrders().find(x => x.id === ev.target.id).name);
+    }
 }
 
 function StaffDrop(ev){
     try {
-        console.log(ev);
         //Ensure the item is a valid customer item.
-        if (document.getElementById(ev.dataTransfer.getData("idText", ev.target.id)).classList.contains('staffOrderContainer')) {
-            var parent = ev.dataTransfer.getData("string", ev.target.parentElement.id);
+        if (document.getElementById(ev.dataTransfer.getData("targetID")).classList.contains('staffOrderContainer')) {
+            var parent = ev.dataTransfer.getData("customerID", ev.target.parentElement.id);
             var target = ev.target.id;
-            var itemName = ev.dataTransfer.getData("text", ev.target.name);
-            var itemId = ev.dataTransfer.getData("idText", ev.target.id);
-            StaffCheckDrop(parent, target, itemName, itemId);
-            LoadOrder();
-            LoadUnassigned();
+            var itemName = ev.dataTransfer.getData("bevID", ev.target.name);
+            var itemId = ev.dataTransfer.getData("targetID", ev.target.id);
+            if (target && parent) {
+                StaffCheckDrop(parent, target, itemName, itemId);
+                LoadOrder();
+                LoadUnassigned();
+            }
         }
     }
     catch (error) {
@@ -25,21 +32,21 @@ function StaffDrop(ev){
 }
 
 function StaffCheckDrop(parent, target, itemName, itemId) { //parent = customerID, target = where the item is dropped
-    if (parent == target) {
+    if (parent === target) {
         return;
     }
     var targetClasses = document.getElementById(target).classList;
     var parentClasses = document.getElementById(parent).classList;
 
-    if (target == "unassignedTab") { //When moving from a customer to the unassigned tab.
+    if (target === "unassignedTab") { //When moving from a customer to the unassigned tab.
         if (parentClasses.contains("cstmrTab") || parentClasses.contains("tabItem")) {
-            StaffDoAction("MoveToUnassigned", parent, target, itemName, itemId)
-        };
+            StaffDoAction("MoveToUnassigned", parent, target, itemName, itemId);
+        }
     }
-    else if (document.getElementById(itemId).parentElement.id == "unassignedTab") { //When moving from the unassigned tab to the customer.
-        if (target == "orderZone" || target == "mainTab") {
-            StaffDoAction("MoveUnassignedToCustomer", parent, target, itemName, itemId)
-        };
+    else if (document.getElementById(itemId).parentElement.id === "unassignedTab") { //When moving from the unassigned tab to the customer.
+        if (target === "orderZone" || target === "mainTab") {
+            StaffDoAction("MoveUnassignedToCustomer", parent, target, itemName, itemId);
+        }
     }
 }
 
@@ -88,12 +95,9 @@ function StaffDoAction(action, parent, target, itemName, itemId) {
             RemoveItemFromUnassigned(itemId);
             break;
         case "SingleOrder":
-            if (modifyOrderOn) { //If it was showing the unassigned tab etc., turn it off.
-                LoadModifyOrder();
-            }
             StaffSingleOrder(); //Call function from StaffDragDropControl that causes all orders to be shifted to one customer.
-            LoadStaffOrderView();
             LoadSingleOrder();
+            LoadStaffOrderView();
             break;
         default:
             successfulAction = false; //If no valid action was made, don't save the state.
