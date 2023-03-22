@@ -125,6 +125,18 @@ function RetrieveCstmrAllItems() {
     return allOrders;
 }
 
+//Purpose: Give a customer item id and find out who the customer (who has the item) is.
+/*function RetrieveCustomerOfItem(custItem = "cust_0_0") {
+    for (let i = 0; i < RetrieveAllCustomers().length; i++) {
+        var orders = RetrieveAllCustomers()[i].orders;
+        for (let j = 0; j < orders.length; j++) {
+            if (orders[j].ID == custItem) {
+                return RetrieveAllCustomers()[i];
+            }
+        }
+    }
+}*/
+
 //Purpose: Returns the total number of orders of a given customer.
 function TotalCstmrOrderCount(customerID = "cust_0"){
     var itemCount = cstmrOrderListModel.find(x => x.ID == customerID).orders.length;

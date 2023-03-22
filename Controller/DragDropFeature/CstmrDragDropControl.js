@@ -71,7 +71,7 @@ function CstmrCheckDrop(parent, target, itemName, itemId)
     if (targetClasses.contains("orderTab") && parentClasses.contains("menuTab")
         && customerCount < maxNumOrders) //Only add when under max number of orders.
     {
-        CstmrAddItemFromMenu(itemName);
+        CstmrAddItemFromMenu(itemId); //Save the beverageID to access later.
     }
     else if (targetClasses.contains("menuTab") && parentClasses.contains("orderTab")) {
         CstmrRemoveItemFromOrder(itemId);
@@ -80,11 +80,11 @@ function CstmrCheckDrop(parent, target, itemName, itemId)
              && RetrieveCstmrItems().length > 0 //Only allow adding of customers once customer 1 has items.
              && customerCount < maxNumOrders)   //Only add when under max number of orders.
     {
-        CstmrAddNewCstmr(itemName, oldState);
+        CstmrAddNewCstmr(itemId, oldState);
         successfulAction = false; //Not successful until user has inputted name and closed the message box. Hence, saving the state has been added to the function run at close event of message box.
     }
     else if (targetClasses.contains("customerContainer") && parentClasses.contains("menuTab")) {
-        CstmrAddItemToCstmr(itemName, target);
+        CstmrAddItemToCstmr(itemId, target); //Save the beverageID to access later.
     }
     else if (targetClasses.contains("menuTab") && parentClasses.contains("customerContainer")) {
         CstmrRemoveItemFromCstmr(itemId, parent);
@@ -124,7 +124,7 @@ function CstmrAddNewCstmr(addItemName, oldState) { //Opens a message box waiting
     document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox(getString("message customer name"), true));
     document.getElementById("defMessBox").addEventListener("MessageClosedEv", function(evt) {
         var newlyAddedCstmrID = AddCustomer(evt.input);
-        AddItem(addItemName, newlyAddedCstmrID);
+        AddItem(addItemName, newlyAddedCstmrID); //addItemName will be the beverageID.
         CstmrActionUndoRedo(oldState);
         LoadView();
         CstmrManageListeners();

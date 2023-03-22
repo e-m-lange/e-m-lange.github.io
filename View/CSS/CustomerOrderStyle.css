@@ -96,6 +96,7 @@ html, body {
 }
 
 .menuItem {
+    border-radius: 10px;
     border-style: solid;
     border-width: 1px;
     height: 80px;
@@ -104,12 +105,84 @@ html, body {
     max-width: 100px;
     min-width: 100px;
     background-color: #E4E4E4;
-    display: flex;
 }
 
 .orderItem {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    height: 80px;
+    margin: 15px;
+    padding: 15px;
+    max-width: 100px;
+    min-width: 100px;
+    background-color: #E4E4E4;
+}
+
+/*order/menu item styles*/
+
+.img_card {
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+}
+
+.textIconGroup {
+    display: flex;
+}
+
+.info_card {
+    font-family: Tahoma;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 85%;
+    width: 15px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.info_popup_card {
+    display: none;
+}
+
+.text_card {
+    display: block;
+    font-family: Calibri;
+    font-size: 13px;
+}
+
+.bev_name {
+    width: 75px;
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 5px;
+
+    margin-bottom: 2%;
+}
+
+.bev_category {
+    display: none;
+}
+
+.bev_country {
+    width: 75px;
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+.bev_price {
 
 }
+
+/**/
 
 .orderZoneOpened {
     flex-grow: 1;

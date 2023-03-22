@@ -138,7 +138,9 @@ function LoadView(){
     else {
         document.getElementById("orderZone").style.padding = "20px";
         for (i = 0; i < RetrieveCstmrItems().length; i++) {
-            document.getElementById("orderZone").appendChild(CreateItem(RetrieveCstmrItems()[i].name, RetrieveCstmrItems()[i].ID, "orderItem"));
+            var itemToAdd = CreateItem(parseInt(RetrieveCstmrItems()[i].name)); //name refers to the beverageID.
+            itemToAdd.id = RetrieveCstmrItems()[i].ID; //Need to do a bit of a workaround. Need id to be the item's item (e.g. cust_0_1).
+            document.getElementById("orderZone").appendChild(itemToAdd);
         }
         document.getElementById("optionZone").getElementsByClassName("allCustOrderSumTxt")[0].textContent = getString("string total order") + ": $XX"; //If only one item, display it this way
     }
@@ -155,6 +157,8 @@ function LoadView(){
         document.getElementById("orderZone").style.paddingRight = "0px";
         document.getElementById("orderZone").style.height = "70%";
     }
+
+    CreateAllOrderItems("orderItem");
 }
 
 function LoadViewMultipleCustomer(){ //If there are more than one customer, this needs to be presented visually.
@@ -169,7 +173,9 @@ function LoadViewMultipleCustomer(){ //If there are more than one customer, this
 
         for (j = 0; j < RetrieveCstmrItems(customerId).length; j++) {
             var addElementTo = $(".customerItem#" + customerId) //first find the ones with customer class, then identify with ID
-            addElementTo.append(CreateItem(RetrieveCstmrItems(customerId)[j].name, RetrieveCstmrItems(customerId)[j].ID, "orderItem"));
+            var itemToAdd = CreateItem(parseInt(RetrieveCstmrItems(customerId)[j].name)); //name refers to the beverageID.
+            itemToAdd.id = RetrieveCstmrItems(customerId)[j].ID; //Need to do a bit of a workaround. Need id to be the item's item (e.g. cust_0_1).
+            addElementTo.append(itemToAdd);
         }
         //Adding sum text
         var custOrderSumTxtEl = createElement("label", {"class": "custOrderSumTxt"});
@@ -187,12 +193,33 @@ function LoadCustomerMenu() {
     }
 }
 
-function CreateAllMenuItems(className) {
-    //Make the items menu items
+function CreateAllMenuItems(className) { //Make the items menu items by adding the class.
     var beverage = document.getElementsByClassName("item");
     for (let i = 0; i < beverage.length; i++) {
         if (className != null) {
             beverage[i].classList.add(className);
+        }
+    }
+}
+
+function CreateAllOrderItems(className) { //Make the items order items by adding the class.
+    if (TotalCstmrCount() <= 1) {
+        var columnChildren = document.getElementById("orderZone").children;
+        for (let i = 0; i < columnChildren.length; i++) {
+            if (columnChildren[i].classList.contains("item")) {
+                columnChildren[i].classList.add(className);
+            }
+        }
+    }
+    else if (TotalCstmrCount() > 1) {
+        var customers = document.getElementsByClassName("customerItem");
+        for (let i = 0; i < customers.length; i++) {
+            var customerChildren = document.getElementsByClassName("item");
+            for (let j = 0; j < customerChildren.length; j++) {
+                if (customerChildren[j].classList.contains("item")) {
+                    customerChildren[j].classList.add(className);
+                }
+            }
         }
     }
 }

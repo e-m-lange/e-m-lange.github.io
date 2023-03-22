@@ -92,6 +92,11 @@
 }
 
 .staffOrderInfo {
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     width: 60%;
     margin-top: 18px;
     padding-left: 15px;

@@ -39,11 +39,15 @@ function CreateStaffOrderPage() {
     LoadStaffOrderView();
 }
 
-function CreateStaffOrderItem(itemName = "Drink", itemPrice = "0kr", itemId) {
+//Purpose: Create the staff order item.
+function CreateStaffOrderItem(itemName = "", itemPrice = "0kr", itemId) {
+    var bevPrice = getPriceBeverage(parseInt(itemName));
+    var bevName = getNameBeverage(parseInt(itemName));
+
     var orderInfoEl = createElement("label", {"class": "staffOrderInfo"});
-    orderInfoEl.textContent = itemName;
+    orderInfoEl.textContent = bevName;
     var priceEl = createElement("label", {"class": "staffOrderPrice"});
-    priceEl.textContent = itemPrice;
+    priceEl.textContent = bevPrice + "kr";
     var orderOptionEl = createElement("div", {"class": "staffOrderOption"});
     var optionBtnContainerEl = createElement("div", {"class": "optionBtnContainer"}, [orderInfoEl, priceEl, orderOptionEl]);
     var orderContainerEl = createElement("div", {"id": itemId, "class": "staffOrderContainer"}, [optionBtnContainerEl]);
@@ -67,9 +71,12 @@ function ExpandOrderItemOption(ev) {
     var parent = ev.target.parentElement.parentElement; //should be staffOrderContainer
     var target = ev.target; //should be staffOrderItem
 
+    //Create the buttons.
     var duplicateEl = createElement("div", {"class": "duplicateOption"});
     duplicateEl.textContent = getString("button duplicate");
-    duplicateEl.addEventListener("click", function() { StaffDoAction("DuplicateItem", null, null, ev.target.parentElement.parentElement.childNodes[0].childNodes[0].textContent, ev.target.parentElement.parentElement.id); LoadOrder(); } );
+    duplicateEl.addEventListener("click", function() { StaffDoAction("DuplicateItem", null, null,
+        getNameBeverage(RetrieveCstmrSingleItem(ev.target.parentElement.parentElement.id, GetParentIDOfItem(ev.target.parentElement.parentElement.id)),
+        ev.target.parentElement.parentElement.id)); LoadOrder(); } );
     var freeEl = createElement("div", {"class": "freeOption"});
     freeEl.textContent = getString("button free");
     var discountEl = createElement("div", {"class": "discountOption"});
@@ -127,6 +134,7 @@ function CreateCustomerTabItem(custText, custID) {
     return customerItem;
 }
 
+//Purpose: Add an edit button next to the customer tab.
 function AddEditCustomerTabItem(custID) {
     var editCustTabEl = createElement("button", {"class": "editCustomerOption", "id": custID});
     editCustTabEl.addEventListener("click", function() { StaffEditCustomerNameCtrl(custID); });
@@ -160,7 +168,7 @@ function SetSelectedCustomer(newID) {
     }
 }
 
-//Upon splitting, need to add new elements and functionality.
+//Purpose: Upon splitting, need to add new elements and functionality.
 function LoadModifyOrder() {
     if (!modifyOrderOn){ //If it hasn't been split yet.
         if (TotalCstmrCount() > 1) {
