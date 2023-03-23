@@ -4,6 +4,7 @@ function SetChangeLangAfterFunc(func) {
 }
 function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, General Staff = 2, Owner = 3
     //Creating the html elements:
+
     var langBtnIconEl = createElement("div", {"id": "langBtnIcon"});
     var langBtnEl = createElement("button", {"id": "langBtn", "content": "textContent"});
     langBtnEl.textContent = parameters.lang;

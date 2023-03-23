@@ -1,4 +1,4 @@
-/**
+/*
  * Update the credits of a user in the database.
  * @param {number|object} user - The ID of the user or an user object.
  * @param {number} number - The number of credits to add or subtract from the user's account.
