@@ -42,7 +42,10 @@ var languages = {
         "button remove": "Remove",
         "string unassigned": "Unassigned",
         "string add customer allcaps": "ADD CUSTOMER",
-        "string remove customer allcaps": "REMOVE CUSTOMER"
+        "string remove customer allcaps": "REMOVE CUSTOMER",
+        "button view hidden": "View Hidden Items",
+        "string running out": "Running Out Soon:",
+        "string all inventory": "All Inventory:",
     },
 
     fra : {
@@ -88,7 +91,10 @@ var languages = {
         "button remove": "Supprimer",
         "string unassigned": "Non attribué",
         "string add customer allcaps": "AJOUTER CLIENT",
-        "string remove customer allcaps": "SUPPRIMER CLIENT"
+        "string remove customer allcaps": "SUPPRIMER CLIENT",
+        "button view hidden": "(Fra)View Hidden Items",
+        "string running out": "(Fra)Running Out Soon:",
+        "string all inventory": "(Fra)All Inventory:",
     },
 
     indo : {
@@ -134,6 +140,9 @@ var languages = {
         "button remove": "Hapus",
         "string unassigned": "Belum Itugaskan",
         "string add customer allcaps": "TAMBAHKAN PELANGGAN",
-        "string remove customer allcaps": "HAPUS PELANGGAN"
+        "string remove customer allcaps": "HAPUS PELANGGAN",
+        "button view hidden": "(Indo)View Hidden Items",
+        "string running out": "(Indo)Running Out Soon:",
+        "string all inventory": "(Indo)All Inventory:",
     }
 }

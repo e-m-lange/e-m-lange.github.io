@@ -18,13 +18,20 @@ function CreateNavBar() {
 
 //Purpose: Called when an item on the navigation bar is selected.
 function SelectNavItem(ev) {
-    var selectedId = null;
+    var selectedId = null; //Reset.
 
-    if (ev.target.id){
-        selectedId = ev.target.id;
+    //If just sending a string, can be 'orderNav', 'inventoryNav', or 'vipNav'.
+    if (typeof ev === 'string') {
+        selectedId = ev;
     }
-    else if (ev.target.parentElement.id){
-        selectedId = ev.target.parentElement.id;
+    //Otherwise if it is of type Event.
+    else if (ev instanceof Event) {
+        if (ev.target.id) {
+            selectedId = ev.target.id;
+        }
+        else if (ev.target.parentElement.id) {
+            selectedId = ev.target.parentElement.id;
+        }
     }
 
     //Change the page accordingly.
@@ -50,7 +57,6 @@ function SetFocusedNav(elToChange) {
     //Clear the "selected" appearance of the nav items.
     var navItems = document.getElementsByClassName("navItem");
     for (i = 0; i < navItems.length; i++) {
-        console.log(navItems[i]);
         navItems[i].children[0].style.fontWeight = "unset";
         if (navItems[i].querySelector(".horizLineNav")){
             navItems[i].querySelector(".horizLineNav").remove();

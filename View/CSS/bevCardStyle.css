@@ -25,6 +25,51 @@
     display: none;
 }
 
+.crossBtn {
+    height: 35px;
+    width: 35px;
+    margin-left: 195px;
+    margin-top: -5px;
+    border-radius: 25px;
+}
+
+.popUpLabel {
+    height: 100%;
+    width: 100%;
+}
+
+.popUpLabelContainer {
+    margin: 10%;
+}
+
+.popUpCard {
+    position: absolute;
+    top: 30%;
+    left: 43%;
+    min-height: 180px;
+    height: fit-content;
+    width: 220px;
+    font-family: Tahoma;
+    font-size: 14px;
+    box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.25);
+    background: #D4E4DE;
+    border-radius: 10px;
+}
+
+.popupAddToOrderBtn {
+    height: 40px;
+    width: fit-content;
+    padding: 15px;
+    border-radius: 15px;
+    border: transparent;
+    background-color: white;
+    transition: background-color 200ms;
+}
+
+.popupAddToOrderBtn:hover {
+    background-color: #EFB93C;
+}
+
 .text_card {
     display: block;
     font-family: Calibri;
@@ -57,4 +102,18 @@
 
 .bev_price {
 
+}
+
+#addToOrderNotif {
+    position: absolute;
+    bottom: 4%;
+    right: 4%;
+    height: 20px;
+    width: fit-content;
+    font-family: Tahoma;
+    color: black;
+    transition: opacity 200ms;
+    background-color: white;
+    border-radius: 3px;
+    padding: 15px;
 }

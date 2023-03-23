@@ -16,9 +16,15 @@ function SetPage() {
             break;
         case 2:
             PageLoadStaffOrder();
+            SetFocusedNav(document.getElementById("orderNav")); //Show item in nav bar as selected. Only applies to staff pages.
             break;
         case 3:
             PageLoadStaffInventory();
+            SetFocusedNav(document.getElementById("inventoryNav"));
+            break;
+        case 4: //Differs from case 3 because we are loading the StaffInventoryPage for the StaffOrderPage when adding items from the menu.
+            PageLoadStaffInventory(true);
+            SetFocusedNav(document.getElementById("orderNav"));
             break;
     }
 }
@@ -43,10 +49,10 @@ function PageLoadStaffOrder() {
     CreateStaffOrderPage();
 }
 
-function PageLoadStaffInventory() {
+function PageLoadStaffInventory(addFromMenuPage = false) {
     $("#staffInventoryStyleId")[0].disabled = false;
     $("#staffInventoryId")[0].disabled = false;
-    CreateStaffInventoryPage();
+    CreateStaffInventoryPage(addFromMenuPage);
 }
 
 //Purpose: Used to reset the stylesheets that are related to specific pages. The relevant ones are turned on in the functions called by SetPage().
