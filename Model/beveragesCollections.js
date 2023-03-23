@@ -1,4 +1,5 @@
 // Returns all the beverages information in a array sorted by category and alcohol strength
+// Used in other collection functions
 function allBeverages(){
     var collector = [];
 
@@ -32,6 +33,7 @@ function sortBeverages(beverages) {
 }
 
 // Returns the beverages on the menu from all the available drinks
+// Used for the inventory
 function BeveragesOnMenu() {
     var collector = [];
     var beverages = allBeverages(); // all the drinks available
@@ -45,6 +47,7 @@ function BeveragesOnMenu() {
 }
 
 // Returns the beverages hidden from all the available drinks
+// Used for inventory hidden beverages section
 function BeveragesHidden() {
     var collector = [];
     var beverages = allBeverages();
@@ -57,7 +60,50 @@ function BeveragesHidden() {
     return collector;
 }
 
+// Returns the beverages with less that 5 items left from all the available drinks
+// Used for the inventory to restock section
+function BeveragesToRestock(beverages) {
+    var collector = [];
+    var beverages = allBeverages(); // all available drinks
+    
+    for (i = 0; i < beverages.length; i++) {
+        // We check if the drink has less that 5 items in stock
+        if (getStockBeverage(beverages[i]) <= 5) collector.push(beverages[i]);
+    };
+
+    return collector;
+}
+
+// Returns the beverages for VIP from all the drinks on the menu
+// Used for the VIP order page
+function BeveragesVIP() {
+    var collector = [];
+    var beverages = BeveragesOnMenu(); // all the drinks on menu
+
+    for (i = 0; i < beverages.length; i++) {
+        // We check if the drink is not hidden
+        if (getVIPBeverage(beverages[i])) collector.push(beverages[i]);
+    };
+
+    return collector;
+}
+
+// Returns the beverages for everyone from all the drinks on menu
+// User for VIP & customer order page
+function BeveragesCustomers() {
+    var collector = [];
+    var beverages = BeveragesOnMenu(); // all the drinks on menu
+
+    for (i = 0; i < beverages.length; i++) {
+        // We check if the drink is not hidden
+        if (!getVIPBeverage(beverages[i])) collector.push(beverages[i]);
+    };
+
+    return collector;
+}
+
 // Returns the beverage information within a category from a list of beverages
+// Used for filtering
 function filterBeverageCategory(category, beverages) {
     var collector = [];
 
@@ -75,6 +121,7 @@ function filterBeverageCategory(category, beverages) {
 }
 
 // Returns the beverage infomation that contain a percentage of alcohol within the strength range given in percent from a list of beverages
+// Used for filtering
 function filterBeverageStrength(strength_min, strength_max, beverages) {
     var collector = [];
 
@@ -92,6 +139,7 @@ function filterBeverageStrength(strength_min, strength_max, beverages) {
 }
 
 // Returns the beverage infomation that does not contain the allergies from a list of beverages
+// Used for filtering
 function filterBeverageAllergies(allergies, beverages) {
     var collector = [];
     
@@ -115,21 +163,3 @@ function filterBeverageAllergies(allergies, beverages) {
 
     return collector;
 }
-
-// Returns the beverages with less that 5 items left from a list of beverages
-function BeveragesToRestock(beverages) {
-    var collector = [];
-    
-    // if there is no list specified get all the drinks
-    if(typeof beverages === "undefined") beverages = allBeverages();
-    
-    for (i = 0; i < beverages.length; i++) {
-
-        // We check if the drink has less that 5 items in stock
-        if (getStockBeverage(beverages[i]) <= 5) collector.push(beverages[i]);
-    };
-
-    return collector;
-}
-
-//console.log(allBeverages());

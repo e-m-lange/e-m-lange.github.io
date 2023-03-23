@@ -28,6 +28,7 @@ function sortUsers(users) {
 }
 
 // Returns the VIP users
+// Used in the VIP page for the bartender/manager
 function VIPUsers() {
     var collector = [];
     var users = allUsers();
@@ -39,6 +40,3 @@ function VIPUsers() {
 
     return collector;
 }
-
-//console.log(allUsers());
-

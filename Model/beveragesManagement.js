@@ -1,4 +1,5 @@
 // Modify the stock of a beverage either with a id or an object
+// Used when confirm order and adding stocks
 function updateBeverageStock(beverage, number){
     // If the parameter is an object, use it to find the ID
     if(typeof beverage === "object") beverage = getIdBeverage(beverage);
@@ -21,5 +22,3 @@ function updateBeverageStock(beverage, number){
     // Modify the stock number
     drinks_information[i].stock += number;
 }
-
-console.log(allBeverages()[0]);

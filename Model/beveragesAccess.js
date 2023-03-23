@@ -269,3 +269,8 @@ function getTypesBeverage() {
     
     return Array.from(types.values());
 }
+
+// Return the list of allergies in the database
+function getAllerigesBeverage() {
+    return ["lactose", "gluten", "nuts"];
+}

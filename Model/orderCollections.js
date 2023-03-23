@@ -24,6 +24,7 @@ function sortOrders(orders) {
 }
 
 // Returns the orders not served yet
+// Used in the bartender order page 
 function PendingOrders() {
     var collector = [];
     var order = allOrders();
