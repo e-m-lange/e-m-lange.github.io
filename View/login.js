@@ -22,7 +22,7 @@ $(document).ready(function() {
     $('#lBtn').on('click', function() {
         var loginUsernameEntry = $("#username1").val();
         var loginPasswordEntry = $("#password1").val();
-        $.getJSON("../databases/VIP.json", function(data){
+        $.getJSON("../databases/user.js", function(data){
             // console.log(data); // Prints: Harry
             loginUsername = data.find(item => item.username === loginUsernameEntry);
             loginPassword = data.find(item => item.password === loginPasswordEntry);
@@ -36,13 +36,19 @@ $(document).ready(function() {
                 console.log("Attempted Username " + loginUsernameEntry);
                 console.log("Attempted Password " + loginPasswordEntry);
 
-                console.log("Login Falied");
-            };
+                console.log("Login Failed");
+            }
 
         }).fail(function(){
             console.log("An error has occurred.");
         });
 
     });
+    const swipe = document.getElementById("swipeUp");
+    swipe.addEventListener("click", swipeUp);
 
+    function swipeUp() {
+        alert("Button clicked!");
+    }
+    welcomePage();
 });
