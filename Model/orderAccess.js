@@ -7,6 +7,13 @@ function getOrderfromOrders(order_id){
     return orders[i];
 }
 
+// Return the index of the order in the orders database from an object or an id
+function getIndexfromOrders(order){
+    // If the parameter is an object, use it to find the ID
+    if (typeof order === "object" ) order = getIdOrder(order);
+    return orders.findIndex(x => x.transaction_id == order);
+}
+
 // Return the id of the order
 function getIdOrder(order){
     return order.transaction_id;

@@ -6,12 +6,26 @@ function getUserfromUsers(user_id){
     return person;
 }
 
+// Return the index of the user in the user database from an object or an id
+function getIndexfromUser(user){
+    // If the parameter is an object, use it to find the ID
+    if (typeof user === "object" ) user = getIdUser(user);
+    return users.findIndex(x => x.user_id == user);
+}
+
 // Return the object referenced by the id from the accounts database
 function getUserfromAccounts(user_id){
     // Search for the corresponding id in the database by ChatGPT
     const person = accounts.find(user => user.user_id == user_id);
     
     return person;
+}
+
+// Return the index of the user in the accounts database from an object or an id
+function getIndexfromAccounts(user){
+    // If the parameter is an object, use it to find the ID
+    if (typeof user === "object" ) user = getIdUser(user);
+    return accounts.findIndex(x => x.user_id == user);
 }
 
 // Return the id of the user from an object or an ID

@@ -1,24 +1,24 @@
 // Modify the stock of a beverage either with a id or an object
 // Used when confirm order and adding stocks
-function updateBeverageStock(beverage, number){
-    // If the parameter is an object, use it to find the ID
-    if(typeof beverage === "object") beverage = getIdBeverage(beverage);
+function UpdateBeverageStock(beverage, number){  
+    // Find the beverage in the database
+    const index = getIndexfromDrinksInformation(beverage);
     
-    var i = 0;
-
-    // Search for the corresponding object in the database using the id
-    while(i < parameters.menu_size && beverage != drinks_information[i].articleid) i++;
-
-    if (i == parameters.menu_size) {
+    if (index === -1) {
         console.log("Error: Beverage ID not found");
         return;
     }
 
+    // Validate the amount
     if (typeof number !== "number") {
         console.log("Error: Invalid number");
         return;
     }
 
     // Modify the stock number
-    drinks_information[i].stock += number;
+    drinks_information[index].stock += number;
+    
+    console.log("Updated stock:", drinks_information[index].stock);   
 }
+
+// pb : the changes are not persistant in the database -> use JSON

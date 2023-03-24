@@ -31,12 +31,4 @@ function UpdateVIPCredits(user, number) {
     console.log("Updated credits:", accounts[userIndex].creditSEK);
 }
 
-// TO DO check login
-
-// pb : the changes are not persistant in the database
-console.log(accounts[0]);
-UpdateVIPCredits(2, -400);
-console.log(accounts[0]);
-
-accounts[0].creditSEK=320;
-console.log(accounts[0]);
+// pb : the changes are not persistant in the database -> use JSON

@@ -7,6 +7,13 @@ function getBeveragefromDrinks(beverage_id){
     return beverage;
 }
 
+// Return the index of the beverage in the drinks database from an object or an id
+function getIndexfromDrinks(beverage){
+    // If the parameter is an object, use it to find the ID
+    if (typeof beverage === "object" ) beverage = getIdBeverage(beverage);
+    return drinks.findIndex(x => x.articleid == beverage);
+}
+
 // Return the object referenced by the id from the drinks_information database
 function getBeveragefromDrinksInformation(beverage_id){
     // Search for the corresponding id in the database by ChatGPT
@@ -14,6 +21,14 @@ function getBeveragefromDrinksInformation(beverage_id){
     
     // If a match is found, return the beverage object; otherwise, return undefined
     return beverage;
+}
+
+// Return the index of the beverage in the drinks_information database from an object or an id
+function getIndexfromDrinksInformation(beverage){
+    // If the parameter is an object, use it to find the ID
+    if (typeof beverage === "object") beverage = getIdBeverage(beverage);
+    console.log(beverage);
+    return drinks_information.findIndex(x => x.articleid == beverage);
 }
 
 // Return the id of the beverage from an object or an ID proof checked by ChatGPT
