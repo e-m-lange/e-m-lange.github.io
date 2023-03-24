@@ -4,13 +4,10 @@
  * @param {number} number - The number of credits to add or subtract from the user's account.
  */
 function UpdateVIPCredits(user, number) {
-    // If the parameter is an object, use it to find the ID
-    if (typeof user === "object" ) user = getIdUser(user);
-    
     // Find the user in the database
-    const userIndex = accounts.findIndex(u => u.user_id == user);
+    const index = getIndexfromUser(user);
     
-    if (userIndex === -1) {
+    if (index === -1) {
         console.log("Error: User ID not found");
         return;
     }
@@ -22,13 +19,13 @@ function UpdateVIPCredits(user, number) {
     }
 
     // Convert creditSEK to a number
-    let credits = parseFloat(accounts[userIndex].creditSEK);
+    let credits = parseFloat(accounts[index].creditSEK);
     
     // Update the user's credits
     credits += number;
     accounts[userIndex].creditSEK = credits.toString();
 
-    console.log("Updated credits:", accounts[userIndex].creditSEK);
+    console.log("Updated credits:", accounts[index]);
 }
 
 // pb : the changes are not persistant in the database -> use JSON

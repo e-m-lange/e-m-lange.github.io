@@ -18,7 +18,7 @@ function UpdateBeverageStock(beverage, number){
     // Modify the stock number
     drinks_information[index].stock += number;
     
-    console.log("Updated stock:", drinks_information[index].stock);   
+    console.log("Updated stock:", drinks_information[index]);   
 }
 
 // pb : the changes are not persistant in the database -> use JSON
