@@ -1,15 +1,51 @@
-// Create an order with an array of customer names or ID and 
+// Create an order with an array of customer names or one ID (for VIP) and a matrix of beverages
 // Used when a customer confirms their order
-function CreateOrder(customers, beverages){
-    var order = { "transaction_id" :  (+new Date).toString(36) + Math.random().toString(36), //https://stackoverflow.com/questions/32649704/how-to-generate-hash-from-timestamp
-        "customers" : customers,
-        "beverages_id" : beverages,
-        "amount" : getAmountOrder(order),
+// fix the amount calcul
+function CreateOrder(customers_list, beverages_matrix){
+    var amounts = []; 
+
+    // Calcul the amount of each beverage for each customer
+    for (var i = 0; i < customers_list.length; i++) {
+        // Get the list of beverages for the current customer
+        var customer_beverages = beverages_matrix[i];
+        var customer_amounts = [];
+        
+        // Create an object to store the beverage counts for the current customer
+        var beverage_counts = {};
+
+        // Loop over the list of beverages for the current customer
+        for (var j = 0; j < customer_beverages.length; j++) {
+            // Get the ID of the current beverage
+            var beverage_id = customer_beverages[j];
+            
+            // If the beverage count has not been initialized, set it to 0
+            if (!beverage_counts[beverage_id]) beverage_counts[beverage_id] = 0;
+
+            // Increment the beverage count for the current beverage
+            beverage_counts[beverage_id]++;
+        }
+        
+        // Loop over the keys in the beverage_counts object to create an array of beverage amounts for the current customer
+        for (var beverage_id in beverage_counts) customer_amounts.push(beverage_counts[beverage_id]);
+  
+        // Add the customer's beverage amounts to the amounts array
+        amounts.push(customer_amounts);
+    }
+    
+    orders.push({ "transaction_id" :  (+new Date).toString(36) + Math.random().toString(36), //https://stackoverflow.com/questions/32649704/how-to-generate-hash-from-timestamp
+        "customers" : customers_list,
+        "beverages_id" : beverages_matrix,
+        "amount" : amounts,
         "fridgecode" : Math.floor(Math.random() * 900) + 100, //by ChatGPT
         "timestamp" : Date.now(),
         "served" : false
-        };   
+        });   
 }
+
+console.log(orders);
+CreateOrder(["Soyeon","Taeyang"],[[25053, 190719, 51029],[25053, 190719, 190719, 190719, 190719, 51029]]);
+console.log(orders);
+
 
 // Turn a multiple order into multiple single ones
 // Used by the bartender
