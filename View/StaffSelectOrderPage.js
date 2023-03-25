@@ -1,20 +1,29 @@
 function CreateStaffSelectOrderPage() {
     var orderItemZone = createElement("div", {"id": "orderItemZone"});
     //-----------------------------------------------------------------------//
+    SetChangeLangAfterFunc( function() { parameters.lang = this.getAttribute("langType"); UpdateNavigationLabels(); SetStaffSelectOrderLabels(); });
     var staffSelectOrderEl = createElement("div", {"class": "mainContent"}, [CreateNavBar(), orderItemZone, CreateMenuBar()]);
 
     document.body.appendChild(staffSelectOrderEl);
+    RemoveAll();
+    ResetUndoRedo();
     LoadStaffOrderItems();
+    ManageStaffSelectOrderListeners();
+    SetStaffSelectOrderLabels();
 }
 
+//Load the orders that haven't been handled onto the view.
 function LoadStaffOrderItems() {
-    var orders = allOrders();
-
+    var orders = PendingOrders();
     for (let i = 0; i < orders.length; i++) {
-        if (!getStatusOrder(orders[i])) { //If the order hasn't been served yet, append the order.
-            $("#orderItemZone").append(CreateStaffSelectOrderItem(1, TotalPriceOrder(orders[i]), TotalAmountOrder(orders[i]), orders[i].timestamp, orders[i].transaction_id));
-        }
+        $("#orderItemZone").append(CreateStaffSelectOrderItem(1, TotalPriceOrder(orders[i]), TotalAmountOrder(orders[i]), orders[i].timestamp, orders[i].transaction_id));
     }
+}
+
+//Purpose: Clears all the currently displayed orders.
+function ClearStaffOrderItems() {
+    var orderItemZoneChildren = document.getElementById("orderItemZone");
+    while (orderItemZoneChildren.children.length > 0) { orderItemZoneChildren.lastChild.remove() };
 }
 
 function CreateStaffSelectOrderItem(table = 1, price = 0, amount = 1, time = "00:00", id) {
@@ -31,7 +40,11 @@ function CreateStaffSelectOrderItem(table = 1, price = 0, amount = 1, time = "00
     //Button to delete the order.
     var deleteBtnEl = createElement("button", {"class": "deleteBtn"}, ["X"]);
     //Element to append.
-    var orderItemEl = createElement("div", {"class": "tableOrderItem", "id": id}, [labelContainerEl, deleteBtnEl]);
+    var orderItemEl = createElement("div", {"class": "tableOrderItem", "id": id, "onClick": "OpenSelectedOrder(this)"}, [labelContainerEl, deleteBtnEl]);
 
     return orderItemEl;
+}
+
+function SetStaffSelectOrderLabels() {
+    document.getElementById("loginButton").textContent = getString("button login");
 }

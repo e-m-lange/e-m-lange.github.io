@@ -18,12 +18,18 @@ function RemoveCustomer(customerID = "cust_0") {
     }
 }
 
-//Purpose: Remove all customers from the list.
-function RemoveAllCustomers() {
+//Purpose: Remove all customers from the list & add back the default customer.
+function RemoveAllToDefault() {
     //Remove everything...
     cstmrOrderListModel.length = 0; //https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
     //Then add back the default customer.
     AddCustomer();
+}
+
+//Purpose: Remove all customers from the list.
+function RemoveAll() {
+    //Remove everything...
+    cstmrOrderListModel.length = 0;
 }
 
 function EditCustomerName(customerID, newName = "Crewmate") {
@@ -150,7 +156,7 @@ function UndoRedoUnassigned(inputList) {
 //Purpose: Move all orders onto one customer, thus creating a single order.
 function CreateSingleOrder() {
     var replacementList = RetrieveCstmrAllItems();
-    RemoveAllCustomers();
+    RemoveAllToDefault();
     var replacementCstmrId = AddCustomer();
     RetrieveCustomer(replacementCstmrId).orders = replacementList;
     replacementList.forEach(x => x.ID = ItemIdGenerator(replacementCstmrId));
@@ -208,12 +214,13 @@ function ItemIdGeneratorUnassigned() {
     var listToCheck = unassignedOrderModel.orders;
 
     do {
-        if (listToCheck.find(x => x.ID === unassignedOrderModel.ID + "_" + index) != null) {
-            contains === true;
+        if (listToCheck.find(x => x.id === unassignedOrderModel.ID + "_" + index)) {
+            contains = true;
             index++;
         }
-        else
+        else {
             contains = false;
+        }
     } while (contains === true);
 
     return unassignedOrderModel.ID + "_" + index;
@@ -271,4 +278,20 @@ function PageCreateOrder() {
     }
 
     CreateOrder(customerNameArr, orderArr);
+}
+
+//Purpose: Load the selected order into the drag drop model.
+function LoadOrderIntoDragDropModel(orderId) {
+    RemoveAll(); //Clear out the drag drop model completely.
+    ResetUndoRedo();
+
+    var customers = getCustomersOrder(getOrderfromOrders(orderId));
+    var beverages = getBeveragesOrder(getOrderfromOrders(orderId));
+
+    for (let i = 0; i < customers.length; i++) { //Add customer...
+        var cstmrId = AddCustomer(customers[i]);
+        for (let k = 0; k < beverages[i].length; k++) { //add each beverage to the customer.
+            AddItem(beverages[i][k], cstmrId);
+        }
+    }
 }

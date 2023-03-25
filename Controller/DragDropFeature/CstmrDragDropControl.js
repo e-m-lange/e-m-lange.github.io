@@ -162,7 +162,8 @@ function CstmrCreateOrder() {
     if (TotalCstmrCount() > 0) {
         if (RetrieveCstmrAllItems().length > 0) {
             PageCreateOrder();
-            RemoveAllCustomers();
+            RemoveAllToDefault();
+            ResetUndoRedo();
             LoadView();
             document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Order Sent", false));
         }

@@ -41,7 +41,6 @@ function CreateMenuBarItem() {
     var childItems = document.getElementsByClassName("dropDownItem");
     while (childItems.length > 0){ //https://stackoverflow.com/questions/20044883/unable-to-remove-a-dom-element-using-javascript
         childItems[0].parentNode.removeChild(childItems[0]);
-        console.log(childItems[0]);
     }
 
     //Add the dropdown items (the languages).
@@ -92,7 +91,6 @@ function ShowLangDropDown() {
     }
 
     SetLangIcon();
-    console.log("showing");
 }
 
 function SetLangIcon(flagIcon = document.getElementsByClassName("langFlagIcon")[0]) {

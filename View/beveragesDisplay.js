@@ -51,7 +51,7 @@ function PopUpAddToOrder(beverage, addToOrderFunc) {
   card.lastChild.appendChild(createElement("div", {"class": "popUpLabel", "style": "height: 15px"})); //Empty space.
   card.lastChild.appendChild(createElement("div", {"class": "popUpLabel"}, ["Quantity: ", getStockBeverage(beverage)]));
   card.lastChild.appendChild(createElement("div", {"class": "popUpLabel", "style": "height: 15px"})); //Empty space.
-  var addToOrderBtn = createElement("button", {"class": "popupAddToOrderBtn"}, ["Add To Order"]);
+  var addToOrderBtn = createElement("button", {"bevId": beverage, "class": "popupAddToOrderBtn", "onClick": "AddItemToUnassigned(this.getAttribute('bevId'))"}, ["Add To Order"]);
   addToOrderBtn.addEventListener("click", AddedToOrderNotification);
   card.lastChild.appendChild(addToOrderBtn);
 
@@ -71,6 +71,7 @@ function AddedToOrderNotification() {
   }, 1500);
 }
 
+//Purpose: Used to display on staff page. Difference it that is shows quantity as well & ability to hide the beverage.
 function PopUpStaff(beverage) {
   var card = PopUpCardBase(beverage);
   card.lastChild.appendChild(createElement("div", {"class": "popUpLabel", "style": "height: 15px"})); //Empty space.

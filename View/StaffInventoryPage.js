@@ -24,7 +24,7 @@ function CreateStaffInventoryPage(addFromMenuPage = false) { //If true, it will 
     //-----------------------------------------------------------------------//
     var navBarEl = CreateNavBar();
     var goBackBtn = createElement("button", {"id": "goBackBtn"});
-    goBackBtn.addEventListener("click", function() { ChangePage(2); }); //Go back to the select order page.
+    goBackBtn.addEventListener("click", function() { ChangePage(3); }); //Go back to the staff order page.
     //-----------------------------------------------------------------------//
     SetChangeLangAfterFunc( function() { parameters.lang = this.getAttribute("langType"); SetStaffInventoryLabels(); UpdateNavigationLabels(); },)
     if (!addFromMenuPage) {
@@ -44,10 +44,14 @@ function CreateStaffInventoryPage(addFromMenuPage = false) { //If true, it will 
 }
 
 function SetStaffInventoryLabels() {
+    document.getElementById("loginButton").textContent = getString("button login");
     $("#viewHiddenBtn").text(getString("button view hidden"));
     $("#runningOutLabel").text(getString("string running out"));
     $("#allInventoryLabel").text(getString("string all inventory"));
-    $("#goBackBtn").text("Go Back");
+    $("#goBackBtn").text(getString("button back"));
+    if (document.getElementById("goBackBtn")) {
+        document.getElementById("goBackBtn").textContent = getString("button back");
+    }
 }
 
 //Load the items that are running out.

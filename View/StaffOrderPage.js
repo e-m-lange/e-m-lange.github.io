@@ -29,10 +29,12 @@ function CreateStaffOrderPage() {
     addFromMenuBtnEl.addEventListener( "click", function() { ChangePage(5); } ); //Will call for loading the inventory page for adding items from the menu.
     var actionZoneEl = createElement("div", {"id": "actionZone"}, [undoRedoBtnEl, emptyGapEl, singleOrderBtnEl, modifyOrderBtnEl, addFromMenuBtnEl]);
     //-----------------------------------------------------------------------//
+    var goBackBtn = createElement("button", {"id": "goBackBtn"});
+    goBackBtn.addEventListener("click", function() { ChangePage(2); }); //Go back to the select order page.
     var navBarEl = CreateNavBar();
     //-----------------------------------------------------------------------//
     SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); StaffOrderSetTextLabels(); UpdateNavigationLabels(); } );
-    var staffOrderPageEl = createElement("div", {"class": "mainContent"}, [actionZoneEl, navBarEl, CreateMenuBar(), custOrderZoneEl]);
+    var staffOrderPageEl = createElement("div", {"class": "mainContent"}, [actionZoneEl, navBarEl, CreateMenuBar(), custOrderZoneEl, goBackBtn]);
 
     document.body.appendChild(staffOrderPageEl);
 
@@ -240,9 +242,11 @@ function LoadSingleCstmrTab() {
         splitCustTabContainer.lastChild.remove();
     }
 
-    document.getElementsByClassName("tabItem")[0].textContent = getString("string order menu");
-    document.getElementById("defCustTabContainer").getElementsByClassName("tabItem")[0].id = RetrieveAllCustomers()[0].ID;
-    SetSelectedCustomer(RetrieveAllCustomers()[0].ID);
+    if (TotalCstmrCount() > 0) {
+        document.getElementsByClassName("tabItem")[0].textContent = getString("string order menu");
+        document.getElementById("defCustTabContainer").getElementsByClassName("tabItem")[0].id = RetrieveAllCustomers()[0].ID;
+        SetSelectedCustomer(RetrieveAllCustomers()[0].ID);
+    }
 }
 
 //Purpose: Append every customer as a tab.
@@ -308,6 +312,7 @@ function LoadStaffOrderView() {
 
 //Purpose: Set the text in all the labels, getting the strings from the language database.
 function StaffOrderSetTextLabels() {
+    document.getElementById("goBackBtn").textContent = getString("button back");
     document.getElementById("loginButton").textContent = getString("button login");
     document.getElementById("singleOrderBtn").textContent = getString("button single order");
     //If not currently modifying.

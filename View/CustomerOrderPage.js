@@ -19,7 +19,7 @@ function CreateCstmrOrderPage(){
 
     var columnAllEl = createElement("div",{"class": "column"}, [columnRightEl, labelEl]);
     //--------------------------------------------------------------------------------------//
-    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); CstmrOrderSetTextLabels(); LoadView(); CstmrManageListeners(); UpdateNavigationLabels(); } ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
+    SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); CstmrOrderSetTextLabels(); LoadView(); CstmrManageListeners(); } ); //Pass this as the function that should be run after changing the language in the menubar. Do this before creating the menubar.
     var mainContentEl = createElement("div", {"class": "mainContent"}, [filterDivEl, menuZoneEl, columnAllEl, CreateMenuBar()]);
 
     document.body.appendChild(mainContentEl);
@@ -115,6 +115,7 @@ function CustomerControlInit() {
         $("#specialsZone").append(CreateItem("Specials Item", "specials_1", "menuItem")); //For testing.
     }
 
+    RemoveAllToDefault();
     LoadCustomerMenu();
     CreateAllMenuItems("menuItem");
     ClearAllEmptyCustomers();

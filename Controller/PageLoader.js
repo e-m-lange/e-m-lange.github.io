@@ -102,6 +102,11 @@ function TestingTools() {
 }
 
 //Purpose: Use this function to change the page.
+//1 = Customer Order
+//2 = Staff Select Order
+//3 = Staff Order
+//4 = Staff Inventory
+//5 = Staff Inventory when adding item to order
 function ChangePage(num) {
     ResetUndoRedo();
     ClearPage();

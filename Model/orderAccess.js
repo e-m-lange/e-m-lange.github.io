@@ -62,8 +62,6 @@ function getAmountOrder(order){
         throw new Error('Invalid order object. Missing amount property.');
     }
 
-    console.log(order.amount);
-
     return order.amount;
 }
 

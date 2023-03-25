@@ -17,7 +17,8 @@ function CreateOrder(customers_list, beverages_matrix){
         for (var j = 0; j < customer_beverages.length; j++) {
             // Get the ID of the current beverage
             var beverage_id = customer_beverages[j];
-            
+            var beverage_id = customer_beverages[j];
+
             // If the beverage count has not been initialized, set it to 0
             if (!beverage_counts[beverage_id]) beverage_counts[beverage_id] = 0;
 
@@ -125,6 +126,11 @@ function CleanOldOrders() {
     for (let i = indicesToDelete.length - 1; i >= 0; i--) {
         orders.splice(indicesToDelete[i], 1);
     }
+}
+
+// Delete a single, specified order.
+function DeleteOrder(orderID) {
+    orders.splice(getIndexfromOrders(orderID), 1);
 }
 
 // Return the total price of an order from an object or ID
