@@ -20,7 +20,7 @@ html, body {
 .columnRight {
     overflow: clip;
 
-    height: 92%;
+    height: calc(0.92 * 100vh);
     width: 40%;
     min-width: 50px;
     float: right;
@@ -179,23 +179,23 @@ html, body {
 }
 
 #orderZone {
-    height: 70%;
     overflow-y: scroll;
     text-align: left;
     font-family: Tahoma;
-    padding-top: 10px;
-    padding-left: 20px;
+}
+
+#orderZoneLabel {
 }
 
 #optionZone {
-    height: 23%;
+    height: calc(0.17 * 100vh);
     padding-top: 2%;
     text-align: right;
 }
 
 #orderBtn {
     box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.25);
-    padding: 2%;
+    padding: calc(0.01 * 100vh);
     padding-left: 20px;
     padding-right: 20px;
     margin-right: 5%;

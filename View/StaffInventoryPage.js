@@ -24,7 +24,7 @@ function CreateStaffInventoryPage(addFromMenuPage = false) { //If true, it will 
     //-----------------------------------------------------------------------//
     var navBarEl = CreateNavBar();
     var goBackBtn = createElement("button", {"id": "goBackBtn"});
-    goBackBtn.addEventListener("click", function() { ChangePage(2); });
+    goBackBtn.addEventListener("click", function() { ChangePage(2); }); //Go back to the select order page.
     //-----------------------------------------------------------------------//
     SetChangeLangAfterFunc( function() { parameters.lang = this.getAttribute("langType"); SetStaffInventoryLabels(); UpdateNavigationLabels(); },)
     if (!addFromMenuPage) {

@@ -45,9 +45,11 @@ function PressBtn(ev){
 function UnpressBtn(ev){
     var messageBox = document.getElementById("defMessBoxAll");
 
-    var input = document.getElementById("defMessInput").value;
-    if (input && input.length > 0 && input.trim()) { //Make sure it's valid before saving it.
-        messageClosed.input = input; //To pass on the string user inputs so it can be saved.
+    if (document.getElementById("defMessInput")) {
+        var input = document.getElementById("defMessInput").value;
+        if (input && input.length > 0 && input.trim()) { //Make sure it's valid before saving it.
+            messageClosed.input = input; //To pass on the string user inputs so it can be saved.
+        }
     }
 
     ev.target.style.transition = "background-color 500ms";
@@ -63,7 +65,12 @@ function UnpressBtn(ev){
 
     setTimeout(function(){
         messageBox.style.display = "none";
-        document.getElementById("defMessBox").dispatchEvent(messageClosed);
+        if (messageClosed !== undefined || null) {
+            document.getElementById("defMessBox").dispatchEvent(messageClosed);
+        }
+        else {
+            document.getElementById("defMessBox").dispatchEvent("empty");
+        }
     },600); //waits until the other tasks above are done (400 + 300)
 
     setTimeout(function(){

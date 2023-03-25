@@ -26,7 +26,7 @@ function CreateStaffOrderPage() {
     var singleOrderBtnEl = createElement("button", {"id": "singleOrderBtn", "class": "orderActionBtn", "onClick": "StaffDoAction('SingleOrder')"});
     var modifyOrderBtnEl = createElement("button", {"id": "splitOrderBtn", "class": "orderActionBtn", "onClick": "LoadModifyOrder(), LoadUnassigned()"});
     var addFromMenuBtnEl = createElement("button", {"id": "addFromMenuBtn", "class": "orderActionBtn"});
-    addFromMenuBtnEl.addEventListener( "click", function() { ChangePage(4); } ); //Will call for loading the inventory page for adding items from the menu.
+    addFromMenuBtnEl.addEventListener( "click", function() { ChangePage(5); } ); //Will call for loading the inventory page for adding items from the menu.
     var actionZoneEl = createElement("div", {"id": "actionZone"}, [undoRedoBtnEl, emptyGapEl, singleOrderBtnEl, modifyOrderBtnEl, addFromMenuBtnEl]);
     //-----------------------------------------------------------------------//
     var navBarEl = CreateNavBar();

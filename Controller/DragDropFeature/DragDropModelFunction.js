@@ -1,6 +1,6 @@
 //The functions here are called by DragDropControl, and relate directly the DragDropOrderModel
 
-function AddCustomer(customerName = "Crewmate"){
+function AddCustomer(customerName = "Crewmate") {
     var orderModel = []; //A new customer will have an empty order list.
     var customerToAdd = {ID: CstmrIdGenerator(), cstmrName: customerName, orders: orderModel}; //Create the customer object to add to the model.
     cstmrOrderListModel.push(customerToAdd); //Add said object to the model.
@@ -8,8 +8,7 @@ function AddCustomer(customerName = "Crewmate"){
     return customerToAdd.ID;
 }
 
-function RemoveCustomer(customerID = "cust_0")
-{
+function RemoveCustomer(customerID = "cust_0") {
     for (i = 0; i < cstmrOrderListModel.length; i++){
         if (cstmrOrderListModel[i].ID === customerID) {
             cstmrOrderListModel.splice(i, 1);
@@ -21,10 +20,13 @@ function RemoveCustomer(customerID = "cust_0")
 
 //Purpose: Remove all customers from the list.
 function RemoveAllCustomers() {
+    //Remove everything...
     cstmrOrderListModel.length = 0; //https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+    //Then add back the default customer.
+    AddCustomer();
 }
 
-function EditCustomerName(customerID, newName = "Crewmate"){
+function EditCustomerName(customerID, newName = "Crewmate") {
     for (i = 0; i < cstmrOrderListModel.length; i++){
         if (cstmrOrderListModel[i].ID === customerID) {
             cstmrOrderListModel[i].cstmrName = newName;
@@ -35,13 +37,13 @@ function EditCustomerName(customerID, newName = "Crewmate"){
 
 //Purpose: Add the object that the user selected to
 //the order list to the selected customer.
-function AddItem(itemName, customerID = "cust_0"){
+function AddItem(itemName, customerID = "cust_0") {
     var itemToAdd = { ID: ItemIdGenerator(customerID), name: itemName };
     cstmrOrderListModel.find(x => x.ID === customerID).orders.push(itemToAdd);
     return itemToAdd;
 }
 
-function RemoveItem(itemID, customerID = "cust_0"){
+function RemoveItem(itemID, customerID = "cust_0") {
     var customer = cstmrOrderListModel.find(x => x.ID === customerID);
 
     for (i = 0; i < RetrieveCstmrItems(customerID).length; i++){
@@ -78,34 +80,34 @@ function ClearAllEmptyCustomers() {
 
 //Purpose: Retrieve the customer by their ID.
 //Returns a cstmrOrderModel based on the ID.
-function RetrieveCustomer(customerID = "cust_0"){
+function RetrieveCustomer(customerID = "cust_0") {
     var customer = null;
     customer = cstmrOrderListModel.find(x => x.ID === customerID);
     return customer;
 }
 
 //Purpose: Returns the whole model.
-function RetrieveAllCustomers(){
+function RetrieveAllCustomers() {
     return cstmrOrderListModel;
 }
 
 //Purpose: Returns the total number of customers.
-function TotalCstmrCount(){
+function TotalCstmrCount() {
     return cstmrOrderListModel.length;
 }
 
-function SumOfCstmrOrder(customer= "cust_0"){
+function SumOfCstmrOrder(customer= "cust_0") {
     RetrieveCustomer(customer).orders; //INCOMPLETE need to know what the drink card will be...
 }
 
 //Purpose: Returns the order items of a given customer.
-function RetrieveCstmrItems(customerID = "cust_0"){
+function RetrieveCstmrItems(customerID = "cust_0") {
     var items = cstmrOrderListModel.find(x => x.ID === customerID).orders;
     return items;
 }
 
 //Purpose: Returns a specific item from a specific customer.
-function RetrieveCstmrSingleItem(itemID, customerID = "cust_0"){
+function RetrieveCstmrSingleItem(itemID, customerID = "cust_0") {
     var orderItem = RetrieveCstmrItems(customerID).find(x => x.ID === itemID); //WILL NEED TO BE EDITED, WAITING FOR DRINK CARD
     return orderItem;
 }
@@ -125,20 +127,19 @@ function RetrieveCstmrAllItems() {
 }
 
 //Purpose: Returns the total number of orders of a given customer.
-function TotalCstmrOrderCount(customerID = "cust_0"){
+function TotalCstmrOrderCount(customerID = "cust_0") {
     var itemCount = cstmrOrderListModel.find(x => x.ID === customerID).orders.length;
     return itemCount;
 }
 
 //Purpose: Replaces the current cstmrOrderListModel with a new cstmrOrderListModel;
-function SetCstmrOrderListModelState(inputList){
+function SetCstmrOrderListModelState(inputList) {
     cstmrOrderListModel = [];
     cstmrOrderListModel = JSON.parse(JSON.stringify(inputList));
 }
 
 //Purpose: Function drag and drop passes to undo redo manager.
-function UndoRedoDragDrop(inputList)
-{
+function UndoRedoDragDrop(inputList) {
     SetCstmrOrderListModelState(inputList); //Replace the state. This is the main Undo Redo functionality for drag and drop.
 }
 
@@ -250,4 +251,24 @@ function ClearUnassignedOrders() {
 
 function SetUnassignedOrders(input) {
     unassignedOrderModel = input;
+}
+
+
+//When an order has been made.
+function PageCreateOrder() {
+    var customerArr = RetrieveAllCustomers();
+    var customerNameArr = []; //For CreateOrder, we need array of customer names.
+    var orderArr = []; //For CreateOrder, we need arrays of beverage IDs.
+
+    for (let i = 0; i < customerArr.length; i++) {
+        var singleOrder = RetrieveCstmrItems(customerArr[i].ID);
+        var singleOrderArr = [];
+        for (let j = 0; j < singleOrder.length; j++) {
+            singleOrderArr.push(parseInt(singleOrder[j].name)); //Store the beverage ID as int.
+        }
+        customerNameArr.push(customerArr[i].cstmrName); //Store the customer's name.
+        orderArr.push(singleOrderArr);
+    }
+
+    CreateOrder(customerNameArr, orderArr);
 }

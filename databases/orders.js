@@ -20,7 +20,7 @@ var orders = [
     },
     
     {
-        "transaction_id": "328",
+        "transaction_id": "322",
         "customers": ["Anastasia"],
         "beverages_id": [[25053]],
         "amount": [[6]],
@@ -30,7 +30,7 @@ var orders = [
     },
     
     {
-        "transaction_id": "328",
+        "transaction_id": "321",
         "customers": ["Pedro"],
         "beverages_id": [[25053, 190719, 51029]],
         "amount": [[4,1,2]],

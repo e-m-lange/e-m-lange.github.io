@@ -28,7 +28,7 @@ var languages = {
         "button fridge code": "Code",
         "button fridge code explanation": "hold to view",
         "pop up order sent": "The order has been sent to our bartender",
-        "string drag order": "CstmrDrag item here to order",
+        "string drag order": "Drag item here to order",
         "message customer name": "Please input your name:",
         "navigation order": "ORDER",
         "navigation inventory": "INVENTORY",
@@ -46,6 +46,8 @@ var languages = {
         "button view hidden": "View Hidden Items",
         "string running out": "Running Out Soon:",
         "string all inventory": "All Inventory:",
+        "string price": "Price",
+        "string amount": "Amount",
     },
 
     fra : {
@@ -95,6 +97,8 @@ var languages = {
         "button view hidden": "(Fra)View Hidden Items",
         "string running out": "(Fra)Running Out Soon:",
         "string all inventory": "(Fra)All Inventory:",
+        "string price": "(Fra)Price",
+        "string amount": "(Fra)Amount",
     },
 
     indo : {
@@ -144,5 +148,7 @@ var languages = {
         "button view hidden": "(Indo)View Hidden Items",
         "string running out": "(Indo)Running Out Soon:",
         "string all inventory": "(Indo)All Inventory:",
+        "string price": "(Indo)Price",
+        "string amount": "(Indo)Amount",
     }
 }

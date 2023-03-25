@@ -37,9 +37,10 @@ function SelectNavItem(ev) {
     //Change the page accordingly.
     switch(selectedId) {
         case "orderNav":
+            ChangePage(2); //Load the staff select order page.
             break;
         case "inventoryNav":
-            ChangePage(3); //Load the staff inventory page.
+            ChangePage(4); //Load the staff inventory page.
             break;
         case "vipNav":
             break;

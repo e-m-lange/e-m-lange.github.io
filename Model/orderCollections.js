@@ -20,7 +20,8 @@ function compareOrders(a, b) {
 
 //Return all the orders sorted by time
 function sortOrders(orders) {  
-    return orders.sort(compareUsers);
+    //return orders.sort(compareUsers);
+    return orders.sort(compareOrders);
 }
 
 // Returns the orders not served yet

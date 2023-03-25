@@ -125,7 +125,6 @@ function CstmrAddNewCstmr(addItemName, oldState) { //Opens a message box waiting
 }
 
 
-
 //Purpose: When user clicks the edit button next order name to change the customer name.
 function CstmrEditCustomerNameCtrl(customerID){
     document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Input new name:", true));
@@ -154,5 +153,18 @@ function CstmrManageListeners() {
     else { //Otherwise, allow for dropping into any of the customer containers
         document.querySelectorAll(".customerContainer").forEach(x => { x.addEventListener("drop", CstmrDrop ); }) //https://flaviocopes.com/how-to-add-event-listener-multiple-elements-javascript/
         orderZone.removeEventListener("drop", CstmrDrop ); //Prevent user from dropping into orderZone
+    }
+}
+
+
+//Purpose: Create an order in the model, give visual feedback to the user.
+function CstmrCreateOrder() {
+    if (TotalCstmrCount() > 0) {
+        if (RetrieveCstmrAllItems().length > 0) {
+            PageCreateOrder();
+            RemoveAllCustomers();
+            LoadView();
+            document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Order Sent", false));
+        }
     }
 }

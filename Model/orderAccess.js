@@ -24,7 +24,8 @@ function getIdOrder(order){
         throw new Error('Invalid order object. Missing transaction_id property.');
     }
 
-    return Number(order.transaction_id);
+    //return Number(order.transaction_id);
+    return order.transaction_id; //Since hash is invalid for Number...
 }
 
 // Return the names of the customers from an ID or object
@@ -60,6 +61,8 @@ function getAmountOrder(order){
     if (typeof order !== 'object' || !order.hasOwnProperty('amount')) {
         throw new Error('Invalid order object. Missing amount property.');
     }
+
+    console.log(order.amount);
 
     return order.amount;
 }

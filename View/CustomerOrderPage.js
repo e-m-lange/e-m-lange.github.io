@@ -7,10 +7,11 @@ function CreateCstmrOrderPage(){
     //--------------------------------------------------------------------------------------//
     var addCustomerEl = createElement("div", {"id": "addCustomerZone", "class": "addNewCustomer", "content": "textContent"});
     var horizLineEl = createElement("div", {"class": "horizLine"});
-    var orderBtnEl = createElement("button", {"id": "orderBtn", "content": "textContent"});
+    var orderBtnEl = createElement("button", {"id": "orderBtn", "content": "textContent", "onClick": "CstmrCreateOrder();"});
     var allCustOrderSumTxtEl = createElement("label", {"class": "allCustOrderSumTxt"});
 
-    var orderZoneEl = createElement("div", {"id": "orderZone", "class": "orderTab orderZoneOpened"});
+    var orderZoneLabelEl = createElement("label", {"id": "orderZoneLabel"}, [getString("string drag order")]);
+    var orderZoneEl = createElement("div", {"id": "orderZone", "class": "orderTab orderZoneOpened"}, [orderZoneLabelEl]);
     var optionZoneEl = createElement("div", {"id": "optionZone"}, [allCustOrderSumTxtEl, addCustomerEl, horizLineEl, orderBtnEl]);
     //--------------------------------------------------------------------------------------//
     var columnRightEl = createElement("div", {"class": "columnRight"}, [orderZoneEl, optionZoneEl]);
@@ -25,7 +26,7 @@ function CreateCstmrOrderPage(){
 
     CustomerControlInit();
 }
-function CstmrOrderSetTextLabels(){
+function CstmrOrderSetTextLabels() {
     document.getElementById("loginButton").textContent = getString("button login");
     document.getElementById("addCustomerZone").textContent = "+ " + getString("string new customer");
     document.getElementById("orderBtn").textContent = getString("string order menu");
@@ -133,25 +134,28 @@ function LoadView() {
     //For each item in a customer, display them.
     else {
         document.getElementById("orderZone").style.padding = "20px";
-        for (i = 0; i < RetrieveCstmrItems().length; i++) {
-            var itemToAdd = CreateItem(parseInt(RetrieveCstmrItems()[i].name)); //name refers to the beverageID.
-            itemToAdd.id = RetrieveCstmrItems()[i].ID; //Need to do a bit of a workaround. Need id to be the item's item (e.g. cust_0_1).
-            document.getElementById("orderZone").appendChild(itemToAdd);
+        if (TotalCstmrCount() > 0) {
+            for (i = 0; i < RetrieveCstmrItems().length; i++) {
+                var itemToAdd = CreateItem(parseInt(RetrieveCstmrItems()[i].name)); //name refers to the beverageID.
+                itemToAdd.id = RetrieveCstmrItems()[i].ID; //Need to do a bit of a workaround. Need id to be the item's item (e.g. cust_0_1).
+                document.getElementById("orderZone").appendChild(itemToAdd);
+            }
         }
+
         document.getElementById("optionZone").getElementsByClassName("allCustOrderSumTxt")[0].textContent = getString("string total order") + ": $XX"; //If only one item, display it this way
     }
 
     //If there are no items in the order zone, display this text.
     if (document.getElementById("orderZone").children.length === 0) {
-        $("#orderZone").text(getString("string drag order"));
-        document.getElementById("orderZone").style.paddingTop = "36%";
+        $("#orderZone").append(createElement("label", {"id": "orderZoneLabel"}, [getString("string drag order")]));
+        document.getElementById("orderZone").style.paddingTop = "calc(0.2 * 100vh)";
         document.getElementById("orderZone").style.paddingLeft = "30%";
-        document.getElementById("orderZone").style.height = "38%";
+        document.getElementById("orderZone").style.height = "calc(0.45 * 100vh)";
     }
     else {
         document.getElementById("orderZone").style.paddingTop = "0%";
         document.getElementById("orderZone").style.paddingRight = "0px";
-        document.getElementById("orderZone").style.height = "70%";
+        document.getElementById("orderZone").style.height = "calc(0.65 * 100vh)";
     }
 
     CreateAllOrderItems("orderItem");
@@ -223,8 +227,7 @@ function CreateAllOrderItems(className) {
 }
 
 //Purpose: Create placeholder customer container.
-function CreateCustomer(customerName, id = "cust_0", appendTo)
-{
+function CreateCustomer(customerName, id = "cust_0", appendTo) {
     var editCustNameEl = createElement("button", {"class": "editCustomerName", "id": id});
     editCustNameEl.onclick = function() { CstmrEditCustomerNameCtrl(id); };
     var nameCustEl = createElement("p", {"class": "custNameTxt"});

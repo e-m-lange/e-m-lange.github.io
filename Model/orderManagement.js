@@ -141,3 +141,22 @@ function TotalPriceOrder(order){
 
    return total;
 }
+
+// Return the total amount of each beverages of the order from an ID or object
+function TotalAmountOrder(order){
+    var totalAmount = 0;
+    var orderAmount = getAmountOrder(order);
+
+    for (let i = 0; i < orderAmount.length; i++) {
+        if (orderAmount[i].length > 0) {
+            var orderInOrder = orderAmount[i];
+            for (let j = 0; j < orderInOrder.length; j++) {
+                for (let k = 0; k < orderInOrder[j]; k++) {
+                    totalAmount++;
+                }
+            }
+        }
+    }
+
+    return totalAmount;
+}
