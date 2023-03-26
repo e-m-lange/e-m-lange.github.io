@@ -2,7 +2,7 @@ let changeLangAfterFunc = null; //Save the function to run when the language is 
 function SetChangeLangAfterFunc(func) {
     changeLangAfterFunc = func;
 }
-function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, General Staff = 2, Owner = 3
+function CreateMenuBar() {
     //Creating the html elements:
 
     var langBtnIconEl = createElement("div", {"id": "langBtnIcon"});
@@ -11,22 +11,23 @@ function CreateMenuBar(userType = 0) { //Normal Customer = 0, VIP = 1, General S
     var langFlagIconEl = createElement("img", {"class": "langFlagIcon"});
     var langBtnContainerEl = createElement("div", {"id": "langBtnContainer", "onclick": "ShowLangDropDown()"}, [langFlagIconEl, langBtnEl, langBtnIconEl]);
 
-    var langContainerEl = createElement("div", {"id": "langContainer"}, [langBtnContainerEl, CreateMenuBarItem()]);
+    var langContainerEl = createElement("div", {"id": "langContainer"}, [langBtnContainerEl, CreateLangMenuBarItem()]);
     var loginBtnEl = createElement("button", {"id": "loginButton", "content": "textContent"});
 
     var menuBarEl = createElement("div", {"id": "menuBar"}, [loginBtnEl, langContainerEl]);
     SetLangIcon(langFlagIconEl);
 
-    switch (userType){ //This will be used in the future as the different user types have different elements.
-        case 2:
-            break;
+    if (getIdConnected(parameters)) {
+        if (getCategoryUser(getIdConnected(parameters)) === 0 || 1) {
+            menuBarEl.appendChild(CreateSecurityButton());
+        }
     }
 
     return menuBarEl;
 }
 
 //Create the items that are placed in the dropdown menu.
-function CreateMenuBarItem() {
+function CreateLangMenuBarItem() {
     var langDropDownEl;
 
     //If the dropdown element doesn't exist yet, make it, otherwise just change the language being displayed.
@@ -54,7 +55,7 @@ function CreateMenuBarItem() {
             //Make sure there is a function to attach as a listener.
             if (changeLangAfterFunc != null) { //If the function that should be run when a different language is selected is not empty.
                 item.addEventListener("click", changeLangAfterFunc); //Make sure it is run when a different language is selected. Reload the menu items.
-                var reloadFunc = function() {setTimeout(function() {CreateMenuBarItem(); ShowLangDropDown();}, 20)};
+                var reloadFunc = function() {setTimeout(function() {CreateLangMenuBarItem(); ShowLangDropDown();}, 20)};
                 item.addEventListener("click", reloadFunc); //Make sure it is run when a different language is selected. Reload the menu items.
             }
         }
@@ -69,6 +70,19 @@ function CreateMenuBarItem() {
     langDropDownEl.style.display = "none";
 
     return langDropDownEl; //Returns to be attached.
+}
+
+function CreateSecurityButton() {
+    var securityBtnIconEl = createElement("span", {"id": "securityBtnIcon"});
+    var securityBtnFillerEl = createElement("box", {"id": "securityBtnFiller"});
+    var securityBtnEl = createElement("button",
+        {"id": "securityBtn", //Add Events for the filling in animation when holding down security button.
+            "onMouseDown": "document.getElementById('securityBtnFiller').classList.add('pressedBtn'); document.getElementById('securityBtnIcon').style.display = 'none';",
+            "onMouseUp": "document.getElementById('securityBtnFiller').classList.remove('pressedBtn'); document.getElementById('securityBtnIcon').style.display = 'flex';",
+            "onMouseLeave": "document.getElementById('securityBtnFiller').classList.remove('pressedBtn'); document.getElementById('securityBtnIcon').style.display = 'flex';"},
+        [securityBtnIconEl, securityBtnFillerEl]);
+
+    return securityBtnEl;
 }
 
 //When the language button has been clicked, run this function.

@@ -44,6 +44,72 @@
     background: transparent;
 }
 
+#securityBtn {
+    height: 38px;
+    width: 95px;
+    border-radius: 15px;
+    margin: 10px;
+    margin-right: 20px;
+    float: right;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    background: transparent;
+    overflow: hidden;
+}
+
+#securityBtnFiller {
+    background: #EFB93C;
+    border-style: none;
+    height: 50px;
+    width: 20px;
+    margin-left: -20px;
+    translate: -10px -16px;
+    transform: scale(30%);
+    border-radius: 50px;
+}
+
+/*https://www.youtube.com/watch?v=wGPDuqgkoew For the fill effect. Temporary solution.*/
+
+.pressedBtn {
+    height: 38px;
+    width: 95px;
+    margin: 10px;
+    margin-right: 20px;
+    float: right;
+    border-style: solid;
+    border-width: 3px;
+    background: #EFB93C;
+
+    content: "";
+    transform: scaleY(30%);
+    transform: scaleX(10%);
+    animation: fill 8s ease-out infinite;
+    border-radius: 80px;
+}
+
+@keyframes fill {
+    from {
+        transform: scaleY(30%);
+        transform: scaleX(10%);
+    }
+    to {
+        transform: scaleY(700%);
+        transform: scaleX(1000%);
+    }
+}
+
+#securityBtnIcon {
+    display: flex;
+    width: 32px;
+    height: 29px;
+    margin-left: 22px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../jpg/AlarmIcon.png);
+}
+
 #langContainer {
     width: fit-content;
     height: fit-content;
