@@ -17,7 +17,7 @@ function CreateMenuBar() {
     var menuBarEl = createElement("div", {"id": "menuBar"}, [loginBtnEl, langContainerEl]);
     SetLangIcon(langFlagIconEl);
 
-    if (getIdConnected(parameters)) {
+    if (getIdConnected(parameters)) { //If they are staff / manager, display the security button.
         if (getCategoryUser(getIdConnected(parameters)) === 0 || 1) {
             menuBarEl.appendChild(CreateSecurityButton());
         }
@@ -47,7 +47,7 @@ function CreateLangMenuBarItem() {
     //Add the dropdown items (the languages).
     for (lang in languages) {
         //If it isn't the selected language...
-        if (lang != parameters.lang){
+        if (lang !== parameters.lang){
             var item = createElement("div", {"class": "dropDownItem", "content": "textContent", "langType": lang});
             item.after('background: url("../jpg/DropDownArrowIcon.png")');
             item.textContent = languages[lang]["language"]; //We want to get all the languages.
@@ -60,7 +60,7 @@ function CreateLangMenuBarItem() {
             }
         }
         //Else if it is the selected language...
-        else if (lang == parameters.lang){ //Just display it with no event listeners and a gray background.
+        else if (lang === parameters.lang){ //Just display it with no event listeners and a gray background.
             var deselected = createElement("div", {"class": "dropDownItem", "content": "textContent", "langType": lang, "style": "background: darkgray"});
             deselected.textContent = languages[lang]["language"];
             langDropDownEl.appendChild(deselected);

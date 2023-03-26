@@ -1,3 +1,4 @@
+var hasBeenModified = false; //Used to keep track of if changes have occurred to the order, which would mean having to replace the old order with new ones.
 
 function StaffDrag(ev){
     ev.dataTransfer.setData("customerID", selectedCustomer); //storing this ID will allow for us to know where the item came from. Customer id.
@@ -49,10 +50,12 @@ function StaffCheckDrop(parent, target, itemName, itemId) { //parent = customerI
     }
 }
 
+//All staff order actions are routed here.
 function StaffDoAction(action, parent, target, itemName, itemId) {
     var successfulAction = true;
     const oldState = JSON.parse(JSON.stringify(RetrieveAllCustomers())); //Save the old state for undo redo later.
     const oldStateUnassigned = JSON.parse(JSON.stringify(RetrieveUnassignedAll())); //Save the old state for undo redo later.
+    hasBeenModified = true; //When an action has occurred, means the order has been modified.
 
     switch(action) {
         case "AddCustomer":
@@ -138,4 +141,49 @@ function StaffActionUndoRedo(oldState, oldStateUnassigned) {
             LoadStaffOrderView();
             if (modifyOrderOn) { LoadModifyOrder();}
         });
+}
+
+function ManageListenersOrders(orderItem) {
+    orderItem.addEventListener("click", ExpandOrderItemOption);
+}
+
+//Purpose: When clicking proceed payment button.
+function ProceedWithPayment(customerID = "cust_0") { //Default for first customer.
+    console.log("Payment");
+
+    if (TotalCstmrCount() <= 1) { //If there's only one customer, the whole order is done once paid.
+        var currOrderX = cstmrOrderListModel.id; //The saved id of the order being handled.
+        if (!hasBeenModified) { //If the order hasn't been modified, just update the status.
+            UpdateOrderStatus(currOrderX); //Indicate it has been served.
+        }
+        else { //Otherwise, if it has been modified.
+            var newOrderIdX = PageCreateOrder(); //Create a new order.
+            UpdateOrderStatus(newOrderIdX); //Indicate that the new order has already been handled.
+            DeleteOrder(currOrderX); //Delete the old order.
+        }
+        ChangePage(2); //Go back to the select order page.
+        document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Order Payment Completed", false));
+    }
+    else { //Otherwise if there are several customers, hide customers as the orders are paid (flawed solution...) since orders are handled as tables.
+        RetrieveCustomer(selectedCustomer).hasPaid = true; //Indicate the customer has now paid.
+        if (CheckAllCustomersPaid()) { //If all customers have paid...
+            var currOrderY = cstmrOrderListModel.id;
+            if (!hasBeenModified) { //If it hasn't been modified, just change the status.
+                UpdateOrderStatus(currOrderY);
+            }
+            else { //If it has been modified, need to replace the order.
+                var newOrderIdY = PageCreateOrder(); //Create a new order.
+                UpdateOrderStatus(newOrderIdY); //Indicate that the new order has already been handled.
+                DeleteOrder(currOrderY); //Delete the old order.
+            }
+
+            ChangePage(2);
+            document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Order Payment Completed", false));
+        }
+        else { //Otherwise just change the status of the customer's paid status.
+            LoadStaffOrderView(); //Update the view.
+            SetNextUnpaidCustomer(); //Select the next customer that has yet to pay.
+            LoadOrder(); //Load the view (orders of selected customer).
+        }
+    }
 }

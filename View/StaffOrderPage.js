@@ -31,15 +31,18 @@ function CreateStaffOrderPage() {
     //-----------------------------------------------------------------------//
     var goBackBtn = createElement("button", {"id": "goBackBtn"});
     goBackBtn.addEventListener("click", function() { ChangePage(2); }); //Go back to the select order page.
+    var totalLabel = createElement("label", {"id": "paymentLabel"}, ["Proceed Payment"]);
+    var paymentBtn = createElement("button", {"id": "paymentBtn", "onClick": "ProceedWithPayment(selectedCustomer);"}, [totalLabel]); //Button to proceed with payment.
     var navBarEl = CreateNavBar();
     //-----------------------------------------------------------------------//
     SetChangeLangAfterFunc(function() { parameters.lang = this.getAttribute("langType"); StaffOrderSetTextLabels(); UpdateNavigationLabels(); } );
-    var staffOrderPageEl = createElement("div", {"class": "mainContent"}, [actionZoneEl, navBarEl, CreateMenuBar(), custOrderZoneEl, goBackBtn]);
+    var staffOrderPageEl = createElement("div", {"class": "mainContent"}, [actionZoneEl, navBarEl, CreateMenuBar(), custOrderZoneEl, goBackBtn, paymentBtn]);
 
     document.body.appendChild(staffOrderPageEl);
 
     StaffOrderSetTextLabels();
     LoadStaffOrderView();
+    hasBeenModified = false; //Used to keep track of changes. Reset upon the loading of this page.
 }
 
 //Purpose: Create the staff order item.
@@ -58,10 +61,6 @@ function CreateStaffOrderItem(itemName = "", itemPrice = "0kr", itemId) {
     orderContainerEl.ondragstart = StaffDrag;
 
     return orderContainerEl;
-}
-
-function ManageListenersOrders(orderItem) {
-    orderItem.addEventListener("click", ExpandOrderItemOption);
 }
 
 //Purpose: Call this function when clicking the option button on an order item (3 dots). Shows the options available for the order.
@@ -173,6 +172,18 @@ function SetSelectedCustomer(newID) {
     }
 }
 
+//Purpose: Select the next customer that hasn't paid.
+function SetNextUnpaidCustomer() {
+    var customers = RetrieveAllCustomers();
+
+    for (let i = 0; i < customers.length; i++) {
+        if (!customers[i].hasPaid){
+            SetSelectedCustomer(customers[i].ID);
+            break;
+        }
+    }
+}
+
 //Purpose: Called when user clicks modify button. Used to add new elements and functionality or remove them, based on the current state.
 function LoadModifyOrder() {
     //If it hasn't been split yet.
@@ -265,7 +276,10 @@ function LoadMultipleCstmrTabs() {
         splitCustTabContainer.lastChild.remove();
     }
     //Add each customer as a tab.
-    RetrieveAllCustomers().forEach(x => splitCustTabContainer.appendChild(CreateCustomerTabItem(x.cstmrName, x.ID)).append(AddEditCustomerTabItem(x.ID)));
+    RetrieveAllCustomers().forEach(x =>
+    { if (x.hasPaid === false) //If the user hasn't paid yet.
+    { splitCustTabContainer.appendChild(CreateCustomerTabItem(x.cstmrName, x.ID)).append(AddEditCustomerTabItem(x.ID))}
+    });
 }
 
 //Purpose: Load the order of a selected customer.
@@ -282,6 +296,14 @@ function LoadOrder(appendToID = "mainTab", customer = selectedCustomer) {
                 ManageListenersOrders(document.getElementById(newItem.id).querySelectorAll(".staffOrderOption")[0]);
             }
         }
+    }
+
+    //Setting label for payment button.
+    if (selectedCustomer && document.getElementById("paymentLabel")) {
+        document.getElementById("paymentLabel").textContent = "Total: " + CalculatePricePerOrder(RetrieveCstmrItems(selectedCustomer)) + "   Proceed Payment";
+    }
+    else if (document.getElementById("paymentLabel")) {
+        document.getElementById("paymentLabel").textContent = "Proceed Payment";
     }
 }
 
@@ -341,4 +363,12 @@ function StaffOrderSetTextLabels() {
         document.getElementById("removeCustomerTab").textContent = getString("string remove customer allcaps");
     }
     document.getElementById("addFromMenuBtn").textContent = getString("button add from menu");
+
+    //Setting label for payment button.
+    if (selectedCustomer && document.getElementById("paymentLabel")) {
+        document.getElementById("paymentLabel").textContent = "Total: " + CalculatePricePerOrder(RetrieveCstmrItems(selectedCustomer)) + "   Proceed Payment";
+    }
+    else if (document.getElementById("paymentLabel")) {
+        document.getElementById("paymentLabel").textContent = "Proceed Payment";
+    }
 }

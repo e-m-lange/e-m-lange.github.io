@@ -2,7 +2,7 @@
 
 function AddCustomer(customerName = "Crewmate") {
     var orderModel = []; //A new customer will have an empty order list.
-    var customerToAdd = {ID: CstmrIdGenerator(), cstmrName: customerName, orders: orderModel}; //Create the customer object to add to the model.
+    var customerToAdd = {ID: CstmrIdGenerator(), cstmrName: customerName, orders: orderModel, hasPaid: false}; //Create the customer object to add to the model.
     cstmrOrderListModel.push(customerToAdd); //Add said object to the model.
 
     return customerToAdd.ID;
@@ -277,7 +277,7 @@ function PageCreateOrder() {
         orderArr.push(singleOrderArr);
     }
 
-    CreateOrder(customerNameArr, orderArr);
+    return CreateOrder(customerNameArr, orderArr); //Return the id of the newly added oder.
 }
 
 //Purpose: Load the selected order into the drag drop model.
@@ -285,6 +285,7 @@ function LoadOrderIntoDragDropModel(orderId) {
     RemoveAll(); //Clear out the drag drop model completely.
     ResetUndoRedo();
 
+    cstmrOrderListModel.id = orderId;
     var customers = getCustomersOrder(getOrderfromOrders(orderId));
     var beverages = getBeveragesOrder(getOrderfromOrders(orderId));
 
@@ -317,4 +318,18 @@ function CalculateTotalPrice() {
     }
 
     return totalPrice + "kr";
+}
+
+//Purpose: Checks if all the customers have paid.
+function CheckAllCustomersPaid() {
+    var customers = RetrieveAllCustomers();
+    var allPaid = true;
+
+    for (let i = 0; i < customers.length; i++) {
+        if (!customers[i].hasPaid) { //If user hasn't paid.
+            allPaid = false; //Indicate that not all customers have paid.
+        }
+    }
+
+    return allPaid;
 }

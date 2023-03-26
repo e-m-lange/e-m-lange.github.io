@@ -40,7 +40,9 @@ function CreateOrder(customers_list, beverages_matrix){
         "fridgecode" : Math.floor(Math.random() * 900) + 100, //by ChatGPT
         "timestamp" : Date.now(),
         "served" : false
-        });   
+        });
+
+    return orders[orders.length - 1].transaction_id; //To know the id of the newly added order.
 }
 
 console.log(orders);
