@@ -20,6 +20,8 @@ function CreateItem(beverage){
   return card;
 }
 
+
+
 //Purpose: Serves as the base of any card, specific changes are made in the other functions.
 function PopUpCardBase(beverage) {
   if (document.getElementsByClassName("popUpCard").length > 0) { //Get rid of the old popup cards first.
@@ -81,8 +83,33 @@ function PopUpStaff(beverage) {
 }
 
 //Purpose: Used when the item is selected in the inventory and the current user is the manager/owner.
-function PopUpManager() {
+function PopUpManager(beverage) {
+  var card = PopUpCardBase(beverage);
+  card.lastChild.appendChild(createElement("div", {"class": "popUpLabel", "style": "height: 15px"})); //Empty space.
+  card.lastChild.appendChild(createElement("div", {"class": "popUpLabel"}, ["Quantity: ", getStockBeverage(beverage)]));
+  var addToStockBtn = createElement("button", {"id": "addStockBtn", "bevId": beverage, "class": "popUpStockManager", "onClick": "MessageBoxAddStock()"}, [getString("button add stock")]);
+  card.lastChild.appendChild(addToStockBtn);
 
+  return card;
+}
+
+//Purpose: Called when adding stock. Only manager / owner has access. Message box waiting for input pops up, can enter input to add new stock.
+function MessageBoxAddStock() {
+  document.body.appendChild(CreateMessageBox(getString("message enter stock"), true)); //Open a messagebox to get how many items to add to stock.
+  document.getElementById("defMessBox").addEventListener("MessageClosedEv", function(ev) { //Call this when the messagebox is closed.
+    var bevId = document.getElementById("addStockBtn").getAttribute("bevId");
+    try {
+      UpdateBeverageStock(parseInt(bevId), parseInt(ev.input)); //Change stock.
+      ClearAllInventoryItems();
+      LoadRunningOutSoon();
+      LoadInventoryItems();
+      ManageStaffInventoryListeners();
+      document.body.getElementsByClassName("mainContent")[0].appendChild(PopUpStaff(parseInt(bevId))); //To easily see the changes.
+    }
+    catch (error) {
+      console.log("Invalid new stock number");
+    }
+  }, false);
 }
 
 //Purpose: When X button is clicked, remove the popup.

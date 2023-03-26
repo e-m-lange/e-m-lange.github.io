@@ -54,6 +54,13 @@ function SetStaffInventoryLabels() {
     }
 }
 
+function ClearAllInventoryItems() {
+    var allItems = document.getElementsByClassName("item");
+    while (allItems.length > 0) {
+        allItems[allItems.length - 1].remove();
+    }
+}
+
 //Load the items that are running out.
 function LoadRunningOutSoon() {
     var beverages = BeveragesToRestock();

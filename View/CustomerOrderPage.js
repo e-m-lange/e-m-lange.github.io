@@ -34,13 +34,6 @@ function CstmrOrderSetTextLabels() {
 }
 
 //VIEW RELATED FUNCTIONS
-var isVIP = false;
-
-//Can use this function to set the VIP status, which is important for display the correct information & html elements
-function SetVIPStatus (boolValue){
-    isVIP = boolValue;
-}
-
 function HoverOrderTab(ev) {
     var rightColumn = document.getElementsByClassName("columnRight")[0];
 
@@ -108,11 +101,13 @@ function CustomerControlInit() {
 
 
     //If is VIP, just hide the add customer part & append a specials section.
-    if (isVIP) {
-        $(".addNewCustomer").hide();
-        var specialsZoneEl = createElement("div", {"id": "specialsZone"});
-        $("#menuZone").append(specialsZoneEl);
-        $("#specialsZone").append(CreateItem("Specials Item", "specials_1", "menuItem")); //For testing.
+    if (getIdConnected(parameters)) {
+        if (getCategoryUser(getIdConnected(parameters)) === 3) {
+            $(".addNewCustomer").hide();
+            var specialsZoneEl = createElement("div", {"id": "specialsZone"});
+            $("#menuZone").append(specialsZoneEl);
+            $("#specialsZone").append(createElement("div", {}, ["SPECIALS"])); //For testing.
+        }
     }
 
     RemoveAllToDefault();
@@ -152,11 +147,13 @@ function LoadView() {
         document.getElementById("orderZone").style.paddingTop = "calc(0.2 * 100vh)";
         document.getElementById("orderZone").style.paddingLeft = "30%";
         document.getElementById("orderZone").style.height = "calc(0.45 * 100vh)";
+        document.getElementsByClassName("allCustOrderSumTxt")[0].textContent = "";
     }
     else {
         document.getElementById("orderZone").style.paddingTop = "0%";
         document.getElementById("orderZone").style.paddingRight = "0px";
         document.getElementById("orderZone").style.height = "calc(0.65 * 100vh)";
+        document.getElementsByClassName("allCustOrderSumTxt")[0].textContent = CalculateTotalPrice();
     }
 
     CreateAllOrderItems("orderItem");
@@ -181,7 +178,7 @@ function LoadViewMultipleCustomer() {
         }
         //Adding sum text
         var custOrderSumTxtEl = createElement("label", {"class": "custOrderSumTxt"});
-        custOrderSumTxtEl.textContent = getString("string total order") + ": $XX"; //NEED TO REPLACE!
+        custOrderSumTxtEl.textContent = getString("string total order") + ": "+ CalculatePricePerOrder(RetrieveCstmrItems(customerId)); //Show price of the customer's order.
         addElementTo.append(custOrderSumTxtEl);
     }//https://stackoverflow.com/questions/9681601/how-can-i-count-the-number-of-elements-with-same-class
 }

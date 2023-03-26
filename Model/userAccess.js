@@ -77,6 +77,10 @@ function getCategoryUser(user){
         throw new Error('Invalid user object. Missing category property.');
     }
 
+    if (Number(user.credentials) === 0) { //Can have problems returning 0 as it is perceived as false, thus cater for this special case.
+        return Number(user.credentials);
+    }
+
     return Number(user.credentials) || user.category;
 }
 

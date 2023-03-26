@@ -83,6 +83,7 @@ function TurnOffPageSheets() { //https://williamhuey.github.io/posts/disable-sty
 
 //Purpose: For testing to swap between pages.
 function TestingTools() {
+    //For changing pages.
     var btnPage1 = createElement("button", {"onClick": "ChangePage(1)" });
     btnPage1.textContent = "Change to Page 1";
     var btnPage2 = createElement("button", {"onClick": "ChangePage(2)" });
@@ -91,17 +92,38 @@ function TestingTools() {
     btnPage3.textContent = "Change to Page 3";
     var btnPage4 = createElement("button", {"onClick": "ChangePage(4)" });
     btnPage4.textContent = "Change to Page 4";
+    //For changing user types.
+    var loginStaff = createElement("button", {"onClick": "ChangeUserTest(0)" });
+    loginStaff.textContent = "Staff(0)";
+    var loginManager = createElement("button", {"onClick": "ChangeUserTest(1)" });
+    loginManager.textContent = "Manager(1)";
+    var loginNormal = createElement("button", {"onClick": "ChangeUserTest(2)" });
+    loginNormal.textContent = "Customer(2)";
+    var loginVIP = createElement("button", {"onClick": "ChangeUserTest(3)" });
+    loginVIP.textContent = "VIP(3)";
+
+    var notes = createElement("div", {"style": "background: rgba(200,200,200,.5)"}, ["Select user type THEN change page in order to see the effects"]);
+
     var testtool = createElement("div", {"id": "testTool"});
 
+    //For changing pages.
     testtool.appendChild(btnPage1);
     testtool.appendChild(btnPage2);
     testtool.appendChild(btnPage3);
     testtool.appendChild(btnPage4);
+    //For changing user types.
+    testtool.appendChild(loginStaff);
+    testtool.appendChild(loginManager);
+    testtool.appendChild(loginNormal);
+    testtool.appendChild(loginVIP);
+
+    testtool.appendChild(notes);
 
     document.getElementsByClassName("mainContent")[0].appendChild(testtool);
 }
 
 //Purpose: Use this function to change the page.
+//0 =
 //1 = Customer Order
 //2 = Staff Select Order
 //3 = Staff Order
@@ -114,4 +136,26 @@ function ChangePage(num) {
     tempSelected = num;
     SetPage();
     TestingTools();
+}
+
+//Test tool for swapping between user types.
+//0 = Normal Staff / Waiter
+//1 = Manager / Owner
+//2 = Normal Customer (Default - no login)
+//3 = VIP Customer
+function ChangeUserTest(num = 2) {
+    switch (num) {
+        case 0:
+            UpdateUserConnected(24);
+            break;
+        case 1:
+            UpdateUserConnected(2);
+            break;
+        case 2:
+            UpdateUserConnected(""); //No login for normal customers.
+            break;
+        case 3:
+            UpdateUserConnected(28);
+            break;
+    }
 }

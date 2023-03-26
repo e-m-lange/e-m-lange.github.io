@@ -27,7 +27,6 @@ function CreateMessageBox(message, allowInput = false){
     messBtnEl.addEventListener("mouseup", UnpressBtn);
 
     SetMessage(message);
-    console.log("Create message");
 
     return containerAllEl;
 }

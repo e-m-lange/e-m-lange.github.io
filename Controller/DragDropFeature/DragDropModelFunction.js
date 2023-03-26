@@ -156,7 +156,7 @@ function UndoRedoUnassigned(inputList) {
 //Purpose: Move all orders onto one customer, thus creating a single order.
 function CreateSingleOrder() {
     var replacementList = RetrieveCstmrAllItems();
-    RemoveAllToDefault();
+    RemoveAll();
     var replacementCstmrId = AddCustomer();
     RetrieveCustomer(replacementCstmrId).orders = replacementList;
     replacementList.forEach(x => x.ID = ItemIdGenerator(replacementCstmrId));
@@ -294,4 +294,27 @@ function LoadOrderIntoDragDropModel(orderId) {
             AddItem(beverages[i][k], cstmrId);
         }
     }
+}
+
+//Purpose: Calculate total price of drink id array (1 customer's orders).
+function CalculatePricePerOrder(drinkArr) {
+    var totalPrice = 0;
+
+    for (let i = 0; i < drinkArr.length; i++) {
+        totalPrice += getPriceBeverage(parseInt(drinkArr[i].name));
+    }
+
+    return totalPrice + "kr";
+}
+
+//Calculate the price of all orders from all customers.
+function CalculateTotalPrice() {
+    var allItems = RetrieveCstmrAllItems();
+    var totalPrice = 0;
+
+    for (let i = 0; i < allItems.length; i++) {
+        totalPrice += getPriceBeverage(parseInt(allItems[i].name));
+    }
+
+    return totalPrice + "kr";
 }

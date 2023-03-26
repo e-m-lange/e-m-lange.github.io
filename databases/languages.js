@@ -48,6 +48,8 @@ var languages = {
         "string all inventory": "All Inventory:",
         "string price": "Price",
         "string amount": "Amount",
+        "button add stock": "Add Stock",
+        "message enter stock": "Enter amount to add to beverage stock:",
     },
 
     fra : {
@@ -99,6 +101,8 @@ var languages = {
         "string all inventory": "(Fra)All Inventory:",
         "string price": "(Fra)Price",
         "string amount": "(Fra)Amount",
+        "button add stock": "(Fra)Add Stock",
+        "message enter stock": "(Fra)Enter amount to add to beverage stock:",
     },
 
     indo : {
@@ -150,5 +154,7 @@ var languages = {
         "string all inventory": "(Indo)All Inventory:",
         "string price": "(Indo)Price",
         "string amount": "(Indo)Amount",
+        "button add stock": "(Indo)Add Stock",
+        "message enter stock": "(Indo)Enter amount to add to beverage stock:",
     }
 }

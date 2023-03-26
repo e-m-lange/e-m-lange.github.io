@@ -3,12 +3,19 @@ function ManageStaffInventoryListeners(addFromMenuPage) {
     var items = document.getElementsByClassName("item");
     //Add the event listener.
     for (let i = 0; i < items.length; i++) {
-        if (!addFromMenuPage) {
-            items[i].addEventListener("click", function (ev) {
-                document.body.getElementsByClassName("mainContent")[0].appendChild(PopUpStaff(parseInt(GetCardID(ev))));
-            });
+        if (!addFromMenuPage) { //If not adding item to order (modified inventory page)
+            if ( getCategoryUser(getIdConnected(parameters)) === 0 ) {//Show different popup based on user type.
+                items[i].addEventListener("click", function (ev) {
+                    document.body.getElementsByClassName("mainContent")[0].appendChild(PopUpStaff(parseInt(GetCardID(ev))));
+                });
+            }
+            else if (getCategoryUser(getIdConnected(parameters)) === 1) { //Manager / Owner
+                items[i].addEventListener("click", function (ev) {
+                    document.body.getElementsByClassName("mainContent")[0].appendChild(PopUpManager(parseInt(GetCardID(ev))));
+                });
+            }
         }
-        else {
+        else { //Other if it is adding an item from inventory to the order.
             items[i].addEventListener("click", function (ev) {
                 document.body.getElementsByClassName("mainContent")[0].appendChild(PopUpAddToOrder(parseInt(GetCardID(ev))));
             });

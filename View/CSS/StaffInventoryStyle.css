@@ -63,6 +63,21 @@ html, body {
     background: #B3D0AE;
 }
 
+#addStockBtn {
+    border-style: none;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-left: 95px;
+    padding: 10px;
+
+    background: white;
+    transition: background-color 200ms;
+}
+
+#addStockBtn:hover {
+    background: #B3D0AE;
+}
+
 #runningOutLabel {
     color: white;
     font-family: Tahoma;
