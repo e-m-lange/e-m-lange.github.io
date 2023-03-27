@@ -84,27 +84,30 @@ function TurnOffPageSheets() { //https://williamhuey.github.io/posts/disable-sty
 //Purpose: For testing to swap between pages.
 function TestingTools() {
     //For changing pages.
-    var btnPage1 = createElement("button", {"onClick": "ChangePage(1)" });
-    btnPage1.textContent = "Change to Page 1";
-    var btnPage2 = createElement("button", {"onClick": "ChangePage(2)" });
-    btnPage2.textContent = "Change to Page 2";
-    var btnPage3 = createElement("button", {"onClick": "ChangePage(3)" });
-    btnPage3.textContent = "Change to Page 3";
-    var btnPage4 = createElement("button", {"onClick": "ChangePage(4)" });
-    btnPage4.textContent = "Change to Page 4";
+    var btnPage1 = createElement("button", {"class": "testBtn", "onClick": "ChangePage(1)" });
+    btnPage1.textContent = "Customer Order Page(1)";
+    var btnPage2 = createElement("button", {"class": "testBtn", "onClick": "ChangePage(2)" });
+    btnPage2.textContent = "Staff Select Order Page(2)";
+    var btnPage3 = createElement("button", {"class": "testBtn", "onClick": "ChangePage(3)" });
+    btnPage3.textContent = "Staff Order Page(3)";
+    var btnPage4 = createElement("button", {"class": "testBtn", "onClick": "ChangePage(4)" });
+    btnPage4.textContent = "Staff Inventory Page(4)";
     //For changing user types.
-    var loginStaff = createElement("button", {"onClick": "ChangeUserTest(0)" });
+    var loginStaff = createElement("button", {"class": "testBtn", "onClick": "ChangeUserTest(0); UpdateTestToolUser();" });
     loginStaff.textContent = "Staff(0)";
-    var loginManager = createElement("button", {"onClick": "ChangeUserTest(1)" });
+    var loginManager = createElement("button", {"class": "testBtn", "onClick": "ChangeUserTest(1); UpdateTestToolUser();" });
     loginManager.textContent = "Manager(1)";
-    var loginNormal = createElement("button", {"onClick": "ChangeUserTest(2)" });
+    var loginNormal = createElement("button", {"class": "testBtn", "onClick": "ChangeUserTest(2); UpdateTestToolUser();" });
     loginNormal.textContent = "Customer(2)";
-    var loginVIP = createElement("button", {"onClick": "ChangeUserTest(3)" });
+    var loginVIP = createElement("button", {"class": "testBtn", "onClick": "ChangeUserTest(3); UpdateTestToolUser();" });
     loginVIP.textContent = "VIP(3)";
 
-    var notes = createElement("div", {"style": "background: rgba(200,200,200,.5)"}, ["Select user type THEN change page in order to see the effects"]);
+    var title = createElement("div", {"style": "background: rgba(200,200,200,.5); font-size: 12px; width: 100px;"}, ["Test Tools:"]);
+    var notes = createElement("div", {"style": "background: rgba(200,200,200,.5); font-size: 12px; width: 100px;"}, ["Select user type THEN change page in order to see the effects"]);
 
-    var testtool = createElement("div", {"id": "testTool"});
+    var testtool = createElement("div", {"id": "testTool", "style": "background: transparent; height: fit-content;"});
+
+    testtool.appendChild(title);
 
     //For changing pages.
     testtool.appendChild(btnPage1);
@@ -120,6 +123,25 @@ function TestingTools() {
     testtool.appendChild(notes);
 
     document.getElementsByClassName("mainContent")[0].appendChild(testtool);
+    UpdateTestToolUser();
+}
+
+//Purpose: Allow you to see which user you are currently.
+function UpdateTestToolUser() {
+    var stringToShow;
+
+    if (getIdConnected(parameters)) {
+        stringToShow = getCategoryUser(getIdConnected(parameters));
+    }
+    else {
+        stringToShow = "default customer";
+    }
+
+    var selectedUser = createElement("div", {"id": "testToolSelectedUser", "style": "background: rgba(200,200,200,.5); font-size: 12px; width: 100px;"}, ["Current User Category: " + stringToShow]);
+    if (document.getElementById("testToolSelectedUser")) { //if the label is already attached, remove & replace.
+        document.getElementById("testToolSelectedUser").remove();
+    }
+    document.getElementById("testTool").appendChild(selectedUser);
 }
 
 //Purpose: Use this function to change the page.

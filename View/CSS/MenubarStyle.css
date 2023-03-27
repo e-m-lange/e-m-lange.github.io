@@ -158,3 +158,10 @@
     width: fit-content;
     height: fit-content;
 }
+
+/*Test Tool Styles*/
+
+.testBtn {
+    width: 100px;
+    font-size: 12px;
+}
