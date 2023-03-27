@@ -2,7 +2,6 @@ Welcome to our ship !
 
 To enter our website open the "The Ship With No Name.html" on your favorite web browser.
 
-
 Please note that the login buttons are not currently functional and the welcome page has been omitted.
 In order to login, use 'test tools' buttons with respective user categories.
 
