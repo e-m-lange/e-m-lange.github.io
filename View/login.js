@@ -50,5 +50,5 @@ $(document).ready(function() {
     function swipeUp() {
         alert("Button clicked!");
     }
-    welcomePage();
+    // welcomePage();
 });
