@@ -153,6 +153,7 @@ function ProceedWithPayment(customerID = "cust_0") { //Default for first custome
 
     if (TotalCstmrCount() <= 1) { //If there's only one customer, the whole order is done once paid.
         var currOrderX = cstmrOrderListModel.id; //The saved id of the order being handled.
+
         if (!hasBeenModified) { //If the order hasn't been modified, just update the status.
             UpdateOrderStatus(currOrderX); //Indicate it has been served.
         }
@@ -164,8 +165,10 @@ function ProceedWithPayment(customerID = "cust_0") { //Default for first custome
         ChangePage(2); //Go back to the select order page.
         document.getElementsByClassName("mainContent")[0].appendChild(CreateMessageBox("Order Payment Completed", false));
     }
+
     else { //Otherwise if there are several customers, hide customers as the orders are paid (flawed solution...) since orders are handled as tables.
         RetrieveCustomer(selectedCustomer).hasPaid = true; //Indicate the customer has now paid.
+
         if (CheckAllCustomersPaid()) { //If all customers have paid...
             var currOrderY = cstmrOrderListModel.id;
             if (!hasBeenModified) { //If it hasn't been modified, just change the status.
