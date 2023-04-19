@@ -1,0 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    /*margin: 0.3em;*/
+    text-align: center;
+}
+.welcome {
+    background-color: #A6A6A6;
+    height: 1017px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.welcome-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -495px;
+    position: absolute;
+}
+
+.welcome-text {
+    font-size: 96px;
+    font-weight: 400;
+    padding:0 484px;
+    padding-top: 495px;
+}
+
+.welcome-btn{
+    width: 178px;
+    height: 103px;
+    color: #FFFFFF;
+    background: #607F91;
+    border-radius: 25px;
+    font-weight: 400;
+    font-size: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 91px;
+    text-decoration:none;
+}
+
+.footer{
+    background-color: #222222;
+    color: white;
+    height:183px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    font-size: 36px;
+}
+.rectangular{
+    width: 196px;
+    height: 66px;
+    background-color: #222222;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    margin-top: -110px;
+}
+
+#ex1{
+    width: 675px;
+    height: 600px;
+    box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    background-color: #01260A;
+
+}
+a {
+    text-decoration:none;
+}
+:link { color: #ffffff; }
+:visited { color: #ffffff; }
+
+.login-container{
+}
+
+.form-welcome{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Engagement', cursive;
+    font-weight: 400;
+    font-size: 80px;
+    color: white;
+}
+.sign-text{
+    font-size: 60px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 18px;
+}
+
+.btn-login{
+    width: 113px;
+    height: 49px;
+    background: #D7A530;
+    backdrop-filter: blur(20px);
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.btn-back{
+    width: 113px;
+    height: 49px;
+    background: #A88D50;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+
+}
+
+#header{
+    font-size: 85px;
+    font-weight: bold;
+}
+
+#head {
+    font-size: 4em;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+#head2 {
+    font-size: 4em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#message {
+    font-size: 1.5em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+/*button {*/
+/*    font-size: 1.2em;*/
+/*    padding: 0.5em 1em;*/
+/*    background-color: #007bff;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    padding: 5px;
+    background: #f4f4f4;
+    margin: 5px 0;
+}
+
+header {
+    background: #f4f4f4;
+    /*padding: 1rem;*/
+    text-align: center;
+}
+
+#my-form {
+    padding: 2rem;
+    background: #f4f4f4;
+}
+
+#my-form label {
+    display: block;
+}
+
+#my-form input[type='text'] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/*.btn {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: 10px 15px;*/
+/*    border: 0;*/
+/*    background: #333;*/
+/*    color: #fff;*/
+/*    border-radius: 5px;*/
+/*    margin: 5px 0;*/
+/*}*/
+
+.btn:hover {
+    background: #444;
+}
+
+.bg-dark {
+    background: #333;
+    color: #fff;
+}
+
+.error {
+    background: orangered;
+    color: #fff;
+    padding: 5px;
+    margin: 5px;
+}
+.userPass {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 45px;
+    color: white;
+}

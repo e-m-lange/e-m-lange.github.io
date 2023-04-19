@@ -1,0 +1,300 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: clip;
+}
+
+.mainContent {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(#546C5B, #01260A);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.column {
+
+}
+
+.columnRight {
+    overflow: clip;
+
+    height: calc(0.92 * 100vh);
+    width: 40%;
+    min-width: 50px;
+    float: right;
+    background: #B3D0AE;
+    border-radius: 15px 0px 0px 15px;
+    box-shadow: -1px 2px 2px 2px rgba(0, 0, 0, 0.4);
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    margin-top: 60px;
+}
+
+.customerItem {
+    display: flex;
+    flex-wrap: wrap;
+    alignment: center;
+    border-radius: 15px;
+    border-style: dashed;
+    border-width: 1px;
+    height: fit-content;
+    min-height: 60px;
+    margin-left: 2%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    padding-bottom: 5%;
+    position: relative;
+}
+
+.custNameTxt {
+
+}
+
+.allCustOrderSumTxt {
+    font-family: Tahoma;
+    margin-right: 35px;
+}
+
+.custOrderSumTxt {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.editCustomerName {
+    border-style: none;
+    border-radius: 30px;
+    height: 30px;
+    width: 30px;
+    margin-left: 3%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../jpg/EditIcon.png");
+    transition: background-color 200ms;
+}
+
+.editCustomerName:hover{
+    background-color: #D4E4DE;
+}
+
+.custContainHeader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.customerContainer {
+    margin-top: 2%;
+    width: 100%;
+}
+
+.menuItem {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    height: 80px;
+    margin: 15px;
+    padding: 15px;
+    max-width: 100px;
+    min-width: 100px;
+    background-color: #E4E4E4;
+}
+
+.orderItem {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    height: 80px;
+    margin: 15px;
+    padding: 15px;
+    max-width: 100px;
+    min-width: 100px;
+    background-color: #E4E4E4;
+}
+
+.orderZoneOpened {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.addNewCustomer {
+    padding-top: 1%;
+    height: 25%;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    border-style: dashed;
+    border-color: dimgray;
+    border-width: 2px;
+    text-align: center;
+    border-radius: 15px;
+    min-height: 20px;
+    font-family: Tahoma;
+}
+
+.horizLine {
+    border-bottom: 2px solid rgb(80, 80, 78);
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+.vertiLine {
+    border-left: 2px solid rgb(80, 80, 78);
+    margin: auto;
+    height: 20px;
+}
+
+#menuZone {
+    height: calc(0.7 * 100vh);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+
+    margin-left: 3%;
+    margin-right: 6%;
+}
+
+#menuZone::-webkit-scrollbar {
+    display: none;
+}
+
+#orderZone {
+    overflow-y: scroll;
+    text-align: left;
+    font-family: Tahoma;
+}
+
+#orderZoneLabel {
+}
+
+#optionZone {
+    height: calc(0.17 * 100vh);
+    padding-top: 2%;
+    text-align: right;
+}
+
+#orderBtn {
+    box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.25);
+    padding: calc(0.01 * 100vh);
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 5%;
+    float: right;
+    background: #EFB93C;
+    border-radius: 15px;
+    border-style: none;
+    font-family: Tahoma;
+    font-size: 15px;
+}
+
+#orderLabel {
+    display: none;
+    top: 50%;
+    right: -35px;
+    transform: rotate(-90deg);
+    position: absolute;
+    font-family: Tahoma;
+    font-size: 18px;
+    min-width: 130px;
+}
+
+#filters {
+    margin-top: 70px;
+    padding-left: 3%;
+    height: 100px;
+    width: 100%;
+    background: transparent;
+}
+
+#undoRedoBtn {
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #E4E4E4;
+    display: flex;
+    width: fit-content;
+    border-radius: 15px;
+}
+
+#undoBtn {
+    padding: 28px;
+    background: transparent;
+    border-style: none;
+
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#undoBtn:hover {
+    background: #B3D0AE;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: background-color 100ms ease-out;
+
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#undoBtn:active {
+    background: #EFB93C;
+
+    background-image: url("../jpg/UndoArrowLeftIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#redoBtn {
+    padding: 28px;
+    background: transparent;
+    border-style: none;
+
+    background-image: url("../jpg/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#redoBtn:hover {
+    background: #B3D0AE;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transition: background-color 100ms ease-out;
+
+    background-image: url("../jpg/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#redoBtn:active {
+    background: #EFB93C;
+
+    background-image: url("../jpg/UndoArrowRightIcon.png");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}

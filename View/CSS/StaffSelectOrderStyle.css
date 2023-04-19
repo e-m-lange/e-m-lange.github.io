@@ -1,0 +1,69 @@
+.mainContent {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(#546C5B, #01260A);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: clip;
+}
+
+.tableOrderItem {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    height: 85px;
+    margin: 15px;
+    padding: 15px;
+    width: 110px;
+    background-color: #E4E4E4;
+}
+
+.labelContainer {
+    font-size: 12px;
+    font-family: Tahoma;
+    width: 100%;
+}
+
+.orderLabel {
+    width: 100%;
+    display:block
+}
+
+.deleteBtn {
+    margin-top: 5px;
+    margin-left: 75px;
+    border-radius: 20px;
+    border-style: none;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    background: white;
+    transition: background-color 200ms;
+}
+
+.deleteBtn:hover {
+    background: #B3D0AE;
+}
+
+#orderItemZone {
+    margin-top: 70px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+#orderItemZone::-webkit-scrollbar {
+    display: none;
+}
