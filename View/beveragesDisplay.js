@@ -5,7 +5,7 @@ function CreateItem(beverage){
   var category = createElement('div',{'class':'bev_category'},[getCategoryBeverage(beverage)]);
   var country = createElement('div', {"class": "bev_country"}, [getCountryBeverage(beverage)]);
   
-  var icon = createElement("img", {"src": "./jpg/DrinksIcon.jpg", "height": "20px", "width" : "10px", "class": "img_card"});
+  var icon = createElement("img", {"src": ".jpg/DrinksIcon.jpg", "height": "20px", "width" : "10px", "class": "img_card"});
   var text = createElement("div", {"class": "text_card"}, [name,category,country,price]);
   var textIconGroup = createElement("div", {"class": "textIconGroup"}, [text, icon]); //Appears better in the view.
 
